@@ -404,7 +404,7 @@ const MODEL={key:'model',title:'Sustainable Business Model',fields:[
    ${pill(10,'PEOPLE',s.people)}${pill(222,'PLANET',s.planet)}${pill(434,'PROFIT',m.rev?`${m.profit>=0?'Surplus':'Loss'} of ${nice(Math.abs(m.profit))} AED a month`:'')}</svg>`; }};
 
 const PROTO={key:'proto',title:'Prototype Development',fields:[
-  {id:'tech',t:'sel',l:'Prototype technique',h:'Not sure? Ask the <a href="week-05.html#s4">Prototype Helper</a>.',o:['Sketch / mock-up','Paper / digital prototype','Physical model','Storyboard / role-play','Functional demo','Storyboard']},
+  {id:'tech',t:'sel',l:'Prototype technique',h:'Not sure? Ask the <a href="week-05.html#s3">Prototype Helper</a>.',o:['Sketch / mock-up','Paper / digital prototype','Physical model','Storyboard / role-play','Functional demo','Storyboard']},
   {id:'assumption',t:'text',l:'Assumption it tested'},
   {id:'v1',t:'text',l:'Version 1: what you built'},
   {row:[{id:'testers',t:'num',l:'Number of testers'}]},
@@ -615,7 +615,7 @@ Lecture.mount({
     fig:{label:'Business model', build:labBuilder(MODEL)} },
 
   { nav:'8 · Prototype', title:'Step 8 · Prototype Development', kind:'activity', minutes:15, full:true,
-    narration:TASK('Report your Week 5 prototype: assumption, test, result, version 2. Unsure of the technique? Use the <a href="week-05.html#s4">Prototype Helper</a>.','Prototype draft + v1 → test → v2 figure.'),
+    narration:TASK('Report your Week 5 prototype: assumption, test, result, version 2. Unsure of the technique? Use the <a href="week-05.html#s3">Prototype Helper</a>.','Prototype draft + v1 → test → v2 figure.'),
     fig:{label:'Prototype', build:labBuilder(PROTO)} },
 
   { nav:'9 · Learning', title:'Step 9 · Learning and Adaptation', kind:'activity', minutes:20, full:true,

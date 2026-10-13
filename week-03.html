@@ -53,21 +53,12 @@ Lecture.mount({
   title:'Lean Startups', meta:'Byers et al (2019). Ch. 4, HBR · 2-hour lab',
   scenes:[
   { nav:'Start here', title:'How do we learn what customers want before time runs out?', minutes:5,
-    narration:[
-     `Your team has one idea. This week you plan the cheapest experiment that tells you whether people want it.`,
-     `Syllabus topics: <strong>Lean Startups</strong> · <strong>Introduction to Lean Startups</strong> · <strong>Minimum Viable Product (MVP)</strong>. CLO 1 and CLO 3.`],
+    narration:[`Plan the cheapest experiment that shows whether people want your idea. <span class="mono">Topics: Lean Startups · Introduction to Lean Startups · Minimum Viable Product (MVP). CLO 1 · CLO 3.</span>`],
     src:`Reading: Byers et al (2019). Ch. 4 · Blank, S. (2013). Why the lean start-up changes everything. <em>Harvard Business Review</em>, 91(5).`,
-    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Hook`,5,'a'],[`Lean startup in one loop`,15,'l'],[`What an MVP is`,15,'l'],[`MVP or not?`,10,'a'],[`Pivot or persevere`,10,'l'],[`Design your MVP experiment`,40,'a'],[`Key takeaways`,15,'l'],[`Exit check`,5,'c']])} },
-
-  { nav:'Hook', title:'Hook · What kills most new ventures?', kind:'activity', minutes:5,
-    narration:[`Vote.`],
-    fig:{label:`Vote`, build:el=>W.poll(el,{q:'The biggest risk for a new venture is…',opts:['a competitor copies it','building something nobody wants','the logo is weak','too little funding at the start'],reveal:i=>(i===1?'<b>Yes.</b> ':'<b>Suggested: B.</b> ')+'Lean startup exists to reduce exactly this risk: test demand before you build.'})} },
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Lean startup`,15,'l'],[`MVP`,15,'l'],[`Pivot or persevere`,10,'l'],[`Design your MVP`,75,'a']])} },
 
   { nav:'Lean startup', title:'Introduction to lean startups', minutes:15,
-    narration:[
-     B.plain(`A lean startup treats every plan as a set of <b>guesses (hypotheses)</b> and tests them quickly with real customers. Steve Blank (2013) summarises it as experimentation over elaborate planning, customer feedback over intuition, and iterative design over big up-front design.`),
-     `The engine is one loop, from Eric Ries (2011): <strong>Build → Measure → Learn</strong>. Each loop should be short and cheap.`,
-     B.ex(`Guess: “students will pay 15 AED for a surplus meal.” Build: a landing page with the offer. Measure: 31 sign-ups in a week. Learn: interest is real but below the target of 50; test a lower price next week.`)],
+    narration:[`A lean startup tests its guesses with real customers before building, in short <b>Build → Measure → Learn</b> loops (Ries, 2011; Blank, 2013).`],
     src:`Ries, E. (2011). <em>The lean startup</em>. Crown Business. · Blank, S. (2013). <em>Harvard Business Review</em>.`,
     fig:{label:`Build → Measure → Learn`, flow:[
       {t:'Hypothesis',s:'the guess',d:'We believe [customer] will [behaviour] because [reason].'},
@@ -76,53 +67,21 @@ Lecture.mount({
       {t:'Learn',s:'decide',d:'Persevere, iterate or pivot. Then start the next loop.'}]} },
 
   { nav:'MVP', title:'Minimum Viable Product (MVP)', minutes:15, wide:true,
-    narration:[
-     B.plain(`An <b>MVP</b> is the version of a new product that lets a team collect the maximum amount of validated learning about customers with the least effort (Ries, 2011). It is an <b>experiment</b>, not a small version of the final product.`),
-     `Five common MVP types. Click each for a real case.`],
+    narration:[`An <b>MVP</b> gives the most validated learning with the least effort (Ries, 2011). UAE examples: The Entertainer sold printed two-for-one voucher books before launching its app in 2013; Careem launched in Dubai in 2012 as a corporate car-booking service before serving everyone. Click each MVP type for more cases.`],
+    src:`Gulf Business (2013, November 6). Dubai's The Entertainer launches mobile app. · Arabian Business. In the driving seat: Careem. · Ries, E. (2011). <em>The lean startup</em>.`,
     fig:{label:`MVP types · click for a case`, build:el=>W.picker(el,MVP,'Select an MVP type.')} },
 
-  { nav:'MVP or not?', title:'Activity · MVP or not?', kind:'activity', minutes:10,
-    narration:[`Sort each plan. Then reveal and discuss.`],
-    fig:{label:`Sort`, build:el=>W.sort(el,{buckets:['Good MVP','Not an MVP'],items:[
-      {t:`A one-page website with a “Reserve your first meal” button, shared for one week`,a:0,why:`Cheap, fast, measures real behaviour.`},
-      {t:`Spending 6 weeks building a full app with login, payments and maps`,a:1,why:`Too slow and expensive; nothing is learned until it ships.`},
-      {t:`Running the tutoring service by hand for 5 children for two weekends`,a:0,why:`Concierge MVP: learns what the service really needs.`},
-      {t:`Asking friends “Would you use this?”`,a:1,why:`Opinions, not behaviour. Friends are polite.`},
-      {t:`A 60-second video of how the product works, with a sign-up link`,a:0,why:`Explainer-video MVP; measures interest.`}]})} },
-
   { nav:'Pivot or persevere', title:'Pivot, iterate or persevere?', minutes:10,
-    narration:[
-     `Before you run an MVP, write down a <strong>target number</strong>. After the test, compare the result with the target and decide.`,
-     B.ex(`Target 50 sign-ups, result 31: <b>iterate</b> (change one thing). Result 8: <b>pivot</b> (change the customer, problem or solution). Result 65: <b>persevere</b>.`)],
-    notes:[`The 50% and 100% thresholds in the tool are a teaching rule of thumb, not a standard.`],
+    narration:[`Set a target number <b>before</b> the test, then compare. Try different results.`],
     fig:{label:`Try different numbers`, build:pivot, caption:`Rule of thumb for this course: ≥100% persevere, 50–99% iterate, below 50% pivot.`} },
 
-  { nav:'Design your MVP', title:'Activity · Design your MVP experiment', kind:'activity', minutes:40,
-    narration:[
-     `Fill in the experiment card for your team's idea. Run the MVP before Week 5 if you can: the result becomes evidence for Steps 4 and 8 of the <a href="project-1.html">Project 1 Lab</a>.`,
-     B.ex(`<b>We believe</b> university students near campus <b>will</b> reserve a discounted evening meal. <b>MVP:</b> landing page shared in 3 class groups for 7 days. <b>We will know we are right when</b> 50 students sign up.`)],
+  { nav:'Design your MVP', title:'Activity · Design your MVP experiment', kind:'activity', minutes:75,
+    narration:[`<b>Next week:</b> read the UN SDGs, Qian et al., (2024) and Bridge et al 2020 Ch1.`,`Fill in your experiment card. The result becomes evidence in the <a href="project-1.html">Project 1 Lab</a>.`],
     fig:{label:`Experiment card · saves in your browser`, build:el=>W.worksheet(el,{id:'ent142-w3-mvp',title:'ENT 142 · Week 3 · MVP experiment',fields:[
       {l:'We believe [customer]…',rows:1},{l:'…will [behaviour]…',rows:1},{l:'…because [reason]',rows:2},
       {l:'MVP type and what we will build',hint:'Landing page, explainer video, concierge, Wizard of Oz or single feature',rows:2},
       {l:'Metric and target number',hint:'Decide before the test',rows:1},{l:'Result',rows:1},{l:'Decision: persevere, iterate or pivot? Why?',rows:2}]})} },
 
-  { nav:'Key takeaways', full:true, title:'Key takeaways · Week 3', kind:'review', minutes:15,
-    narration:[KEY(`<ul><li>Lean startup: test guesses with customers before building.</li><li>Build → Measure → Learn, in short loops.</li><li>MVP = maximum validated learning with the least effort.</li><li>Five MVP types: landing page, explainer video, concierge, Wizard of Oz, single feature.</li><li>Set a target number <b>before</b> the test; then persevere, iterate or pivot.</li></ul>`)],
-    fig:{mindmap:{center:'Lean startup',branches:[
-      {t:'Mindset',items:['Plans are guesses','Experiment over planning']},
-      {t:'Loop',items:['Build','Measure','Learn']},
-      {t:'MVP',items:['Learning, least effort','An experiment, not a mini product']},
-      {t:'MVP types',items:['Landing page · video','Concierge · Wizard of Oz','Single feature']},
-      {t:'Decide',items:['Target set in advance','Persevere · iterate · pivot']}]}} },
-
-  { nav:'Exit check', title:'Exit check', kind:'check', minutes:5,
-    narration:[`Five questions.`,`<strong>Before Week 4:</strong> read the UN SDGs (sdgs.un.org/goals), Qian et al., (2024) and Bridge et al 2020 Ch1.`],
-    fig:{label:`Five questions`, build:el=>W.quiz(el,[
-      {q:`The lean startup loop is…`,o:[`Plan → Build → Sell`,`Build → Measure → Learn`,`Idea → Logo → Launch`,`Research → Write → Submit`],a:1,why:`Ries (2011).`},
-      {q:`An MVP is best described as…`,o:[`a cheap final product`,`an experiment for maximum learning with least effort`,`a prototype for investors only`,`the first version with all features`],a:1,why:`It exists to learn.`},
-      {q:`Airbnb's founders first tested their idea by…`,o:[`building an app`,`renting air mattresses in their apartment during a conference`,`buying a hotel`,`running ads`],a:1,why:`A concierge-style MVP in 2007.`},
-      {q:`Target 50, result 27. The course rule of thumb says…`,o:[`persevere`,`iterate`,`pivot`,`stop the project`],a:1,why:`27/50 = 54%: change one thing and test again.`},
-      {q:`“Would you use this?” asked to friends is weak evidence because…`,o:[`it is too slow`,`it measures polite opinions, not behaviour`,`it is too expensive`,`friends are not customers ever`],a:1,why:`Measure what people do.`}])} }
   ]
 });
 </script>
