@@ -109,6 +109,7 @@ Lecture.mount({
   { nav:'Form your team', title:'Activity · Group formation', kind:'activity', minutes:20,
     narration:[
      `Teams of <strong>4–5</strong>, built around the chosen ideas. Give every member a lead role; everyone still contributes to every section.`,
+     `${window.ENT142_REG?`<a class="btn" href="${window.ENT142_REG}" target="_blank" rel="noopener">Register your team (CUD account) →</a>`:`<span class="tag">Team registration link: coming soon</span>`}`,
      `<table class="tbl"><thead><tr><th>Role</th><th>Leads in the Project 1 Lab</th></tr></thead><tbody><tr><td>Coordinator</td><td>Plan, deadlines, final assembly (Step 11)</td></tr><tr><td>Data lead</td><td>Verified data and market (Steps 2, 5)</td></tr><tr><td>Customer lead</td><td>Customers and competition (Steps 4, 6)</td></tr><tr><td>Design lead</td><td>Prototype (Step 8)</td></tr><tr><td>Business lead</td><td>Business model (Step 7)</td></tr></tbody></table>`],
     fig:{label:`Team charter · saves in your browser`, build:el=>W.worksheet(el,{id:'ent142-w2-charter',title:'ENT 142 · Team charter',fields:[
       {l:'Team name and chosen idea',rows:1},{l:'Members, student IDs and lead roles',rows:4},{l:'When and where we meet each week',rows:1},{l:'Our communication channel',rows:1},{l:'How we decide when we disagree',rows:2},{l:'What happens if someone misses a deadline',rows:2}]})} },

@@ -27,11 +27,11 @@ const {W,B} = Lecture;
 const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your project</b>${html}</div>`;
 
 /* assessment weights, drawn to scale (syllabus section 8) */
-const ASSESS=[['Project 1 · Report',40,'Week 9'],['Project 1 · Presentation',10,'Week 10'],['Project 2 · Reflective Portfolio',30,'Week 16'],['Activity 1',10,'Week 6'],['Activity 2',10,'Week 13']];
+const ASSESS=[['Project 1 · Report',40,'27 Oct'],['Project 1 · Presentation',10,'27 Oct'],['Project 2 · Reflective Portfolio',30,'Week 16'],['Activity 1',10,'Week 6'],['Activity 2',10,'Week 13']];
 function weights(el){
   let x=0; const cols=['var(--wk)','color-mix(in srgb,var(--wk) 60%,var(--bg))','color-mix(in srgb,var(--wk) 35%,var(--bg))','var(--muted)','color-mix(in srgb,var(--muted) 55%,var(--bg))'];
   el.innerHTML=`<svg viewBox="0 0 600 70" style="width:100%;height:auto" role="img" aria-label="Assessment weights">${ASSESS.map(([t,w],i)=>{ const r=`<rect x="${x*6}" y="10" width="${w*6-2}" height="40" rx="4" fill="${cols[i]}"/><text x="${x*6+w*3}" y="36" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="14" fill="${i<1?'var(--on-wk)':'var(--ink)'}">${w}%</text>`; x+=w; return r; }).join('')}</svg>
-  <table class="tbl" style="margin-top:8px"><thead><tr><th>Assessment</th><th>Weight</th><th>Syllabus week</th></tr></thead><tbody>${ASSESS.map(a=>`<tr><td>${a[0]}</td><td>${a[1]}%</td><td>${a[2]}</td></tr>`).join('')}</tbody></table>`;
+  <table class="tbl" style="margin-top:8px"><thead><tr><th>Assessment</th><th>Weight</th><th>Due</th></tr></thead><tbody>${ASSESS.map(a=>`<tr><td>${a[0]}</td><td>${a[1]}%</td><td>${a[2]}</td></tr>`).join('')}</tbody></table>`;
 }
 
 /* feedback capture grid */
@@ -59,7 +59,7 @@ Lecture.mount({
     narration:[
      `<b>Material:</b> textbook Byers, Dorf &amp; Nelson (2019), <em>Technology ventures</em>; reference books by Liedtka et al. (2017), Ray &amp; Shaw (2023) and Bridge et al. (2020); HBR articles; weekly pages on this site; announcements on Moodle.`,
      `<b>Assessment:</b> the bar on the right is drawn to scale. Half of your grade is Project 1, built step by step in the <a href="project-1.html">Project 1 Lab</a> from Week 5.`,
-     B.plain(`Due dates are confirmed on Moodle. The weeks shown are the syllabus schedule. Turnitin similarity must be 20% or lower.`)],
+     B.plain(`Project 1 report and presentation: <b>Tuesday 27 October</b>, same day, submitted on Moodle. Other dates follow the syllabus.`)],
     fig:{label:`Assessment weights · syllabus`, build:weights} },
 
   { nav:'Hook', title:'Hook · Where does design thinking start?', kind:'activity', minutes:5,

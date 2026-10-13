@@ -223,7 +223,7 @@ function builder(cfg){ return el=>{
       ${refs.length?`<div><h4>References used</h4><ul class="refs">${refs.map(d=>`<li>${apa(d)}</li>`).join('')}</ul></div>`:''}
       ${r.gaps&&r.gaps.length?`<div class="vs-gaps"><b>To validate this section</b><ul>${r.gaps.map(g=>`<li>${g}</li>`).join('')}</ul></div>`:`<div class="feedback"><span class="tag good">validated</span> Every claim in this draft is linked to verified data or your own test.</div>`}
       <div class="vs-tools"><button type="button" class="btn" data-l="Copy paragraph">Copy paragraph</button>${svgS?`<button type="button" class="btn ghost" data-l="Download image">Download image</button>`:''}</div>
-      <p class="vs-note">A starting draft built from your answers. Rewrite it in your team's own words: every team starts from the same sentence patterns, and Turnitin compares reports.</p>`;
+      <p class="vs-note">A starting draft built from your answers. Rewrite it in your team's own words: every team starts from the same sentence patterns.</p>`;
     const bs=out.querySelectorAll('.vs-tools button');
     bs[0].addEventListener('click',()=>copyText(bs[0],r.text+(refs.length?'\n\nReferences\n'+refs.map(apaTxt).join('\n'):'')));
     if(bs[1]) bs[1].addEventListener('click',()=>downloadSVG(cfg.illus(s,PRINT).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" '),`${(V('name')||'venture').replace(/\W+/g,'-')}-${cfg.key}`));
@@ -524,12 +524,12 @@ const STEPS=[
  ['Learning and Adaptation',9,()=>LEARN.gen(sec('learn')).gaps,'learn'],
  ['Introduction + summary',10,()=>INTRO.gen(sec('intro')).gaps,'intro'],
  ['Assemble and submit',11,()=>finalGaps(),'final']];
-const FINAL_CHECKS=['One Word file for the whole group, with Heading styles.','Cover page: CUD logo, title, names + student IDs, course name and code, word count.','Table of contents generated in Word; page numbers match.','Drafts rewritten in our own words and expanded to about 4000 counted words.','Prototype photos inside the report, with captions.','Every number has an in-text citation; references in APA, no bare links.','Turnitin similarity is 20% or lower.'];
+const FINAL_CHECKS=['One Word file for the whole group, with Heading styles.','Cover page: CUD logo, title, names + student IDs, course name and code, word count.','Table of contents generated in Word; page numbers match.','Drafts rewritten in our own words and expanded to about 4000 counted words.','Prototype photos inside the report, with captions.','Every number has an in-text citation; references in APA, no bare links.','Uploaded on Moodle by 27 October; presentation ready for the same day.'];
 function finalGaps(){ const f=(S.final||[]); const n=FINAL_CHECKS.filter((_,i)=>f[i]).length; return n<FINAL_CHECKS.length?[`${FINAL_CHECKS.length-n} submission check(s) left.`]:[]; }
 function stepState(st){ const g=st[2](); if(g.length) return ['todo',`${g.length} to fix`]; if(st[3]!=='v'&&st[3]!=='data'&&st[3]!=='final'&&!DONE(st[3])) return ['warn','paste into report']; return ['good','done']; }
 
 function overview(el){
-  el.innerHTML=`<div class="vs"><div class="req">${[['Type','Group report (4–5)'],['File','Word document'],['Length','4000 words'],['Submit','Turnitin · Moodle/MyCUD'],['Weight','Report 40% · Pitch 10%'],['Evidence','Verified open data + prototype test']].map(([a,b])=>`<div><b>${a}</b><span>${b}</span></div>`).join('')}</div>
+  el.innerHTML=`<div class="vs"><div class="req">${[['Type','Group report (4–5)'],['File','Word document'],['Length','4000 words'],['Due','Tue 27 Oct 2026 · Moodle'],['Weight','Report 40% · Pitch 10%'],['Evidence','Verified open data + prototype test']].map(([a,b])=>`<div><b>${a}</b><span>${b}</span></div>`).join('')}</div>
    <div class="tblw"><table class="tbl"><thead><tr><th>Step</th><th>You produce</th><th>Status</th></tr></thead><tbody>${STEPS.map(st=>{ const s=stepState(st); return `<tr><td><a href="#s${st[1]}" data-go="${st[1]}">${st[1]}. ${st[0]}</a></td><td>${['One-line value proposition','5+ verified data cards','Section draft + figure','Section draft + figure','Section draft + TAM/SAM/SOM figure','Section draft + positioning map','Section draft + revenue/TBL figure','Section draft + v1→v2 figure','One paragraph per member','Introduction + executive summary','Full report text, checked'][st[1]-1]}</td><td><span class="tag ${s[0]==='good'?'good':s[0]==='warn'?'warn':''}">${s[1]}</span></td></tr>`; }).join('')}</tbody></table></div>
    <p class="vs-note">Work saves in this browser. One laptop per team, or copy each draft into your team document as you go.</p></div>`;
   el.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); const b=document.querySelectorAll('.toc ol li button')[+a.dataset.go]; if(b) b.click(); }));
@@ -564,7 +564,7 @@ function assemble(el){
 }
 
 function marking(el){
-  const tabs=[['Report · syllabus rubric',()=>rubHTML(RUB_SYL)],['Report · briefing rubric',()=>rubHTML(RUB_DECK)],['Presentation (1B)',()=>`<div class="brief"><p><b>1-minute</b> individual presentation + <b>2 minutes</b> Q&amp;A (7 minutes per group) · PowerPoint · submit slides to Turnitin before the presentation date · graded individually.</p><b>Outline</b><ol><li>Cover slide with team name, and students' names/ID numbers</li><li>Introduction of each member of the team</li><li>The Problem &amp; Solution</li><li>Market Opportunity and Innovation</li><li>Impact of the Solution</li><li>Presentation and Pitch</li></ol></div>${rubHTML(RUB_PRES)}`]];
+  const tabs=[['Report · syllabus rubric',()=>rubHTML(RUB_SYL)],['Report · briefing rubric',()=>rubHTML(RUB_DECK)],['Presentation (1B)',()=>`<div class="brief"><p><b>1-minute</b> individual presentation + <b>2 minutes</b> Q&amp;A (7 minutes per group) · PowerPoint · same day as the report, 27 October · graded individually.</p><b>Outline</b><ol><li>Cover slide with team name, and students' names/ID numbers</li><li>Introduction of each member of the team</li><li>The Problem &amp; Solution</li><li>Market Opportunity and Innovation</li><li>Impact of the Solution</li><li>Presentation and Pitch</li></ol></div>${rubHTML(RUB_PRES)}`]];
   el.innerHTML=`<div class="seg2">${tabs.map((t,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===0}">${t[0]}</button>`).join('')}</div><div id="mk"></div>`;
   const mk=el.querySelector('#mk'), bs=el.querySelectorAll('.seg2 button');
   const show=i=>{ bs.forEach((b,j)=>b.setAttribute('aria-pressed',j===i)); mk.innerHTML=tabs[i][1](); };
@@ -578,8 +578,8 @@ Lecture.mount({
   title:'Project 1 Lab', meta:'Social Enterprise Project · step by step',
   scenes:[
   { nav:'Overview', title:'Project 1 Lab · 11 steps to your report', kind:'activity', full:true,
-    narration:TASK('Work through the steps in order. Each step ends with a draft section and a check. Status updates as you go.','A complete, evidence-based report draft.'),
-    notes:[`Suggested pacing: Steps 1–3 in Week 5, 4–6 in Week 6, 7–8 in Week 7, 9–11 in Week 8. Deadline on Moodle (syllabus: report Week 9, presentation Week 10).`,`The two report rubrics differ (4 × 25 vs 4 × 20); tell students which applies.`],
+    narration:TASK('Register your team, then work through the steps in order. Each step ends with a draft section and a check.','A complete, evidence-based report draft.').concat([`${window.ENT142_REG?`<a class="btn" href="${window.ENT142_REG}" target="_blank" rel="noopener">Register your team (CUD account) →</a>`:`<span class="tag">Team registration link: coming soon</span>`}`]),
+    notes:[`Suggested pacing: Steps 1–3 in Week 5, 4–6 in Week 6, 7–8 in Week 7, 9–11 in Week 8. Deadline: Tuesday 27 October 2026, report and presentation on the same day.`,`The two report rubrics differ (4 × 25 vs 4 × 20); tell students which applies.`],
     fig:{label:'Requirements · your progress', build:overview} },
 
   { nav:'1 · Venture card', title:'Step 1 · Venture card', kind:'activity', minutes:10, full:true,

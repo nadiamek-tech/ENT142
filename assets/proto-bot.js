@@ -112,7 +112,8 @@
       const html=`<span class="eyebrow">Recommended first prototype</span><h5>${esc(tech)}</h5>
         <p>You need to learn <b>${esc(NEEDS[st.need].q.toLowerCase())}</b>, so the lecture's rule is: <b>${esc(NEEDS[st.need].q)} → ${esc(tech)}</b>.</p>
         <h6>How to build it</h6><ul>${b.how.map(x=>`<li>${x}</li>`).join('')}</ul>
-        <h6>Materials</h6><p>${esc(b.mat)}</p>
+        <p style="margin-top:8px"><b>Remember:</b> there is no single right type. Pick the fastest, cheapest, easiest version that tests this assumption and your SDG impact.</p>
+        <h6>Materials</h6><p>${esc(b.mat)}${tech==='Physical model'?'. Quick 3D look: Meshy AI or Tinkercad (free).':''}</p>
         <h6>How to test it</h6><p>${esc(b.test)}</p>
         <h6>Fidelity</h6><p>${FIDELITY[st.time]}</p>
         ${b.case?`<h6>Example from the lecture</h6><p>${esc(b.case)}</p>`:''}

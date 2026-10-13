@@ -80,9 +80,9 @@ Lecture.mount({
      `Syllabus topics: <strong>Prototyping</strong> · <strong>Prototype Generation Techniques</strong> · <strong>Initial Prototype Development</strong>. This builds <strong>CLO 1</strong>: Explain the process of innovation, entrepreneurship and sustainability.`],
     src:`Reading: Byers et al (2019). Ch. 8, Pradeep &amp; Rajib (2022). Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
     notes:[`2-hour lab (0-2-1). Most of the time is the build activity: protect those 30 minutes.`,`Teams of 4–5 sit together from the start.`],
-    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Hook: what first?`,10,'a'],[`What is a prototype?`,10,'l'],[`Six techniques`,15,'l'],[`Prototype Helper`,20,'a'],[`Case: Embrace`,10,'l'],[`Activity: match the technique`,10,'a'],[`Activity: build v1`,25,'a'],[`Prototype → Project 1`,5,'l'],[`Key takeaways`,5,'l'],[`Exit check`,5,'c']])} },
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Hook: what first?`,5,'a'],[`What is a prototype?`,10,'l'],[`Six techniques`,10,'l'],[`Prototype Helper`,20,'a'],[`Real prototypes`,10,'l'],[`3D with Meshy AI`,5,'a'],[`Case: Embrace`,5,'l'],[`Activity: match the technique`,10,'a'],[`Activity: build v1`,25,'a'],[`Prototype → Project 1`,5,'l'],[`Key takeaways`,5,'l'],[`Exit check`,5,'c']])} },
 
-  { nav:'What first?', title:'Hook · What should the team do first?', kind:'activity', minutes:10,
+  { nav:'What first?', title:'Hook · What should the team do first?', kind:'activity', minutes:5,
     narration:[
      `A team wants an app that lets the CUD cafeteria sell surplus meals cheaply at the end of the day. They have 5 days. Vote: what should they do first?`],
     think:`What would the team <em>learn</em> from each option, and how much would each cost them?`,
@@ -104,7 +104,7 @@ Lecture.mount({
       {t:'Iterate',s:'version 2',d:'Build version 2. Each loop should be faster and cheaper than the last.'}],
       html:LADDER, caption:`Fidelity ladder (illustrative). Higher fidelity costs more time and money; climb only when needed.`} },
 
-  { nav:'Six techniques', title:'Prototype generation techniques', minutes:15,
+  { nav:'Six techniques', title:'Prototype generation techniques', minutes:10,
     narration:[
      `Six techniques, from the slide: <strong>Sketch</strong> (show the idea), <strong>Storyboard</strong> (show the user journey), <strong>Paper</strong> (simulate interaction), <strong>Digital</strong> (show screens or interface), <strong>Physical</strong> (show the product), <strong>Role-play</strong> (simulate the service).`,
      `Click each technique on the right for an example. Three are real company stories; the others are student-scale examples.`],
@@ -113,13 +113,43 @@ Lecture.mount({
 
   { nav:'Prototype Helper', title:'Choose your prototype · Prototype Helper', kind:'activity', minutes:20, wide:true,
     narration:[
-     `Rule from the slide: choose the prototype that tests your <strong>biggest assumption</strong>, the thing that must be true for your idea to work.`,
+     `There is no single right prototype. Look at your project and its SDG, then choose the <strong>fastest, cheapest, easiest</strong> one that tests your <strong>biggest assumption</strong> and collects feedback before you invest.`,
      `<b>Try it:</b> click an example idea to load it into the box, change it to your own idea, and press <b>Send</b>. Answer three questions and copy the plan into the Build v1 worksheet.`,
      B.ex(`Idea: a WhatsApp service that matches retired professionals in Dubai with students for career mentoring. Biggest assumption: <i>retirees will reply within a day</i>. Prototype: run it by hand for one week with 3 mentors and 5 students (role-play). No app needed.`)],
     notes:[`Each team runs its own idea through the helper, then copies the plan into the Build v1 worksheet.`,`Rule-based on purpose: free, works on any phone, answers only from this lecture.`],
     fig:{label:`Prototype Helper · type your idea`, build:el=>ProtoBot(el)} },
 
-  { nav:'Case: Embrace', title:'Case · Embrace infant warmer', minutes:10,
+  { nav:'Real prototypes', title:'How real teams prototype and show it', minutes:10, wide:true,
+    narration:[
+     `Watch one video. Notice how rough the first prototypes are, and how fast they test them.`,
+     B.ex(`Incubators showcase startups with the prototype in people's hands. in5, the TECOM Group incubator in Dubai, brought seven of its startups to GITEX 2022 to show their products to a wide audience.`),
+     `<b>Show it like a startup:</b> demo first → the problem it solves → what testers did → what you will test next.`],
+    video:[{id:'M66ZU2PCIcM',title:'ABC Nightline: IDEO Shopping Cart',by:'ABC Nightline (uploaded by Alfonso Neri)',why:'IDEO redesigns a shopping cart in days: rough models, real users, fast changes.'},
+           {id:'H0_yKBitO8M',title:'Build a tower, build a team',by:'TED · Tom Wujec',why:'Why children beat business students: they prototype early and often.'}],
+    src:`Zawya (2022). Business incubator in5 to showcase 7 innovative Dubai-based start-ups at GITEX 2022. · More: Jane Chen, <a href="https://www.ted.com/talks/jane_chen_a_warm_embrace_that_saves_lives" target="_blank" rel="noopener">A warm embrace that saves lives</a> (TED).`,
+    fig:{label:`Demo like a startup`, flow:[
+      {t:'Demo',s:'hand it over',d:'Let the audience see or try the prototype first.'},
+      {t:'Problem',s:'one sentence',d:'Who has the problem and why it matters (your SDG).'},
+      {t:'Evidence',s:'what testers did',d:'“7 of 12 could not find the pickup time; after the change, 11 of 12 did.”'},
+      {t:'Next test',s:'what you learn next',d:'The next assumption and the cheapest way to test it.'}]} },
+
+  { nav:'3D with Meshy AI', title:'A quick 3D prototype with Meshy AI', kind:'activity', minutes:5, wide:true,
+    narration:[
+     `For a physical product, an AI tool can turn a <b>sketch or a sentence</b> into a 3D model in minutes. Press ▶ Play to see the steps.`,
+     `Meshy free plan: 100 credits a month, up to 10 models, licence CC BY 4.0 (credit Meshy).`,
+     B.plain(`A 3D model shows the <b>look</b>. It does not prove people want it: put it in front of users and test.`)],
+    src:`Meshy (2026). Web app: getting started; Pricing. docs.meshy.ai · meshy.ai/pricing`,
+    notes:[`State in the report that the image was made with Meshy (AI use and licence attribution).`],
+    fig:{label:`Meshy AI in 6 steps · press Play`, flow:[
+      {t:'Sign up',s:'free',d:'meshy.ai → sign up with Google or email. No credit card.'},
+      {t:'Choose',s:'Image or Text to 3D',d:'Image to 3D: upload a clear photo of your sketch or cardboard model. Text to 3D: describe it, e.g. “a reusable lunch box made of date-palm fibre with a bamboo clip”.'},
+      {t:'Generate',s:'see the cost',d:'Click Generate. The panel shows time and credit cost first.'},
+      {t:'Check',s:'3D viewer',d:'Rotate and zoom. Wait for “Complete”. Regenerate if the shape is wrong.'},
+      {t:'Export',s:'GLB · STL',d:'Download GLB (web, AR) or STL (3D printing), or take screenshots for your report.'},
+      {t:'Test',s:'with users',d:'Show it to 5 people. Ask what it is, how they would use it, what they would change.'}],
+      html:`<table class="tbl"><thead><tr><th>Need</th><th>Free tool</th></tr></thead><tbody><tr><td>Screens, posters, storyboards</td><td>Canva</td></tr><tr><td>Clickable app screens</td><td>Figma (free plan)</td></tr><tr><td>Simple 3D shapes</td><td>Tinkercad (browser)</td></tr><tr><td>3D from a sketch or text</td><td>Meshy AI (free plan)</td></tr><tr><td>Prototyping guides</td><td><a href="https://dschool.stanford.edu/resources" target="_blank" rel="noopener">Stanford d.school tools</a></td></tr></tbody></table>`} },
+
+  { nav:'Case: Embrace', title:'Case · Embrace infant warmer', minutes:5,
     narration:[
      `In 2007, Stanford students Jane Chen, Rahul Panicker and Linus Liang worked on hypothermia in low-birth-weight babies in the course <em>Design for Extreme Affordability</em>.`,
      B.plain(`Their early prototype looked like a <b>small sleeping bag for babies</b>, with a reusable pouch of phase-change material that, once heated, stays at body temperature for several hours. No constant electricity needed.`),
@@ -161,12 +191,12 @@ Lecture.mount({
       {t:'Prototype v1',s:'Week 5',d:'Build and test today. Keep photos and notes.'},
       {t:'Market + competition',s:'Week 6',d:'Who else serves this need? How big is the market?'},
       {t:'Business model',s:'Week 7',d:'Lean canvas: how the venture earns and stays sustainable.'},
-      {t:'Report',s:'Project 1A',d:'4000-word group report. Deadline on Moodle.'},
-      {t:'Pitch',s:'Project 1B',d:'Individual 1-minute presentation + 2-minute Q&A.'}]} },
+      {t:'Report',s:'Project 1A',d:'4000-word group report, submitted on Moodle by Tuesday 27 October.'},
+      {t:'Pitch',s:'Project 1B',d:'Individual 1-minute presentation + 2-minute Q&A, also on 27 October.'}]} },
 
   { nav:'Key takeaways', full:true, title:'Key takeaways · Week 5', kind:'review', minutes:5,
     narration:[
-     KEY(`<b>If you remember only this…</b><ul><li><b>Prototype</b> = simple representation to see, explain and test an idea.</li><li><b>Goal</b> = learning, not perfection.</li><li><b>Six techniques:</b> sketch, storyboard, paper, digital, physical, role-play.</li><li><b>Choose</b> the technique that tests your biggest assumption.</li><li><b>Start low fidelity</b>; climb only when needed.</li><li><b>Evidence:</b> photos, test notes and changes go into Project 1.</li></ul>`),
+     KEY(`<b>If you remember only this…</b><ul><li><b>Prototype</b> = simple representation to see, explain and test an idea.</li><li><b>Goal</b> = learning, not perfection.</li><li><b>Six techniques:</b> sketch, storyboard, paper, digital, physical, role-play.</li><li><b>No single right type:</b> choose the fastest, cheapest, easiest prototype that tests your biggest assumption.</li><li><b>Start low fidelity</b>; climb only when needed.</li><li><b>Evidence:</b> photos, test notes and changes go into Project 1.</li></ul>`),
      `Use the questions below to check your team is ready for next week.`],
     fig:{mindmap:{center:'Prototyping',branches:[
       {t:'What it is',items:['See · experience · test','Learning, not perfection']},

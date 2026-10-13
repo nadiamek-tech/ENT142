@@ -1,19 +1,21 @@
 /* ENT 142 course assistant · knowledge base.
    Every answer comes from the course pages, the syllabus or the Project 1 brief.
    q = question, k = extra words students may use, a = short answer, l = link, r = reading (syllabus mapping). */
+window.ENT142_REG='https://forms.cloud.microsoft/r/B905PpvTTv';  /* ENT 142 Project 1 progress & team form (CUD account) */
 window.ENT142_KB=[
 /* ---------- course & assessment ---------- */
 {q:'How is the course graded?',k:'grade marks weight worth assessment percentage breakdown',a:'Project 1 Report 40%, Project 1 Presentation 10%, Project 2 Reflective Portfolio 30%, Activity 1 10%, Activity 2 10%.',l:'week-01.html#s1'},
-{q:'When is Project 1 due?',k:'deadline due date submission report when',a:'The syllabus schedules the Project 1 Report in Week 9 and the Presentation in Week 10. The exact date is on Moodle.',l:'project-1.html#s0'},
+{q:'When is Project 1 due?',k:'deadline due date submission report when',a:'Tuesday 27 October 2026: report submission and presentation on the same day.',l:'project-1.html#s0'},
 {q:'How many words is the Project 1 report?',k:'word count length 4000 words limit',a:'4000 words. The cover page, table of contents and executive summary are not counted.',l:'project-1.html#s11'},
 {q:'How long is the introduction?',k:'introduction 250 words limit intro',a:'250 words or fewer.',l:'project-1.html#s10'},
 {q:'Is the executive summary counted?',k:'executive summary counted word count one page abstract',a:'No. Keep it to one page; write it last.',l:'project-1.html#s10'},
 {q:'What sections must the report have?',k:'structure sections outline contents order headings',a:'Cover, contents, executive summary, introduction, concept and vision, market analysis, customers and customer development, competition and positioning, sustainable business model, prototype development, learning and adaptation, references.',l:'project-1.html#s0'},
 {q:'What goes on the cover page?',k:'cover page title logo names ids',a:'CUD logo, report title, names and student IDs, course name and code, word count.',l:'project-1.html#s11'},
-{q:'How do I submit the report?',k:'submit upload turnitin moodle mycud file word',a:'One Word file per group, through Turnitin on Moodle/MyCUD.',l:'project-1.html#s11'},
-{q:'What is the Turnitin limit?',k:'turnitin similarity plagiarism percent 20',a:'Similarity must be 20% or lower. Rewrite every draft in your own words.',l:'project-1.html#s11'},
+{q:'How do I submit the report?',k:'submit upload turnitin moodle file word',a:'One Word file per group, uploaded on Moodle by 27 October.',l:'project-1.html#s11'},
+{q:'Is there a Turnitin check?',k:'turnitin similarity plagiarism copy own words',a:'No Turnitin: submission is on Moodle. Still write everything in your own words and cite every source.',l:'project-1.html#s11'},
+{q:'How do we register our team?',k:'register registration team sign up form group list',a:'Fill in the ENT 142 Project 1 Progress & Team form with your CUD account: https://forms.cloud.microsoft/r/B905PpvTTv',l:'index.html'},
 {q:'How big is a team?',k:'team size group members how many people',a:'4–5 members, each with a lead role.',l:'week-02.html#s6'},
-{q:'How does the presentation work?',k:'presentation pitch 1b slides minute q&a individual',a:'Worth 10%. 1-minute individual presentation plus 2 minutes of Q&A, 7 minutes per group. Graded individually. Submit slides to Turnitin first.',l:'project-1.html#s13'},
+{q:'How does the presentation work?',k:'presentation pitch 1b slides minute q&a individual',a:'Worth 10%. 1-minute individual presentation plus 2 minutes of Q&A, 7 minutes per group. Graded individually. On 27 October, the same day as the report.',l:'project-1.html#s13'},
 {q:'How is the report marked?',k:'rubric marking criteria marks how graded report',a:'Knowledge, analysis, creativity and evaluation of your proposal. Both rubric versions are in the lab.',l:'project-1.html#s13'},
 {q:'What is Project 2?',k:'project 2 reflective portfolio swot action plan',a:'An individual reflective portfolio (30%): a ranked personal SWOT and a three-year entrepreneurship action plan. Due Week 16 per the syllabus.',l:'index.html'},
 {q:'What is the textbook?',k:'textbook book reading reference byers',a:'Byers, Dorf & Nelson (2019), Technology ventures: From idea to enterprise (5th ed.).',l:'week-01.html#s1',r:'Byers et al. (2019)'},
@@ -54,14 +56,16 @@ window.ENT142_KB=[
 {q:'What is SDG target 12.3?',k:'12.3 food waste target',a:'By 2030, halve per capita global food waste at the retail and consumer levels and reduce food losses along production and supply chains.',l:'week-04.html#s5'},
 /* ---------- week 5 ---------- */
 {q:'What is a prototype?',k:'prototype definition meaning',a:'A simple representation of your solution that lets you see, explain and test it before full development.',l:'week-05.html#s2',r:'Byers et al. (2019), Ch. 8'},
-{q:'Which prototype should we build?',k:'which prototype type technique choose best',a:'The one that tests your biggest assumption. Try the Prototype Helper.',l:'week-05.html#s4'},
+{q:'Which prototype should we build?',k:'which prototype type technique choose best',a:'There is no single right type. Look at your project and SDG, then pick the fastest, cheapest, easiest prototype that tests your biggest assumption.',l:'week-05.html#s4'},
 {q:'What prototype techniques are there?',k:'techniques sketch storyboard paper digital physical role play',a:'Sketch, storyboard, paper, digital, physical, role-play.',l:'week-05.html#s3'},
 {q:'What is low or high fidelity?',k:'fidelity low high lo-fi hi-fi',a:'Low = fast, cheap, rough. High = close to the real product. Start low.',l:'week-05.html#s2'},
 {q:'How do I prototype a service?',k:'service prototype storyboard role-play',a:'Storyboard the journey, then act it out with real users.',l:'week-05.html#s3'},
 {q:'What is our biggest assumption?',k:'biggest assumption riskiest',a:'The thing that must be true for your idea to work. Test it first.',l:'week-05.html#s4'},
-{q:'How many people should test the prototype?',k:'how many testers users test',a:'About 5 real users per round, not teammates.',l:'week-05.html#s7'},
-{q:'What tools can I use to prototype?',k:'tools canva figma cardboard materials',a:'Paper, Canva, slides, cardboard, a mock-up or role-play. Free tools are fine.',l:'week-05.html#s7'},
-{q:'What was the Embrace warmer?',k:'embrace infant warmer stanford',a:'A low-cost baby warmer (target about $200 vs up to $20,000 for an incubator) that changed after field observation.',l:'week-05.html#s5'},
+{q:'How many people should test the prototype?',k:'how many testers users test',a:'About 5 real users per round, not teammates.',l:'week-05.html#s9'},
+{q:'What tools can I use to prototype?',k:'tools canva figma cardboard materials tinkercad',a:'Paper, Canva, Figma, cardboard, role-play, or a quick 3D model in Meshy or Tinkercad.',l:'week-05.html#s6'},
+{q:'How do I make a 3D model with AI?',k:'3d model meshy ai generate image to 3d text to 3d',a:'Use Meshy: Image to 3D or Text to 3D, generate, check it in the viewer, download GLB or take screenshots. Free plan: 100 credits a month.',l:'week-05.html#s6'},
+{q:'How do startups show their prototypes?',k:'incubator demo day show present prototype startups gitex',a:'Live demo first: put the prototype in people\'s hands, then the problem and the evidence.',l:'week-05.html#s5'},
+{q:'What was the Embrace warmer?',k:'embrace infant warmer stanford',a:'A low-cost baby warmer (target about $200 vs up to $20,000 for an incubator) that changed after field observation.',l:'week-05.html#s7'},
 /* ---------- project 1 lab ---------- */
 {q:'I am lost. Where do I start?',k:'lost confused dont understand anything help begin overwhelmed',a:'No stress. Start with Week 1, then open the Project 1 Lab and do one step at a time.',l:'week-01.html#s0'},
 {q:'Where do I start Project 1?',k:'start begin project 1 first step lab',a:'Open the Project 1 Lab and fill in Step 1, your venture card.',l:'project-1.html#s1'},
