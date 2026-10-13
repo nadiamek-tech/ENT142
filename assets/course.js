@@ -113,7 +113,7 @@
       }));
     },
     video(el, v){
-      const embed=/github\.io$|^localhost$|^127\./.test(location.hostname);
+      const embed=!/claude|anthropic/.test(location.hostname);
       const url=`https://www.youtube.com/watch?v=${v.id}${v.start?`&t=${v.start}s`:''}`;
       const box=h('div',{class:'video'});
       box.innerHTML=(embed?`<div class="vframe"><iframe src="https://www.youtube-nocookie.com/embed/${v.id}${v.start?`?start=${v.start}`:''}" title="${esc(v.title)}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`
