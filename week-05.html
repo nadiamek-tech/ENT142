@@ -25,6 +25,7 @@
 </head>
 <body>
 <script src="assets/course.js"></script>
+<script src="assets/proto-bot.js"></script>
 <script>
 const {W,B} = Lecture;
 const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your project</b>${html}</div>`;
@@ -77,7 +78,7 @@ Lecture.mount({
      B.plain(`Key idea: <b>a prototype is a question you can hold</b>. You build it to learn, not to impress.`)],
     src:`Reading: Byers et al (2019). Ch. 8, Pradeep &amp; Rajib (2022). Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
     notes:[`2-hour lab (0-2-1). Most of the time is the build activity: protect those 30 minutes.`,`Teams of 4–5 sit together from the start.`],
-    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Hook: what first?`,10,'a'],[`What is a prototype?`,10,'l'],[`Six techniques`,15,'l'],[`Choose your technique`,10,'l'],[`Case: Embrace`,10,'l'],[`Activity: match the technique`,10,'a'],[`Activity: build v1`,30,'a'],[`Prototype → Project 1`,5,'l'],[`Key takeaways`,10,'l'],[`Exit check`,5,'c']])} },
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Hook: what first?`,10,'a'],[`What is a prototype?`,10,'l'],[`Six techniques`,15,'l'],[`Choose your technique`,10,'l'],[`Prototype Helper`,10,'a'],[`Case: Embrace`,10,'l'],[`Activity: match the technique`,10,'a'],[`Activity: build v1`,25,'a'],[`Prototype → Project 1`,5,'l'],[`Key takeaways`,5,'l'],[`Exit check`,5,'c']])} },
 
   { nav:'What first?', title:'Hook · What should the team do first?', kind:'activity', minutes:10,
     narration:[
@@ -118,6 +119,15 @@ Lecture.mount({
     think:`Write your team's biggest assumption in one sentence. Is it about the user, the technology, or the money?`,
     fig:{label:`I need to…`, build:chooser} },
 
+  { nav:'Prototype Helper', title:'Ask the Prototype Helper', kind:'activity', minutes:10, wide:true,
+    narration:[
+     `Not sure which prototype fits your idea? Describe it to the <strong>Prototype Helper</strong> on the right. It asks three short questions (type of idea, what you need to learn, how much time you have) and suggests a first prototype, how to build it and how to test it.`,
+     B.plain(`The helper uses only the rules from this lecture, mainly the slide <b>“Choose the prototype that answers your question”</b>. It is not AI and does not search the internet, so it cannot invent facts.`),
+     KEY(`The helper gives a starting point, not a final answer. Your team still decides, based on your <b>biggest assumption</b>.`)],
+    think:`Did the helper suggest what your team expected? If not, which of your answers changed the result?`,
+    notes:[`Each team runs its idea through the helper, then copies the plan into the Build v1 worksheet.`,`Rule-based on purpose: free, works on any phone, and stays inside the lecture content.`],
+    fig:{label:`Prototype Helper · chat`, build:el=>ProtoBot(el)} },
+
   { nav:'Case: Embrace', title:'Case · Embrace infant warmer', minutes:10,
     narration:[
      `In 2007, Stanford students Jane Chen, Rahul Panicker and Linus Liang worked on hypothermia in low-birth-weight babies in the course <em>Design for Extreme Affordability</em>.`,
@@ -139,7 +149,7 @@ Lecture.mount({
       {t:`A website where cafés list surplus food at a discount`,a:1,why:`Paper screens first; the café side and the student side.`},
       {t:`A bench with a solar phone charger for public parks`,a:2,why:`Scale model to test size, seating and where the panel goes.`}]})} },
 
-  { nav:'Build v1', title:'Activity 2 · Build your initial prototype', kind:'activity', minutes:30, wide:true,
+  { nav:'Build v1', title:'Activity 2 · Build your initial prototype', kind:'activity', minutes:25, wide:true,
     narration:[
      `Answer the four questions on the right as a team, then <strong>build</strong> the simplest version today. Use what you have: paper, Canva, slides, cardboard, a mock-up or role-play.`,
      `Last 10 minutes: test it with <strong>another team</strong>. They play your user. Write down what they did, what confused them, and one thing to change.`,
@@ -165,7 +175,7 @@ Lecture.mount({
       {t:'Report',s:'Project 1A',d:'4000-word group report. Deadline on Moodle.'},
       {t:'Pitch',s:'Project 1B',d:'Individual 1-minute presentation + 2-minute Q&A.'}]} },
 
-  { nav:'Key takeaways', full:true, title:'Key takeaways · Week 5', kind:'review', minutes:10,
+  { nav:'Key takeaways', full:true, title:'Key takeaways · Week 5', kind:'review', minutes:5,
     narration:[
      KEY(`<b>If you remember only this…</b><ul><li><b>Prototype</b> = simple representation to see, explain and test an idea.</li><li><b>Goal</b> = learning, not perfection.</li><li><b>Six techniques:</b> sketch, storyboard, paper, digital, physical, role-play.</li><li><b>Choose</b> the technique that tests your biggest assumption.</li><li><b>Start low fidelity</b>; climb only when needed.</li><li><b>Evidence:</b> photos, test notes and changes go into Project 1.</li></ul>`),
      `Use the questions below to check your team is ready for next week.`],
