@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Venture Studio · ENT 142</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#1F5E8C;--wk-soft:rgba(31,94,140,.10);--wk-d:#7DB8E8;--wk-soft-d:rgba(125,184,232,.14)}
+.vs{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;font-family:var(--f-display);font-size:.92rem}
+.vs h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;font-weight:400}
+.vs-form{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.vs-out{min-width:0}.vs-out .refs li{overflow-wrap:anywhere}.vs-group{min-width:0}
+.vs-f{display:grid;gap:3px;min-width:0}
+.vs-f label{font-weight:600;font-size:.88rem}
+.vs-f small{color:var(--muted);font-size:.78rem}
+.vs-f input,.vs-f textarea,.vs-f select{width:100%;min-width:0;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:.9rem}
+.vs-f textarea{resize:vertical}
+.vs-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.vs-group{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:8px;background:var(--bg)}
+.vs-group > b{font-size:.84rem}
+.vs-out{border:1px solid var(--wk);border-radius:12px;padding:14px;background:var(--surface);display:grid;gap:12px}
+.vs-out .para{font-family:var(--f-body);font-size:1rem;line-height:1.65;margin:0}
+.vs-out .refs{font-family:var(--f-body);font-size:.88rem;color:var(--muted);margin:0;padding-left:1.1em}
+.vs-out svg{width:100%;height:auto;display:block}
+.vs-gaps{border-left:4px solid var(--warn);background:color-mix(in srgb,var(--warn) 8%,transparent);padding:8px 12px;border-radius:0 8px 8px 0}
+.vs-gaps ul{margin:4px 0 0;padding-left:1.1em}
+.vs-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.vs-note{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);margin:0}
+.dc{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);display:grid;gap:4px;min-width:0}
+.dc .top{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.dc .val{font-weight:800;font-size:1.15rem;color:var(--wk)}
+.dc .src{color:var(--muted);font-size:.82rem;overflow-wrap:anywhere}
+.dc .chk{display:flex;flex-wrap:wrap;gap:4px}
+.dc .chk span{font-family:var(--f-mono);font-size:.66rem;padding:2px 6px;border-radius:4px;border:1px solid var(--line)}
+.dc .chk .y{border-color:var(--good);color:var(--good)}
+.dc .chk .n{border-color:var(--bad);color:var(--bad)}
+.dc .row2{display:flex;gap:6px;flex-wrap:wrap}
+.st-good{color:var(--good)}.st-warn{color:var(--warn)}.st-bad{color:var(--bad)}
+.tiers{display:grid;gap:6px}
+.tiers div{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);font-family:var(--f-display);font-size:.88rem}
+.tiers b.n{font-size:1.2rem;color:var(--wk);line-height:1}
+.tblw{overflow-x:auto}
+.cks{display:grid;gap:4px;font-size:.86rem}
+.cks label{display:flex;gap:8px;align-items:flex-start}
+.cks input{accent-color:var(--wk);margin-top:3px}
+</style>
+</head>
+<body>
+<script src="assets/course.js"></script>
+<script>
+const {W,B} = Lecture;
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const KEY = html=>`<div class="box exam"><b class="lbl">Investor lens</b>${html}</div>`;
+const YEAR=new Date().getFullYear();
+
+/* ================= state ================= */
+const SKEY='ent142-studio-v1';
+let S; try{ S=JSON.parse(localStorage.getItem(SKEY)||'null') }catch(e){ S=null }
+if(!S) S={venture:{},data:[],sec:{}};
+const save=()=>{ try{ localStorage.setItem(SKEY,JSON.stringify(S)) }catch(e){} };
+const V=k=>S.venture[k]||'';
+const sec=k=>(S.sec[k]=S.sec[k]||{});
+
+/* ================= example (fictional venture, real data) ================= */
+const EXAMPLE={
+ venture:{name:'ShareBite',idea:'a mobile app that lets cafés sell their unsold meals at a discount before closing time',user:'university students and young workers in Dubai who eat out on a tight budget',problem:'cafés throw away good food every evening while many students find eating out expensive',sdg:'12',place:'Dubai'},
+ data:[
+  {id:'D1',kind:'stat',claim:'Food wasted worldwide in 2022',value:'1.05',unit:'billion tonnes',year:'2024',place:'World',org:'United Nations Environment Programme',title:'Food waste index report 2024',url:'https://www.unep.org/resources/publication/food-waste-index-report-2024',opened:true,cross:true,method:true},
+  {id:'D2',kind:'stat',claim:'Share of food available to consumers that was wasted (retail, food service and households, 2022)',value:'19',unit:'%',year:'2024',place:'World',org:'United Nations Environment Programme',title:'Food waste index report 2024',url:'https://www.unep.org/resources/publication/food-waste-index-report-2024',opened:true,cross:true,method:true},
+  {id:'D3',kind:'stat',claim:'Household food waste per person per year (world average, 2022)',value:'79',unit:'kg per person',year:'2024',place:'World',org:'United Nations Environment Programme',title:'Food waste index report 2024',url:'https://www.unep.org/resources/publication/food-waste-index-report-2024',opened:true,cross:true,method:true},
+  {id:'D4',kind:'stat',claim:'Dubai population at the end of 2025',value:'4580000',unit:'people',year:'2026',place:'Dubai',org:'The National',title:'Dubai population surpassed 4.5 million by end of 2025',url:'https://www.thenationalnews.com/news/uae/2026/07/30/dubai-population-surpassed-45-million-by-end-of-2025',opened:true,cross:false,method:false},
+  {id:'D5',kind:'fact',claim:'UAE Food Bank launched to collect surplus food from hotels, eateries, grocery chains and farms',value:'2017',unit:'launch year',year:'2017',place:'UAE',org:'UAE Cabinet',title:'Mohammed bin Rashid Al Maktoum launches first UAE Food Bank',url:'https://uaecabinet.ae/en/news/mohammed-bin-rashid-al-maktoum-launches-first-uae-food-bank',opened:true,cross:true,method:true}],
+ sec:{
+  concept:{opp:'Food prices and food waste are both rising concerns in the UAE, and smartphones already link cafés and customers every day',today:'cafés throw unsold food away or give a small amount to staff',benefit:'a full meal at up to 50% off near campus',impact:'less food in landfill and lower food costs for students',sim1:'UAE Food Bank',sim1what:'collects surplus food from hotels and restaurants for people in need',sim1data:'D5',sim2:'Too Good To Go (Europe)',sim2what:'sells surplus food from shops and cafés through an app',lesson:'Neither serves price-sensitive students buying from small cafés near campus in the evening'},
+  customer:{who:'university students in Dubai, aged 18–25, who buy at least one meal a day on or near campus',pain:'meals cost more than their daily budget; healthy options sell out early',cope:'skip meals, eat fast food or bring food from home',size:'D4',painData:'D2',assumption:'students care most about price',result:'Partly confirmed',learned:'Waste data shows the supply side is large: almost a fifth of food is wasted. Price matters, but in our Week 5 prototype test students also asked about pickup times.',change:'we added pickup time slots to the first screen',still:'how many cafés near campus have regular surplus',next:'contact three cafés near campus and record their unsold meals for one week'},
+  market:{industry:'food service and food-rescue technology',segment:'students and young workers near universities in Dubai',tam:'D4',samPct:'5',samWhy:'assumption: the share of Dubai residents who are students or young workers near university areas',somPct:'2',somWhy:'assumption: a realistic first-year reach for a student-run app',value:'720',valueWhy:'assumption: 4 meals a month × 15 AED × 12 months',attractive:'large, growing city population and strong public attention to food waste'},
+  compet:{xA:'Price for the customer (high → low)',yA:'Convenience near campus (low → high)',youx:'4',youy:'4',c1:'UAE Food Bank',c1t:'Indirect',c1s:'Trusted, national scale',c1w:'Serves people in need, not paying students',c1x:'5',c1y:'2',c2:'Café closing-time discounts',c2t:'Substitute',c2s:'No app needed',c2w:'Customers must be there at the right minute',c2x:'3',c2y:'3',c3:'Food-delivery apps',c3t:'Indirect',c3s:'Huge choice, fast',c3w:'Delivery fees make meals expensive',c3x:'1',c3y:'5',barYou:'Cafés must trust a student start-up; delivery apps already own the café relationship',barOthers:'Delivery apps could add a surplus feature quickly',partners:'CUD student council and café owners near campus'},
+  model:{payer:'Students pay the discounted meal price; cafés pay ShareBite a commission',s1:'15% commission per meal',p1:'2.25',v1:'2000',s2:'Monthly sustainability report for cafés',p2:'150',v2:'10',fixed:'3000',varPct:'5',people:'Number of affordable meals sold to students per month',planet:'Kilograms of food saved from landfill per month',risk:'Cafés may not list surplus food every day',test:'Run a 4-week pilot with three cafés and count meals listed per day'},
+  proto:{tech:'Paper / digital prototype',assumption:'students will understand how to reserve and collect a meal in under one minute',v1:'three paper screens: browse meals, reserve, pickup code',testers:'12',what:'7 of 12 testers could not find the pickup time',change:'v2 (Canva mock-up) shows the pickup time on the first screen; 11 of 12 found it'}
+ }};
+
+/* ================= verification ================= */
+const TRUST_OFFICIAL=[/\.gov\.ae$/,/\.gov$/,/\.gov\.[a-z]{2}$/,/(^|\.)u\.ae$/,/(^|\.)bayanat\.ae$/,/(^|\.)uaecabinet\.ae$/,/(^|\.)wam\.ae$/,/(^|\.)digitaldubai\.ae$/,/(^|\.)dubaipulse\.gov\.ae$/];
+const TRUST_INTL=[/(^|\.)un\.org$/,/(^|\.)unep\.org$/,/(^|\.)who\.int$/,/(^|\.)worldbank\.org$/,/(^|\.)oecd\.org$/,/(^|\.)imf\.org$/,/(^|\.)ilo\.org$/,/(^|\.)fao\.org$/,/(^|\.)unesco\.org$/,/(^|\.)unicef\.org$/,/(^|\.)undp\.org$/,/(^|\.)irena\.org$/,/(^|\.)iea\.org$/,/(^|\.)ourworldindata\.org$/,/(^|\.)sdgindex\.org$/,/(^|\.)wto\.org$/];
+const TRUST_ACAD=[/\.edu$/,/\.ac\.[a-z]{2}$/,/(^|\.)doi\.org$/,/(^|\.)springer\.com$/,/(^|\.)sciencedirect\.com$/,/(^|\.)hbr\.org$/,/(^|\.)jstor\.org$/,/(^|\.)tandfonline\.com$/,/(^|\.)wiley\.com$/,/(^|\.)nature\.com$/];
+const NEWS=[/(^|\.)thenationalnews\.com$/,/(^|\.)gulfnews\.com$/,/(^|\.)khaleejtimes\.com$/,/(^|\.)reuters\.com$/,/(^|\.)bbc\.(com|co\.uk)$/,/(^|\.)arabianbusiness\.com$/,/(^|\.)zawya\.com$/,/(^|\.)bloomberg\.com$/,/(^|\.)ft\.com$/];
+function host(u){ try{ return new URL(u).hostname.replace(/^www\./,'') }catch(e){ return '' } }
+function tier(u){ const h=host(u); if(!h) return ['none','No valid link']; const m=a=>a.some(r=>r.test(h));
+  if(m(TRUST_OFFICIAL)) return ['official','Official government source'];
+  if(m(TRUST_INTL)) return ['intl','International organisation'];
+  if(m(TRUST_ACAD)) return ['acad','Academic or research source'];
+  if(m(NEWS)) return ['news','Reputable news: trace the original source'];
+  return ['unknown','Unknown site: check who publishes it']; }
+function verify(d){
+  const t=tier(d.url); const yr=+d.year;
+  const checks=[
+    ['Publisher',!!(d.org&&d.org.trim())],
+    ['Trusted source',['official','intl','acad'].includes(t[0])],
+    ['Recent',d.kind==='fact'?true:(yr>=YEAR-6&&yr<=YEAR)],
+    ['Value + unit',!!(String(d.value).trim()&&String(d.unit).trim())],
+    ['Original opened',!!d.opened],
+    ['Method known',!!d.method],
+    ['Cross-checked',!!d.cross]];
+  const n=checks.filter(c=>c[1]).length;
+  const status=n===checks.length?['good','Verified']:((checks[1][1]||t[0]==='news')&&checks[0][1]&&checks[3][1])?['warn','Partly verified']:['bad','Not verified'];
+  return {checks,n,status,tier:t};
+}
+const card=id=>S.data.find(d=>d.id===id);
+const num=v=>{ const n=parseFloat(String(v).replace(/,/g,'')); return isFinite(n)?n:NaN; };
+function nice(n){ if(!isFinite(n)) return '—'; const a=Math.abs(n);
+  if(a>=1e9) return (n/1e9).toLocaleString('en-US',{maximumFractionDigits:2})+' billion';
+  if(a>=1e6) return (n/1e6).toLocaleString('en-US',{maximumFractionDigits:2})+' million';
+  return Math.round(n).toLocaleString('en-US'); }
+function dval(d){ const n=num(d.value); return (isFinite(n)&&n>=10000?nice(n):d.value)+(String(d.unit).trim()==='%'?'%':' '+d.unit); }
+const fact=d=>`${esc(d.claim)}: ${esc(dval(d))} ${cite(d)}`;
+const shortOrg=o=>o.length>40?o.replace(/\s*\(.*\)\s*/,'').trim():o;
+const cite=d=>d?`(${shortOrg(d.org)}, ${d.year})`:'';
+const apa=d=>`${esc(d.org)}. (${esc(d.year)}). <i>${esc(d.title||d.claim)}</i>. ${esc(d.url)}`;
+const apaTxt=d=>`${d.org}. (${d.year}). ${d.title||d.claim}. ${d.url}`;
+const strong=id=>{ const d=card(id); return d&&verify(d).status[0]==='good'; };
+const some=id=>{ const d=card(id); return d&&verify(d).status[0]!=='bad'; };
+const hash=s=>{ let h=0; for(const c of String(s)) h=(h*31+c.charCodeAt(0))|0; return Math.abs(h); };
+const pick=(arr)=>arr[hash(V('name')+arr.length)%arr.length];
+
+/* ================= illustration palettes ================= */
+const SCREEN={ink:'var(--ink)',muted:'var(--muted)',line:'var(--line)',bg:'var(--bg)',surf:'var(--surface)',wk:'var(--wk)',soft:'var(--wk-soft)',good:'var(--good)',warn:'var(--warn)',bad:'var(--bad)',onwk:'var(--on-wk)'};
+const PRINT={ink:'#16202B',muted:'#5A6675',line:'#D6DDE5',bg:'#F3F5F8',surf:'#FFFFFF',wk:'#1F5E8C',soft:'#E3ECF4',good:'#1E7F4F',warn:'#A86200',bad:'#B4362F',onwk:'#FFFFFF'};
+const FF='font-family="Schibsted Grotesk, Arial, sans-serif"';
+const T=(x,y,t,P,o={})=>`<text x="${x}" y="${y}" ${FF} font-size="${o.s||13}" font-weight="${o.w||400}" fill="${o.c||P.ink}" text-anchor="${o.a||'start'}">${esc(t)}</text>`;
+function wrap(t,max){ const w=String(t).split(/\s+/); const out=[]; let line=''; w.forEach(x=>{ if((line+' '+x).trim().length>max){ if(line) out.push(line); line=x; } else line=(line+' '+x).trim(); }); if(line) out.push(line); return out; }
+const TL=(x,y,t,P,max,o={})=>wrap(t,max).slice(0,o.lines||3).map((l,i)=>T(x,y+i*(o.lh||16),l,P,o)).join('');
+
+/* ================= generic form ================= */
+function dataOptions(sel){ return `<option value="">— choose a data card —</option>`+S.data.map(d=>`<option value="${d.id}" ${d.id===sel?'selected':''}>[${d.id}] ${esc(dval(d))} · ${esc(d.claim).slice(0,60)}</option>`).join(''); }
+function field(secKey,f){
+  const v=sec(secKey)[f.id]||''; const id=`${secKey}-${f.id}`;
+  let input;
+  if(f.t==='area') input=`<textarea id="${id}" rows="${f.rows||2}" placeholder="${esc(f.ph||'')}">${esc(v)}</textarea>`;
+  else if(f.t==='data') input=`<select id="${id}">${dataOptions(v)}</select>`;
+  else if(f.t==='sel') input=`<select id="${id}"><option value="">— choose —</option>${f.o.map(o=>`<option ${o===v?'selected':''}>${esc(o)}</option>`).join('')}</select>`;
+  else input=`<input id="${id}" type="${f.t==='num'?'number':'text'}" ${f.t==='num'?'inputmode="decimal" step="any"':''} value="${esc(v)}" placeholder="${esc(f.ph||'')}">`;
+  return `<div class="vs-f"><label for="${id}">${f.l}</label>${f.h?`<small>${f.h}</small>`:''}${input}</div>`;
+}
+function renderFields(secKey,fields){ return fields.map(f=>f.group?`<div class="vs-group"><b>${f.group}</b>${f.row?`<div class="vs-row">${f.fields.map(x=>field(secKey,x)).join('')}</div>`:f.fields.map(x=>field(secKey,x)).join('')}</div>`:f.row?`<div class="vs-row">${f.row.map(x=>field(secKey,x)).join('')}</div>`:field(secKey,f)).join(''); }
+function allFields(fields){ const a=[]; fields.forEach(f=>{ if(f.fields) a.push(...f.fields); else if(f.row) a.push(...f.row); else a.push(f); }); return a; }
+
+function downloadSVG(svg,name){
+  const blob=new Blob([svg],{type:'image/svg+xml'}); const url=URL.createObjectURL(blob); const img=new Image();
+  img.onload=()=>{ const vb=svg.match(/viewBox="0 0 (\d+) (\d+)"/); const w=+vb[1]*2,h=+vb[2]*2; const c=document.createElement('canvas'); c.width=w; c.height=h; const x=c.getContext('2d'); x.fillStyle='#FFFFFF'; x.fillRect(0,0,w,h); x.drawImage(img,0,0,w,h);
+    c.toBlob(b=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=name+'.png'; document.body.appendChild(a); a.click(); a.remove(); }); URL.revokeObjectURL(url); };
+  img.src=url;
+}
+function copyText(btn,txt){ const ok=()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent=btn.dataset.l,1500)}; const fail=()=>{ btn.textContent='Copy blocked: select the text'; }; try{ navigator.clipboard.writeText(txt).then(ok,fail) }catch(e){ fail() } }
+
+/* builder: questions on top, generated paragraph + illustration below, updates live */
+function builder(cfg){ return el=>{
+  const s=sec(cfg.key);
+  el.innerHTML=`<div class="vs"><div><h4>Answer the guided questions</h4><div class="vs-form">${renderFields(cfg.key,cfg.fields)}</div></div><div class="vs-out" aria-live="polite"></div></div>`;
+  const out=el.querySelector('.vs-out');
+  const draw=()=>{
+    const r=cfg.gen(s);
+    const refs=[...new Set(r.refs||[])].map(card).filter(Boolean);
+    const svgS=cfg.illus?cfg.illus(s,SCREEN):'';
+    out.innerHTML=`<h4 style="margin:0">Your draft · ${esc(cfg.title)}</h4>
+      ${svgS?`<div>${svgS}</div>`:''}
+      <p class="para">${r.html}</p>
+      ${refs.length?`<div><h4>References used</h4><ul class="refs">${refs.map(d=>`<li>${apa(d)}</li>`).join('')}</ul></div>`:''}
+      ${r.gaps&&r.gaps.length?`<div class="vs-gaps"><b>To validate this section</b><ul>${r.gaps.map(g=>`<li>${g}</li>`).join('')}</ul></div>`:`<div class="feedback"><span class="tag good">validated</span> Every claim in this draft is linked to verified data or your own test.</div>`}
+      <div class="vs-tools"><button type="button" class="btn" data-l="Copy paragraph">Copy paragraph</button>${svgS?`<button type="button" class="btn ghost" data-l="Download image">Download image</button>`:''}</div>
+      <p class="vs-note">A starting draft built from your answers. Rewrite it in your team's own words: every team starts from the same sentence patterns, and Turnitin compares reports.</p>`;
+    const bs=out.querySelectorAll('.vs-tools button');
+    bs[0].addEventListener('click',()=>copyText(bs[0],r.text+(refs.length?'\n\nReferences\n'+refs.map(apaTxt).join('\n'):'')));
+    if(bs[1]) bs[1].addEventListener('click',()=>downloadSVG(cfg.illus(s,PRINT).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" '),`${(V('name')||'venture').replace(/\W+/g,'-')}-${cfg.key}`));
+  };
+  allFields(cfg.fields).forEach(f=>{ const i=el.querySelector('#'+cfg.key+'-'+f.id); i.addEventListener('input',()=>{ s[f.id]=i.value; save(); draw(); }); });
+  draw();
+};}
+const strip=h=>h.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
+const out=(html,refs,gaps)=>({html,text:strip(html),refs,gaps});
+const lc=t=>t&&/^[A-Z][a-z]/.test(t)?t.charAt(0).toLowerCase()+t.slice(1):t;
+const ph=(v,label,low)=>{ v=String(v||'').trim().replace(/[.\s]+$/,''); return v?esc(low?lc(v):v):`<mark>[${label}]</mark>`; };
+const name=()=>ph(V('name'),'venture name');
+const SDGS=['1 No poverty','2 Zero hunger','3 Good health and well-being','4 Quality education','5 Gender equality','6 Clean water and sanitation','7 Affordable and clean energy','8 Decent work and economic growth','9 Industry, innovation and infrastructure','10 Reduced inequalities','11 Sustainable cities and communities','12 Responsible consumption and production','13 Climate action','14 Life below water','15 Life on land','16 Peace, justice and strong institutions','17 Partnerships for the goals'];
+const sdgName=()=>{ const s=SDGS.find(x=>x.split(' ')[0]===V('sdg')); return s?`SDG ${s.split(' ')[0]} (${s.split(' ').slice(1).join(' ')})`:'<mark>[SDG]</mark>'; };
+
+/* ================= venture profile ================= */
+function profile(el){
+  const F=[['name','Venture name','e.g. ShareBite'],['idea','The idea in one sentence','what it is (start with “a …”)'],['user','Primary customer','who exactly, where'],['problem','The problem','what goes wrong for them today'],['place','Where','city or country']];
+  el.innerHTML=`<div class="vs"><div class="vs-form">${F.map(([k,l,h])=>`<div class="vs-f"><label for="v-${k}">${l}</label><small>${h}</small><input id="v-${k}" type="text" value="${esc(V(k))}"></div>`).join('')}
+    <div class="vs-f"><label for="v-sdg">Main SDG</label><select id="v-sdg"><option value="">— choose —</option>${SDGS.map(s=>`<option value="${s.split(' ')[0]}" ${s.split(' ')[0]===V('sdg')?'selected':''}>SDG ${esc(s)}</option>`).join('')}</select></div></div>
+    <div class="vs-tools"><button type="button" class="btn" id="v-ex">Load the example (ShareBite)</button><button type="button" class="btn ghost" id="v-clear">Clear everything</button></div>
+    <div class="feedback" id="v-msg">${V('name')?`Saved in this browser: <b>${esc(V('name'))}</b>, ${S.data.length} data card(s).`:'Fill in your venture, or load the example to see how the studio works.'}</div>
+    <p class="vs-note">The example venture ShareBite is fictional. Its data cards D1–D5 are real, published figures.</p></div>`;
+  F.concat([['sdg']]).forEach(([k])=>{ const i=el.querySelector('#v-'+k); i.addEventListener('input',()=>{ S.venture[k]=i.value; save(); }); });
+  el.querySelector('#v-ex').addEventListener('click',()=>{ S=JSON.parse(JSON.stringify(EXAMPLE)); save(); el.innerHTML=''; profile(el); el.querySelector('#v-msg').innerHTML='<b>Example loaded.</b> Move through the scenes to see each section built from verified data.'; });
+  const clr=el.querySelector('#v-clear');
+  clr.addEventListener('click',()=>{ if(clr.dataset.sure){ S={venture:{},data:[],sec:{}}; save(); el.innerHTML=''; profile(el); } else { clr.dataset.sure='1'; clr.textContent='Click again to delete all answers'; } });
+}
+
+/* ================= evidence bank ================= */
+function bank(el){
+  const draw=()=>{
+    el.innerHTML=`<div class="vs">
+      <div class="vs-group"><b>Add a data card</b>
+        <div class="vs-f"><label for="d-claim">What does the number show?</label><input id="d-claim" type="text" placeholder="e.g. Food wasted worldwide in 2022"></div>
+        <div class="vs-row">${[['value','Value','1.05'],['unit','Unit','billion tonnes'],['year','Year published','2024'],['place','Place','World / UAE / Dubai']].map(([k,l,p])=>`<div class="vs-f"><label for="d-${k}">${l}</label><input id="d-${k}" type="text" placeholder="${p}"></div>`).join('')}</div>
+        <div class="vs-f"><label for="d-org">Publisher (organisation)</label><input id="d-org" type="text" placeholder="e.g. United Nations Environment Programme"></div>
+        <div class="vs-f"><label for="d-title">Title of the page, table or report</label><input id="d-title" type="text" placeholder="e.g. Food waste index report 2024"></div>
+        <div class="vs-f"><label for="d-url">Link</label><input id="d-url" type="url" placeholder="https://…"></div>
+        <div class="vs-f"><label for="d-kind">Type</label><select id="d-kind"><option value="stat">Statistic (must be recent)</option><option value="fact">Fact or event (e.g. a launch date)</option></select></div>
+        <div class="cks"><label><input type="checkbox" id="d-opened"> I opened the original publisher's page, not a copy of it</label><label><input type="checkbox" id="d-method"> I know how the number was measured (census, survey of N people, estimate…)</label><label><input type="checkbox" id="d-cross"> A second source gives the same or a similar figure</label></div>
+        <div class="vs-tools"><button type="button" class="btn" id="d-add">Add card</button><span class="mono" id="d-err" style="color:var(--bad)"></span></div></div>
+      <div><h4>Your evidence bank · ${S.data.length} card(s)</h4><div style="display:grid;gap:8px">${S.data.length?S.data.map(d=>{ const v=verify(d); return `<div class="dc"><div class="top"><span><span class="mono">[${d.id}]</span> <span class="val">${esc(dval(d))}</span></span><b class="st-${v.status[0]}">${v.status[1]} · ${v.n}/7</b></div><div>${esc(d.claim)} · ${esc(d.place)}</div><div class="src">${esc(d.org)} (${esc(d.year)}) · ${esc(v.tier[1])} · ${esc(host(d.url)||'no link')}</div><div class="chk">${v.checks.map(([l,ok])=>`<span class="${ok?'y':'n'}">${ok?'✓':'✗'} ${l}</span>`).join('')}</div><div class="row2"><button type="button" class="btn ghost" data-t="${d.id}" data-k="opened">${d.opened?'Untick':'Tick'} opened</button><button type="button" class="btn ghost" data-t="${d.id}" data-k="method">${d.method?'Untick':'Tick'} method</button><button type="button" class="btn ghost" data-t="${d.id}" data-k="cross">${d.cross?'Untick':'Tick'} cross-checked</button><button type="button" class="btn ghost" data-del="${d.id}">Delete</button></div></div>`; }).join(''):'<div class="feedback">No cards yet. Add your first verified number above, or load the example on the Start scene.</div>'}</div></div></div>`;
+    el.querySelector('#d-add').addEventListener('click',()=>{
+      const g=k=>el.querySelector('#d-'+k); const d={kind:g('kind').value,claim:g('claim').value.trim(),value:g('value').value.trim(),unit:g('unit').value.trim(),year:g('year').value.trim(),place:g('place').value.trim(),org:g('org').value.trim(),title:g('title').value.trim(),url:g('url').value.trim(),opened:g('opened').checked,method:g('method').checked,cross:g('cross').checked};
+      if(!d.claim||!d.value||!d.org||!d.year){ g('err').textContent='Add at least: what it shows, value, year and publisher.'; return; }
+      let n=1; while(S.data.some(x=>x.id==='D'+n)) n++; d.id='D'+n; S.data.push(d); save(); draw();
+    });
+    el.querySelectorAll('[data-t]').forEach(b=>b.addEventListener('click',()=>{ const d=card(b.dataset.t); d[b.dataset.k]=!d[b.dataset.k]; save(); draw(); }));
+    el.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{ S.data=S.data.filter(d=>d.id!==b.dataset.del); save(); draw(); }));
+  };
+  draw();
+}
+
+/* ================= section generators ================= */
+const CONCEPT={key:'concept',title:'Concept and Vision',fields:[
+  {id:'opp',t:'area',l:'Why is this an opportunity now?',h:'What has changed: a trend, a rule, a technology, a gap.'},
+  {id:'today',t:'text',l:'What do people use or do today instead?'},
+  {id:'benefit',t:'text',l:'Main benefit for the customer'},
+  {id:'impact',t:'text',l:'How it makes the world better',h:'People and planet'},
+  {group:'Who has tried something similar?',fields:[
+    {id:'sim1',t:'text',l:'Similar venture 1'},{id:'sim1what',t:'text',l:'What it does / what happened'},{id:'sim1data',t:'data',l:'Evidence card (optional)'},
+    {id:'sim2',t:'text',l:'Similar venture 2'},{id:'sim2what',t:'text',l:'What it does / what happened'}]},
+  {id:'lesson',t:'area',l:'Why is your opportunity still attractive?'}],
+ gen(s){ const d=card(s.sim1data); const gaps=[];
+  if(!s.sim1||!s.sim2) gaps.push('Name at least two similar ventures.'); if(!d) gaps.push('Link an evidence card for a similar venture.'); else if(!strong(s.sim1data)) gaps.push(`Finish verifying [${d.id}].`); if(!s.lesson) gaps.push('Explain why the opportunity is still attractive.');
+  const vp=pick([`For ${ph(V('user'),'customer')}, ${name()} is ${ph(V('idea'),'idea')}.`,`${name()} is ${ph(V('idea'),'idea')}, designed for ${ph(V('user'),'customer')}.`]);
+  const html=`${vp} Today, ${ph(s.today,'current alternative')}; ${name()} offers ${ph(s.benefit,'main benefit')}. The opportunity is timely: ${ph(s.opp,'why now',1)}. The venture supports ${sdgName()} through ${ph(s.impact,'impact',1)}. Similar initiatives exist: ${ph(s.sim1,'venture 1')} ${ph(s.sim1what,'what it does')}${d?` ${cite(d)}`:''}, and ${ph(s.sim2,'venture 2')} ${ph(s.sim2what,'what it does')}. ${ph(s.lesson,'why still attractive')}.`;
+  return out(html,[s.sim1data],gaps); },
+ illus(s,P){ const box=(x,t,h,c)=>`<rect x="${x}" y="40" width="190" height="120" rx="10" fill="${c==='wk'?P.wk:P.surf}" stroke="${c==='wk'?P.wk:P.line}"/>${T(x+12,64,h,P,{s:11,w:600,c:c==='wk'?P.onwk:P.muted})}${TL(x+12,86,t,P,26,{s:13,w:600,c:c==='wk'?P.onwk:P.ink,lines:4})}`;
+  return `<svg viewBox="0 0 640 200" role="img" aria-label="Problem, solution and impact">${box(10,V('problem')||'The problem','PROBLEM')}<path d="M206 100h26" stroke="${P.muted}" stroke-width="2"/><path d="M228 94l8 6-8 6" fill="${P.muted}"/>${box(225+15,V('name')?V('name')+': '+(s.benefit||''):'Your solution','SOLUTION','wk')}<path d="M436 100h26" stroke="${P.muted}" stroke-width="2"/><path d="M458 94l8 6-8 6" fill="${P.muted}"/>${box(440+30,s.impact||'Impact','IMPACT · '+(V('sdg')?'SDG '+V('sdg'):'SDG'))}${T(320,190,'Value proposition: problem → solution → impact',P,{s:11,c:P.muted,a:'middle'})}</svg>`; }};
+
+const CUSTOMER={key:'customer',title:'Customers and Customer Development',fields:[
+  {id:'who',t:'area',l:'Who exactly is your primary customer?',h:'Age, place, situation. Not “everyone”.'},
+  {id:'pain',t:'area',l:'Their main pain points'},
+  {id:'cope',t:'text',l:'How do they deal with the problem today?'},
+  {id:'size',t:'data',l:'Evidence: how many people are affected?',h:'A verified data card (e.g. population, students, households)'},
+  {id:'painData',t:'data',l:'Evidence: the problem is real and important',h:'A verified data card about the problem'},
+  {id:'assumption',t:'text',l:'Your original assumption about the customer'},
+  {id:'result',t:'sel',l:'Did the data confirm it?',o:['Confirmed','Partly confirmed','Challenged']},
+  {id:'learned',t:'area',l:'What the data (and your prototype test) taught you'},
+  {id:'change',t:'text',l:'What you changed because of it'},
+  {id:'still',t:'text',l:'What you still need to learn'},
+  {id:'next',t:'text',l:'Next customer-development action'}],
+ gen(s){ const a=card(s.size), b=card(s.painData), gaps=[];
+  if(!a) gaps.push('Link a data card showing how many people are affected.'); else if(!strong(s.size)) gaps.push(`Finish verifying [${a.id}] (see the evidence bank).`);
+  if(!b) gaps.push('Link a data card proving the problem is real.'); else if(!strong(s.painData)) gaps.push(`Finish verifying [${b.id}].`);
+  if(!s.change) gaps.push('State what you changed (assumption → evidence → change).');
+  const html=`Our primary customers are ${ph(s.who,'primary customer')}. Their main pain points: ${ph(s.pain,'pain points',1)}. Today they ${ph(s.cope,'current workaround',1)}. ${a?`The potential customer base is significant. ${fact(a)}.`:'<mark>[data on how many people are affected]</mark>'} ${b?`The problem is well documented. ${fact(b)}.`:'<mark>[data proving the problem]</mark>'} We first assumed that ${ph(s.assumption,'assumption')}. This assumption was ${ph((s.result||'').toLowerCase(),'confirmed / challenged')} by our desk research: ${ph(s.learned,'what you learned',1)}. As a result, ${ph(s.change,'what you changed')}. We still need to learn ${ph(s.still,'open question')}, so our next step is to ${ph(s.next,'next action')}.`;
+  return out(html,[s.size,s.painData],gaps); },
+ illus(s,P){ const a=card(s.size), b=card(s.painData);
+  const tile=(x,d,lbl)=>`<rect x="${x}" y="96" width="190" height="96" rx="10" fill="${P.soft}" stroke="${P.wk}"/>${d?T(x+12,128,dval(d).length>16?dval(d).slice(0,18):dval(d),P,{s:20,w:800,c:P.wk})+TL(x+12,150,d.claim,P,28,{s:11,lines:2})+T(x+12,184,`${shortOrg(d.org)}, ${d.year}`,P,{s:10,c:P.muted}):T(x+12,140,'Add a data card',P,{c:P.muted})}${T(x+12,90,lbl,P,{s:10,c:P.muted,w:600})}`;
+  return `<svg viewBox="0 0 640 210" role="img" aria-label="Customer profile with evidence">
+   <rect x="10" y="10" width="620" height="60" rx="10" fill="${P.surf}" stroke="${P.line}"/><circle cx="44" cy="40" r="18" fill="${P.wk}"/>${T(44,46,(V('name')||'C').charAt(0).toUpperCase(),P,{s:16,w:800,c:P.onwk,a:'middle'})}
+   ${T(72,34,'PRIMARY CUSTOMER',P,{s:10,w:600,c:P.muted})}${TL(72,52,s.who||V('user')||'Who is your customer?',P,78,{s:13,w:600,lines:1})}
+   ${tile(10,a,'HOW MANY')}${tile(220,b,'PROBLEM EVIDENCE')}
+   <rect x="430" y="96" width="200" height="96" rx="10" fill="${P.surf}" stroke="${P.line}"/>${T(442,90,'ASSUMPTION',P,{s:10,c:P.muted,w:600})}${TL(442,120,s.assumption||'—',P,30,{s:12,lines:2})}${T(442,170,(s.result||'not tested yet').toUpperCase(),P,{s:12,w:800,c:s.result==='Confirmed'?P.good:s.result?P.warn:P.muted})}</svg>`; }};
+
+function mkt(s){ const d=card(s.tam); const tam=d?num(d.value):NaN; const sam=tam*(num(s.samPct)/100), som=sam*(num(s.somPct)/100), val=num(s.value); return {d,tam,sam,som,rev:som*val,val}; }
+const MARKET={key:'market',title:'Market Analysis',fields:[
+  {id:'industry',t:'text',l:'Industry or sector'},
+  {id:'segment',t:'text',l:'Segment you target'},
+  {id:'tam',t:'data',l:'Total market (TAM): a verified data card',h:'A count of people, households or businesses'},
+  {row:[{id:'samPct',t:'num',l:'SAM: % you can serve'},{id:'somPct',t:'num',l:'SOM: % of SAM reached in year 1'}]},
+  {id:'samWhy',t:'text',l:'Why that SAM %?',h:'Say if it is an assumption, or link it to data'},
+  {id:'somWhy',t:'text',l:'Why that SOM %?'},
+  {id:'value',t:'num',l:'Spend per customer per year (AED)'},
+  {id:'valueWhy',t:'text',l:'How you calculated it'},
+  {id:'growth',t:'data',l:'Growth or trend data (optional)'},
+  {id:'attractive',t:'text',l:'Why the market is attractive'}],
+ gen(s){ const m=mkt(s), g=card(s.growth), gaps=[];
+  if(!m.d) gaps.push('Link a verified data card for the total market (TAM).'); else if(!strong(s.tam)) gaps.push(`Finish verifying [${m.d.id}].`);
+  if(!s.samWhy||!s.somWhy||!s.valueWhy) gaps.push('Explain every percentage and the spend figure; label assumptions as assumptions.');
+  if(!g) gaps.push('Add growth or trend data, or the best analogous market data.');
+  const html=`${name()} operates in ${ph(s.industry,'industry')}, targeting ${ph(s.segment,'segment')}. ${m.d?`The total addressable market is ${nice(m.tam)} ${esc(m.d.unit)} (${esc(m.d.claim)}) ${cite(m.d)}.`:'<mark>[total market from a verified source]</mark>'} We estimate a serviceable market of ${s.samPct?esc(s.samPct)+'%':'<mark>[SAM %]</mark>'}, about ${nice(m.sam)} ${m.d?esc(m.d.unit):''} (${ph(s.samWhy,'reason')}), and a first-year obtainable market of ${s.somPct?esc(s.somPct)+'%':'<mark>[SOM %]</mark>'} of that, about ${nice(m.som)} customers (${ph(s.somWhy,'reason')}). At ${s.value?nice(num(s.value))+' AED':'<mark>[spend]</mark>'} per customer per year (${ph(s.valueWhy,'calculation')}), this represents about <b>${isFinite(m.rev)?nice(m.rev)+' AED':'—'}</b> in yearly customer spending. ${g?`The trend supports growth. ${fact(g)}.`:''} The market is attractive because of ${ph(s.attractive,'reasons')}.`;
+  return out(html,[s.tam,s.growth],gaps); },
+ illus(s,P){ const m=mkt(s); const R=95; const r=v=>isFinite(v)&&m.tam>0?Math.max(R*Math.sqrt(v/m.tam),0):0; const r2=r(m.sam), r3=r(m.som); const minR=6; const clamped=r3<minR&&r3>0;
+  const cy=110, cx=150;
+  return `<svg viewBox="0 0 640 230" role="img" aria-label="Market size: TAM, SAM and SOM">
+   <circle cx="${cx}" cy="${cy}" r="${R}" fill="${P.soft}" stroke="${P.wk}"/>
+   ${r2?`<circle cx="${cx}" cy="${cy+R-r2}" r="${r2}" fill="${P.soft}" stroke="${P.wk}" stroke-width="1.5"/>`:''}
+   ${r3?`<circle cx="${cx}" cy="${cy+R-Math.max(r3,minR)}" r="${Math.max(r3,minR)}" fill="${P.wk}"/>`:''}
+   ${[['TAM',m.tam,'Total market'],['SAM',m.sam,'Serviceable'],['SOM',m.som,'Year-1 customers']].map(([k,v,l],i)=>`<circle cx="285" cy="${50+i*48}" r="6" fill="${i===2?P.wk:P.soft}" stroke="${P.wk}"/>${T(300,46+i*48,k+' · '+l,P,{s:11,c:P.muted,w:600})}${T(300,64+i*48,isFinite(v)?nice(v)+(m.d?' '+m.d.unit:''):'—',P,{s:16,w:800})}`).join('')}
+   ${T(285,200,'Yearly customer spending in SOM',P,{s:11,c:P.muted,w:600})}${T(285,220,isFinite(m.rev)?nice(m.rev)+' AED':'—',P,{s:16,w:800,c:P.wk})}
+   ${T(10,225,clamped?'Circle areas to scale; SOM enlarged to stay visible.':'Circle areas drawn to scale.',P,{s:10,c:P.muted})}</svg>`; }};
+
+const COMPET={key:'compet',title:'Competition and Positioning',fields:[
+  {row:[{id:'xA',t:'text',l:'Axis X (customers care about)',ph:'Price (high → low)'},{id:'yA',t:'text',l:'Axis Y',ph:'Convenience (low → high)'}]},
+  {group:'Your venture (score 1–5)',row:true,fields:[{id:'youx',t:'num',l:'X'},{id:'youy',t:'num',l:'Y'}]},
+  ...[1,2,3].map(i=>({group:`Competitor ${i}`,fields:[{id:`c${i}`,t:'text',l:'Name'},{id:`c${i}t`,t:'sel',l:'Type',o:['Direct','Indirect','Substitute']},{id:`c${i}s`,t:'text',l:'Strength'},{id:`c${i}w`,t:'text',l:'Weakness you can use'},{id:`c${i}x`,t:'num',l:'X score 1–5'},{id:`c${i}y`,t:'num',l:'Y score 1–5'}]})),
+  {id:'evid',t:'data',l:'Evidence card about a competitor or the industry (optional)'},
+  {id:'barYou',t:'area',l:'Barriers to entry for you'},
+  {id:'barOthers',t:'text',l:'Barriers for future competitors'},
+  {id:'partners',t:'text',l:'Partners or allies who help you'}],
+ gen(s){ const cs=[1,2,3].filter(i=>s['c'+i]); const gaps=[]; const e=card(s.evid);
+  if(cs.length<3) gaps.push('List three competitors (direct, indirect or substitute).');
+  if(!s.xA||!s.yA) gaps.push('Name both axes of the positioning map.');
+  const gapX=cs.every(i=>num(s.youx)>num(s['c'+i+'x'])), gapY=cs.every(i=>num(s.youy)>num(s['c'+i+'y']));
+  const better=cs.filter(i=>num(s.youx)+num(s.youy)>num(s['c'+i+'x'])+num(s['c'+i+'y'])).length;
+  if(cs.length&&better<cs.length) gaps.push('On the map, at least one competitor matches or beats you on both axes: explain your real advantage or rethink the position.');
+  if(!s.partners) gaps.push('Name partners or allies.');
+  const list=cs.map(i=>`${esc(s['c'+i])} (${esc((s['c'+i+'t']||'').toLowerCase()||'competitor')}; strength: ${ph(s['c'+i+'s'],'strength')}; weakness: ${ph(s['c'+i+'w'],'weakness')})`).join('; ');
+  const html=`${name()} competes with ${list||'<mark>[competitors]</mark>'}. ${e?`${esc(e.claim)} (${esc(e.value)} ${esc(e.unit)}) ${cite(e)}. `:''}On a positioning map of ${ph(s.xA,'axis X')} and ${ph(s.yA,'axis Y')}, ${name()} ${better===cs.length&&cs.length?'occupies a clear gap':'sits close to existing players'}${gapX&&gapY?', ahead on both dimensions':gapX?`, leading on ${esc(s.xA)}`:gapY?`, leading on ${esc(s.yA)}`:''}. Barriers to entry for us include ${ph(s.barYou,'barriers for you',1)}; for future competitors, ${ph(s.barOthers,'barriers for others',1)}. Partnerships with ${ph(s.partners,'partners')} will help us overcome established players.`;
+  return out(html,[s.evid],gaps); },
+ illus(s,P){ const X=v=>70+(Math.min(5,Math.max(1,num(v)||1))-1)/4*520, Y=v=>200-(Math.min(5,Math.max(1,num(v)||1))-1)/4*170;
+  const pts=[1,2,3].filter(i=>s['c'+i]).map(i=>`<circle cx="${X(s['c'+i+'x'])}" cy="${Y(s['c'+i+'y'])}" r="9" fill="${P.surf}" stroke="${P.muted}" stroke-width="2"/>${T(X(s['c'+i+'x'])+(X(s['c'+i+'x'])>480?-14:14),Y(s['c'+i+'y'])+4,s['c'+i],P,{s:12,a:X(s['c'+i+'x'])>480?'end':'start'})}`).join('');
+  return `<svg viewBox="0 0 640 250" role="img" aria-label="Positioning map">
+   <rect x="70" y="30" width="520" height="170" fill="${P.bg}" stroke="${P.line}"/><path d="M330 30v170M70 115h520" stroke="${P.line}" stroke-dasharray="4 4"/>
+   ${T(330,228,(s.xA||'Axis X')+' →',P,{s:12,w:600,a:'middle',c:P.muted})}<text x="24" y="115" ${FF} font-size="12" font-weight="600" fill="${P.muted}" text-anchor="middle" transform="rotate(-90 24 115)">${esc((s.yA||'Axis Y')+' →')}</text>
+   ${T(76,44,'1',P,{s:10,c:P.muted})}${T(584,214,'5',P,{s:10,c:P.muted,a:'end'})}
+   ${pts}${s.youx&&s.youy?`<circle cx="${X(s.youx)}" cy="${Y(s.youy)}" r="12" fill="${P.wk}"/>${T(X(s.youx),Y(s.youy)-18,V('name')||'You',P,{s:13,w:800,a:'middle',c:P.wk})}`:''}
+   ${T(70,20,'Scores 1–5 are the team’s judgement; justify each one in the text.',P,{s:10,c:P.muted})}</svg>`; }};
+
+function money(s){ const r1=num(s.p1)*num(s.v1)||0, r2=num(s.p2)*num(s.v2)||0, rev=r1+r2, fixed=num(s.fixed)||0, varc=rev*(num(s.varPct)||0)/100, cost=fixed+varc, profit=rev-cost; const unit=num(s.p1)*(1-(num(s.varPct)||0)/100); const be=unit>0?Math.ceil(Math.max(0,fixed-r2*(1-(num(s.varPct)||0)/100))/unit):NaN; return {r1,r2,rev,fixed,varc,cost,profit,be}; }
+const MODEL={key:'model',title:'Sustainable Business Model',fields:[
+  {id:'payer',t:'area',l:'Who pays, and for what?'},
+  {group:'Revenue stream 1',row:true,fields:[{id:'s1',t:'text',l:'Description'},{id:'p1',t:'num',l:'Price per unit (AED)'},{id:'v1',t:'num',l:'Units per month'}]},
+  {group:'Revenue stream 2 (optional)',row:true,fields:[{id:'s2',t:'text',l:'Description'},{id:'p2',t:'num',l:'Price (AED)'},{id:'v2',t:'num',l:'Units per month'}]},
+  {row:[{id:'fixed',t:'num',l:'Fixed costs per month (AED)',h:'hosting, marketing, salaries'},{id:'varPct',t:'num',l:'Variable costs (% of revenue)',h:'payment fees etc.'}]},
+  {id:'costData',t:'data',l:'Evidence for a cost or price (optional data card)'},
+  {id:'people',t:'text',l:'People: social impact indicator',h:'Something you can count'},
+  {id:'planet',t:'text',l:'Planet: environmental indicator'},
+  {id:'risk',t:'text',l:'Major risk to address right away'},
+  {id:'test',t:'text',l:'First test to reduce that risk'}],
+ gen(s){ const m=money(s), c=card(s.costData), gaps=[];
+  if(!m.rev) gaps.push('Add at least one revenue stream with price and volume.'); if(!s.fixed) gaps.push('Estimate monthly fixed costs.');
+  if(m.rev&&m.profit<0) gaps.push(`At these numbers the venture loses ${nice(-m.profit)} AED a month. Show how you reach break-even (about ${nice(m.be)} units of stream 1).`);
+  if(!s.people||!s.planet) gaps.push('Add one people indicator and one planet indicator.'); if(!s.test) gaps.push('Name the first test that reduces the major risk.');
+  const html=`${name()} turns the opportunity into a business as follows: ${ph(s.payer,'who pays')}. Revenue comes from ${ph(s.s1,'stream 1')} (${s.p1?esc(s.p1)+' AED':'—'} × ${s.v1?nice(num(s.v1)):'—'} per month)${s.s2?` and ${esc(s.s2)} (${esc(s.p2||'—')} AED × ${s.v2?nice(num(s.v2)):'—'} per month)`:''}, giving about <b>${nice(m.rev)} AED</b> per month against <b>${nice(m.cost)} AED</b> in costs, a monthly ${m.profit>=0?'surplus':'loss'} of ${nice(Math.abs(m.profit))} AED${isFinite(m.be)?`; break-even is reached at about ${nice(m.be)} units of the first stream per month`:''}. ${c?`${fact(c)}. `:''}The model follows the triple bottom line: for people we track ${ph((s.people||'').toLowerCase(),'social indicator')}; for the planet, ${ph((s.planet||'').toLowerCase(),'environmental indicator')}; and for profit, monthly surplus. The major risk is that ${ph((s.risk||'').charAt(0).toLowerCase()+(s.risk||'').slice(1),'major risk')}; our first step to reduce it is to ${ph((s.test||'').charAt(0).toLowerCase()+(s.test||'').slice(1),'first test')}.`;
+  return out(html,[s.costData],gaps); },
+ illus(s,P){ const m=money(s); const mx=Math.max(m.rev,m.cost,1); const w=v=>v/mx*300;
+  const pill=(x,h,t)=>`<rect x="${x}" y="130" width="196" height="84" rx="10" fill="${P.surf}" stroke="${P.line}"/>${T(x+12,152,h,P,{s:10,w:600,c:P.wk})}${TL(x+12,172,t||'—',P,28,{s:12,lines:2})}`;
+  return `<svg viewBox="0 0 640 225" role="img" aria-label="Monthly revenue versus cost, and triple bottom line">
+   ${T(10,20,'MONTHLY (AED)',P,{s:10,w:600,c:P.muted})}
+   ${T(10,48,'Revenue',P,{s:12,w:600})}<rect x="90" y="36" width="${w(m.rev)}" height="18" rx="3" fill="${P.wk}"/>${T(96+w(m.rev),50,nice(m.rev),P,{s:12,w:700})}
+   ${T(10,80,'Costs',P,{s:12,w:600})}<rect x="90" y="68" width="${w(m.cost)}" height="18" rx="3" fill="${P.muted}"/>${T(96+w(m.cost),82,nice(m.cost),P,{s:12,w:700})}
+   ${T(10,112,(m.profit>=0?'Surplus ':'Loss ')+nice(Math.abs(m.profit))+' AED'+(isFinite(m.be)?' · break-even ≈ '+nice(m.be)+' units/month':''),P,{s:12,w:800,c:m.profit>=0?P.good:P.bad})}
+   ${pill(10,'PEOPLE',s.people)}${pill(222,'PLANET',s.planet)}${pill(434,'PROFIT',m.rev?`${m.profit>=0?'Surplus':'Loss'} of ${nice(Math.abs(m.profit))} AED a month`:'')}</svg>`; }};
+
+const PROTO={key:'proto',title:'Prototype Development',fields:[
+  {id:'tech',t:'sel',l:'Prototype technique',h:'Not sure? Ask the <a href="week-05.html#s5">Prototype Helper</a>.',o:['Sketch / mock-up','Paper / digital prototype','Physical model','Storyboard / role-play','Functional demo','Storyboard']},
+  {id:'assumption',t:'text',l:'Assumption it tested'},
+  {id:'v1',t:'text',l:'Version 1: what you built'},
+  {row:[{id:'testers',t:'num',l:'Number of testers'}]},
+  {id:'what',t:'text',l:'What testers did (the result)'},
+  {id:'change',t:'text',l:'Version 2: what changed and the new result'}],
+ gen(s){ const gaps=[]; if(!(num(s.testers)>=3)) gaps.push('Test with at least 3 people (classmates in the lab count).'); if(!s.change) gaps.push('Show what changed from version 1 to version 2.'); if(!s.assumption) gaps.push('State the assumption the prototype tested.');
+  const html=`To test the assumption that ${ph(s.assumption,'assumption')}, we built a ${ph((s.tech||'').toLowerCase().replace(/\s*prototype$/,''),'technique')} prototype: ${ph(s.v1,'version 1')}. We tested it with ${s.testers?esc(s.testers):'<mark>[n]</mark>'} users in class; ${ph(s.what,'what happened')}. Based on this, ${ph(s.change,'version 2')}. Photos of both versions are shown in Figures X and Y.`;
+  return out(html,[],gaps); },
+ illus(s,P){ const step=(x,h,t,on)=>`<rect x="${x}" y="30" width="180" height="110" rx="10" fill="${on?P.wk:P.surf}" stroke="${on?P.wk:P.line}"/>${T(x+12,54,h,P,{s:10,w:600,c:on?P.onwk:P.muted})}${TL(x+12,76,t||'—',P,25,{s:12,w:600,lines:4,c:on?P.onwk:P.ink})}`;
+  return `<svg viewBox="0 0 640 170" role="img" aria-label="Prototype version 1, test, version 2">${step(10,'VERSION 1 · '+(s.tech||'').toUpperCase().slice(0,20),s.v1)}<path d="M194 85h30" stroke="${P.muted}" stroke-width="2"/><path d="M220 79l8 6-8 6" fill="${P.muted}"/>${step(230,'TEST · '+(s.testers||'?')+' USERS',s.what)}<path d="M414 85h30" stroke="${P.muted}" stroke-width="2"/><path d="M440 79l8 6-8 6" fill="${P.muted}"/>${step(450,'VERSION 2',s.change,true)}${T(320,162,'Assumption tested: '+(s.assumption||'—').slice(0,70),P,{s:11,c:P.muted,a:'middle'})}</svg>`; }};
+
+/* ================= validation scorecard ================= */
+function score(){
+  const c=sec('customer'), m=sec('market'), k=sec('compet'), b=sec('model'), p=sec('proto'), cc=sec('concept');
+  const lvl=(a,b2)=>a?2:b2?1:0;
+  const mk=mkt(m), mo=money(b);
+  const cs=[1,2,3].filter(i=>k['c'+i]);
+  const ahead=cs.length>0&&cs.every(i=>num(k.youx)+num(k.youy)>num(k['c'+i+'x'])+num(k['c'+i+'y']));
+  return [
+   ['The problem is real',lvl(strong(c.painData),some(c.painData)||!!V('problem')),'Verified data shows the problem exists'],
+   ['Enough customers exist',lvl(strong(c.size)&&!!c.who,some(c.size)||!!c.who),'Verified count of people affected'],
+   ['The market is worth it',lvl(strong(m.tam)&&isFinite(mk.rev)&&!!m.samWhy,!!card(m.tam)),'TAM verified; SAM/SOM explained'],
+   ['We can stand out',lvl(cs.length>=3&&ahead,cs.length>=1),'3 competitors and a clear gap on the map'],
+   ['The model can sustain itself',lvl(mo.rev>0&&mo.profit>=0&&!!b.people&&!!b.planet,mo.rev>0),'Covers costs; impact measured'],
+   ['The solution works for users',lvl(num(p.testers)>=3&&!!p.change,!!p.v1),'Prototype tested and improved'],
+   ['Others prove the concept',lvl(!!cc.sim1&&!!cc.sim2&&strong(cc.sim1data),!!cc.sim1),'Similar ventures, with evidence']];
+}
+function summaryBuild(el){
+  const rows=score(); const tot=rows.reduce((a,r)=>a+r[1],0), max=rows.length*2;
+  const verdict=tot>=13?['good','Validated: proceed']:tot>=7?['warn','Proceed with conditions']:['bad','Not validated yet'];
+  const weak=rows.filter(r=>r[1]<2).map(r=>r[0].toLowerCase());
+  const c=sec('customer'), m=sec('market'), b=sec('model'), p=sec('proto'); const pc=card(c.painData), mk=mkt(m), mo=money(b);
+  const html=`${name()} addresses a problem confirmed by verified evidence.${pc?` ${fact(pc)}.`:''} ${mk.d?`From a total market of ${nice(mk.tam)} ${esc(mk.d.unit)} ${cite(mk.d)}, we target about ${nice(mk.som)} customers in year one, worth about ${nice(mk.rev)} AED in yearly spending.`:''} ${mo.rev?`The business model generates about ${nice(mo.rev)} AED a month against ${nice(mo.cost)} AED in costs.`:''} ${num(p.testers)?`Our prototype was tested with ${esc(p.testers)} users and improved: ${esc(p.change||'')}.`:''} Overall, the idea scores ${tot} out of ${max} on our validation scorecard: <b>${verdict[1].toLowerCase()}</b>.${weak.length?` To strengthen next: ${weak.map(w=>'“'+w+'”').join(' and ')}.`:' Every key assumption is supported by evidence.'}`;
+  const refs=[...new Set([c.size,c.painData,m.tam,m.growth,sec('concept').sim1data,sec('compet').evid,b.costData].filter(Boolean))].map(card).filter(Boolean);
+  const svg=P=>`<svg viewBox="0 0 640 ${rows.length*34+70}" role="img" aria-label="Validation scorecard">${rows.map((r,i)=>{ const y=20+i*34; const col=r[1]===2?P.good:r[1]===1?P.warn:P.bad; return `${T(10,y+16,r[0],P,{s:13,w:600})}${[0,1].map(j=>`<rect x="${240+j*58}" y="${y+2}" width="52" height="20" rx="4" fill="${j<r[1]?col:P.bg}" stroke="${j<r[1]?col:P.line}"/>`).join('')}${T(366,y+16,r[1]===2?'Strong':r[1]===1?'Partial':'Missing',P,{s:12,w:700,c:col})}${T(430,y+16,r[2],P,{s:10,c:P.muted})}`; }).join('')}
+    <rect x="10" y="${rows.length*34+26}" width="620" height="34" rx="8" fill="${verdict[0]==='good'?P.good:verdict[0]==='warn'?P.warn:P.bad}"/>${T(320,rows.length*34+48,`${V('name')||'Venture'} · ${tot}/${max} · ${verdict[1]}`,P,{s:14,w:800,a:'middle',c:'#FFFFFF'})}</svg>`;
+  el.innerHTML=`<div class="vs"><div class="vs-out"><h4 style="margin:0">Validation scorecard</h4>${svg(SCREEN)}<p class="para">${html}</p>${refs.length?`<div><h4>References used</h4><ul class="refs">${refs.map(d=>`<li>${apa(d)}</li>`).join('')}</ul></div>`:''}
+    <div class="vs-tools"><button type="button" class="btn" data-l="Copy summary">Copy summary</button><button type="button" class="btn ghost" data-l="Download image">Download image</button><button type="button" class="btn ghost" data-l="Copy all drafts">Copy all drafts</button></div>
+    <p class="vs-note">Each line scores 2 (strong: verified evidence), 1 (partial) or 0 (missing). Use the summary as a base for your Executive Summary, in your own words.</p></div></div>`;
+  const bs=el.querySelectorAll('.vs-tools button');
+  bs[0].addEventListener('click',()=>copyText(bs[0],strip(html)+(refs.length?'\n\nReferences\n'+refs.map(apaTxt).join('\n'):'')));
+  bs[1].addEventListener('click',()=>downloadSVG(svg(PRINT).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" '),`${(V('name')||'venture').replace(/\W+/g,'-')}-scorecard`));
+  bs[2].addEventListener('click',()=>{ const parts=[CONCEPT,CUSTOMER,MARKET,COMPET,MODEL,PROTO].map(c=>`${c.title}\n${c.gen(sec(c.key)).text}`); const all=S.data; copyText(bs[2],`${V('name')} · drafts\n\n`+parts.join('\n\n')+'\n\nValidation summary\n'+strip(html)+'\n\nReferences\n'+all.map(apaTxt).sort().join('\n')); });
+}
+
+Lecture.mount({
+  id:'ent142-studio', week:'P1', course:'ENT 142', short:'Venture Studio', eyebrow:'Project 1 · Venture Studio', endLabel:'End of studio',
+  title:'Venture Studio', meta:'Validate your idea with verified open data · build each report section',
+  scenes:[
+  { nav:'Start here', title:'Validate your venture like an investor would', wide:true,
+    narration:[
+     `Investors do not fund ideas; they fund <strong>evidence</strong>. For Project 1 your evidence comes from two places: <strong>verified open data</strong> published by trusted organisations, and your own <strong>prototype test</strong>. No surveys needed.`,
+     `<ul><li><b>1 · Learn</b> how to find and verify data.</li><li><b>2 · Collect</b> numbers as data cards in your evidence bank.</li><li><b>3 · Build</b> each report section by answering guided questions. You get a draft paragraph with citations and an illustration.</li><li><b>4 · Score</b> your idea on the validation scorecard.</li></ul>`,
+     B.plain(`Everything saves in <b>this browser only</b>. Use one laptop per team, or copy your drafts into the team document often.`),
+     KEY(`Every claim in your report should answer: <b>“How do you know?”</b> A verified number with a citation is the answer.`)],
+    notes:[`Students may load the ShareBite example to explore, then press "Clear everything" before starting their own venture.`],
+    fig:{label:`Your venture`, build:profile} },
+
+  { nav:'Find verified data', title:'How to find verified data', wide:true,
+    narration:[
+     B.plain(`<b>Verified data</b> is a number published by an organisation that is responsible for it, with a date and a method you can check. Go to the <b>original publisher</b>, not a blog, a chatbot or a website that copied it.`),
+     `<b>Search like a professional:</b><ul><li><code>food waste site:gov.ae</code>: only UAE government sites</li><li><code>"statistical yearbook" Dubai filetype:pdf</code>: official reports</li><li><code>youth unemployment site:worldbank.org</code>: one trusted site</li><li>Search inside portals: Bayanat, FCSC open data, Our World in Data</li></ul>`,
+     `<b>Five checks before you use a number:</b> <b>Who</b> published it? <b>When</b> (the year of the data, ideally within 5–6 years)? <b>How</b> was it measured? Is it the <b>original</b> source? Does a <b>second source</b> agree?`,
+     B.ex(`A news article says “1.05 billion tonnes of food were wasted in 2022.” Trace it to the original: UNEP's <i>Food Waste Index Report 2024</i>. Cross-check: UN News reports the same figure. Now it is verified, and you cite UNEP (2024), not the newspaper.`),
+     KEY(`A chatbot answer is <b>not</b> a source: it can invent numbers and links. Use it only to find search words, then verify on the original site.`)],
+    src:`United Nations Environment Programme (2024). <em>Food waste index report 2024</em>. · UN News (2024). With 783 million people going hungry, a fifth of all food goes to waste.`,
+    fig:{label:`Where to look · the source ladder`, html:`<div class="tiers">
+      <div><b class="n">1</b><span><b>Official statistics</b>: UAE Federal Competitiveness and Statistics Centre (fcsc.gov.ae), UAE open data portal Bayanat (bayanat.ae), Dubai Data and Statistics Establishment (via Digital Dubai), Statistics Centre Abu Dhabi (scad.gov.ae), ministries (*.gov.ae).</span></div>
+      <div><b class="n">2</b><span><b>International organisations</b>: World Bank Open Data (data.worldbank.org), UN SDG Global Database (unstats.un.org/sdgs/dataportal), UNEP (unep.org), WHO data (who.int/data), ILO, UNESCO, IRENA, OECD, Our World in Data (ourworldindata.org).</span></div>
+      <div><b class="n">3</b><span><b>Academic research</b>: Google Scholar, CUD library databases, journal articles (doi.org), Harvard Business Review.</span></div>
+      <div><b class="n">4</b><span><b>Company sources</b>: annual reports and official websites of competitors. Good for what a company says about itself.</span></div>
+      <div><b class="n">5</b><span><b>Reputable news</b>: WAM, The National, Gulf News, Khaleej Times, Reuters. Use them to <i>find</i> the original source, then cite the original.</span></div></div>
+      <div class="tblw" style="margin-top:12px"><table class="tbl"><thead><tr><th>Your topic</th><th>Start here</th></tr></thead><tbody>
+      <tr><td>Population, students, households</td><td>FCSC, Bayanat, Dubai Data and Statistics Establishment</td></tr>
+      <tr><td>Economy, industries, jobs</td><td>FCSC, World Bank, Ministry of Economy (moec.gov.ae)</td></tr>
+      <tr><td>Waste, energy, water, climate</td><td>UNEP, IRENA, Our World in Data, Ministry of Climate Change and Environment (moccae.gov.ae)</td></tr>
+      <tr><td>Health and well-being</td><td>WHO, Ministry of Health and Prevention (mohap.gov.ae), Dubai Health Authority (dha.gov.ae)</td></tr>
+      <tr><td>Education and youth</td><td>UNESCO, UAE Ministry of Education (moe.gov.ae), World Bank</td></tr>
+      <tr><td>Progress on your SDG</td><td>UN SDG Global Database, Our World in Data SDG tracker</td></tr></tbody></table></div>`} },
+
+  { nav:'Verified or not?', title:'Activity · Verified or not?', kind:'activity', minutes:10,
+    narration:[`Sort each source. Then reveal the suggestions and discuss.`],
+    fig:{label:`Sort the sources`, build:el=>W.sort(el,{buckets:['Use it','Trace the original','Do not use'],items:[
+      {t:`A population table on the FCSC open data portal`,a:0,why:`Official statistics, with a date and method.`},
+      {t:`A Gulf News article quoting a ministry figure`,a:1,why:`Find the ministry's own release and cite that.`},
+      {t:`A number a chatbot gave you, with a link`,a:2,why:`Chatbots can invent numbers and links. Search for the figure on an official site.`},
+      {t:`A World Bank indicator page for the UAE`,a:0,why:`International organisation with documented methods.`},
+      {t:`A Wikipedia page with a statistic`,a:1,why:`Follow its footnote to the original publisher.`},
+      {t:`A blog post with no author and no date`,a:2,why:`You cannot check who made the number or when.`},
+      {t:`A Statista chart`,a:1,why:`Statista shows its source under the chart: go there.`},
+      {t:`A UNEP report from 2024`,a:0,why:`International organisation, recent, methods explained.`}]})} },
+
+  { nav:'Evidence bank', title:'Your evidence bank', wide:true,
+    narration:[
+     `Every number you find becomes a <strong>data card</strong> with an ID ([D1], [D2]…). The studio checks each card automatically: trusted publisher, recent year, value and unit. You confirm three checks yourself: you opened the original, you know the method, and a second source agrees.`,
+     B.ex(`Card [D4] in the example is a newspaper report of Dubai's population. It shows <b>Partly verified</b>: the next step is to find the figure on the Dubai Data and Statistics Establishment site and replace the link.`),
+     KEY(`Aim for <b>8–12 verified cards</b> across the report: problem, customers, market, competitors, costs.`)],
+    notes:[`The domain check is a guide, not a guarantee. Spot-check two cards per team.`],
+    fig:{label:`Data cards`, build:bank} },
+
+  { nav:'Concept & vision', title:'Build · Concept and Vision', wide:true,
+    narration:[
+     `<b>The investor's question:</b> what is this, why now, and why hasn't someone already done it?`,
+     B.plain(`Lead with a one-line value proposition. Then show the opportunity, the impact on your SDG, and the closest existing ventures. Naming similar ventures is a strength: it proves the need is real.`),
+     KEY(`Never write “no one has done this.” Show who came close, and the gap they left.`)],
+    fig:{label:`Concept builder`, build:builder(CONCEPT)} },
+
+  { nav:'Customers', title:'Build · Customers and Customer Development', wide:true,
+    narration:[
+     `<b>The investor's question:</b> who exactly has this problem, how many of them are there, and how do you know?`,
+     B.plain(`Desk research replaces interviews: link one verified card for <b>how many</b> people are affected and one for <b>how serious</b> the problem is. Then show the loop: <b>assumption → evidence → what you changed</b>.`),
+     KEY(`When the brief asks “How many potential customers did you reach?”, answer with the population your data covers and the number of users who tested your prototype.`)],
+    fig:{label:`Customer builder`, build:builder(CUSTOMER)} },
+
+  { nav:'Market', title:'Build · Market Analysis', wide:true,
+    narration:[
+     `<b>The investor's question:</b> how big can this get?`,
+     B.plain(`Start from a <b>verified total</b> (TAM), then narrow it with percentages you explain (SAM, SOM). Multiply by what one customer spends a year. Label every assumption as an assumption.`),
+     B.ex(`Dubai had 4.58 million residents at the end of 2025 (example card D4). 5% serviceable × 2% reached in year 1 = about 4,580 customers × 720 AED = about 3.3 million AED in yearly spending.`),
+     KEY(`Investors forgive bold assumptions; they do not forgive hidden ones.`)],
+    fig:{label:`Market builder`, build:builder(MARKET)} },
+
+  { nav:'Competition', title:'Build · Competition and Positioning', wide:true,
+    narration:[
+     `<b>The investor's question:</b> why would customers choose you?`,
+     B.plain(`List three competitors: direct, indirect or substitute. Score everyone 1–5 on two things customers care about. The map shows whether you really have a gap.`),
+     KEY(`If a competitor beats you on both axes, the studio flags it. Fix the strategy, not the scores.`)],
+    fig:{label:`Positioning builder`, build:builder(COMPET)} },
+
+  { nav:'Business model', title:'Build · Sustainable Business Model', wide:true,
+    narration:[
+     `<b>The investor's question:</b> does the money work, and does the impact last?`,
+     B.plain(`Enter who pays, your prices and monthly volumes, and your costs. The studio calculates monthly surplus or loss and break-even. Add one <b>people</b> and one <b>planet</b> indicator for the triple bottom line.`),
+     KEY(`Name the <b>one risk</b> that could kill the venture and the <b>first test</b> that reduces it.`)],
+    fig:{label:`Business model builder`, build:builder(MODEL)} },
+
+  { nav:'Prototype', title:'Build · Prototype Development', wide:true,
+    narration:[
+     `<b>The investor's question:</b> have real people tried it?`,
+     B.plain(`Use your Week 5 prototype. Testing with classmates in the lab counts as evidence. Report the assumption, the result, and what changed in version 2.`),
+     KEY(`Numbers make it credible: “7 of 12 testers could not find the pickup time; after the change, 11 of 12 did.”`)],
+    fig:{label:`Prototype builder`, build:builder(PROTO)} },
+
+  { nav:'Validation scorecard', title:'Is the idea validated?', kind:'review', wide:true,
+    narration:[
+     `The scorecard reads all your answers and data cards and rates <strong>seven assumptions</strong> every investor tests. Green means verified evidence; amber means partly supported; red means missing.`,
+     B.plain(`The summary paragraph combines your strongest data into one story. Use it as the base for your <b>Executive Summary</b> and your <b>Learning and Adaptation</b> answer to “Is this idea a true opportunity?”`),
+     KEY(`A low score is useful: it tells you exactly what to research next. An honest “proceed with conditions” with evidence beats an unsupported “validated”.`)],
+    fig:{label:`Scorecard · summary`, build:summaryBuild} }
+  ]
+});
+</script>
+</body>
+</html>
