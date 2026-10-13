@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 5 · Prototyping</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#0F7B6C;--wk-soft:rgba(15,123,108,.10);--wk-d:#4FD1BA;--wk-soft-d:rgba(79,209,186,.14)}
+.chooser{display:grid;gap:6px}
+.chooser button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:9px 12px;cursor:pointer;font-family:var(--f-display);font-size:.92rem}
+.chooser button[aria-pressed="true"]{border-color:var(--wk);background:var(--wk-soft);font-weight:600}
+.answer{margin-top:12px;border-left:4px solid var(--wk);padding:10px 14px;background:var(--surface);border-radius:0 8px 8px 0;font-family:var(--f-display);font-size:.95rem}
+.answer b.big{display:block;font-size:1.25rem;color:var(--wk);margin-bottom:4px}
+.ladder{width:100%;height:auto;display:block}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tiles div{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--bg)}
+.tiles .n{font-family:var(--f-display);font-weight:800;font-size:1.7rem;color:var(--wk);line-height:1}
+.tiles .t{font-family:var(--f-display);font-size:.84rem;margin-top:6px}
+@media (max-width:560px){.tiles{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<script src="assets/course.js"></script>
+<script>
+const {W,B} = Lecture;
+const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your project</b>${html}</div>`;
+
+/* ---------- Scene 3: six techniques ---------- */
+const TECH={
+ 'Show the idea':[
+  ['Sketch','A quick drawing of the solution on paper or a whiteboard. Ten minutes, zero cost.<br><br><b>Example:</b> a team draws the front of a refill station for reusable water bottles at CUD, with arrows showing where students tap their card.'],
+  ['Physical model','A rough object you can hold: cardboard, foam, 3D print, LEGO.<br><br><b>Real case:</b> before the PalmPilot launched, Jeff Hawkins carried a wooden model of it. He used a chopstick as the stylus, took pretend notes in meetings, and counted the steps needed for common tasks. (Computer History Museum)']],
+ 'Show the journey':[
+  ['Storyboard','4–6 comic-style frames showing a user before, during and after using your solution. Best for services.<br><br><b>Example:</b> frame 1, a student throws away half a lunch; frame 2, she opens an app; frame 3, a café lists surplus meals at 6 pm; frame 4, another student collects one for 5 AED.'],
+  ['Role-play','Team members act out the service with a real user. One plays the customer, one plays the service.<br><br><b>Real case:</b> Zappos founder Nick Swinmurn tested online shoe selling by photographing shoes in local stores and posting them online. When someone ordered, he bought the pair in the store and shipped it. The service was simulated by hand before any system existed. (Ries, 2011)']],
+ 'Simulate interaction':[
+  ['Paper prototype','Screens drawn on paper or sticky notes. A user “taps” with a finger; a teammate swaps the paper screen.<br><br><b>Example:</b> three paper screens of a volunteering app, tested with five classmates in 15 minutes.'],
+  ['Digital mock-up','Clickable screens made in Canva, PowerPoint/Slides or Figma (free plan). Looks real, does nothing behind the scenes.<br><br><b>Real case:</b> Dropbox founder Drew Houston made a short demo video showing how the product was meant to work. He said the beta waiting list went from 5,000 to 75,000 people overnight, which showed demand before the product was finished. (TechCrunch, 2011)']]
+};
+
+/* ---------- Scene 4: chooser (slide 4) ---------- */
+const NEEDS=[
+ ['I need to show how it looks','Sketch / mock-up','Quick drawing, then a cleaner mock-up in Canva.'],
+ ['I need to test interaction','Paper / digital','Paper screens first; move to a clickable digital version once the flow works.'],
+ ['I need to show a physical product','Physical model','Cardboard, foam or a 3D print at roughly real size.'],
+ ['I need to show a service','Storyboard / role-play','Draw the steps, then act them out with a real user.'],
+ ['I need to demonstrate technology','Functional demo','The smallest version that really works, even if only one feature.'],
+ ['I need to explain the user journey','Storyboard','Before → during → after, from the user\'s point of view.']];
+function chooser(el){
+  el.innerHTML=`<div class="chooser ui">${NEEDS.map((n,i)=>`<button type="button" data-i="${i}" aria-pressed="false">${n[0]}</button>`).join('')}</div><div class="answer" id="ch-out">Choose what your team needs to do.</div>`;
+  const bs=el.querySelectorAll('button'), out=el.querySelector('#ch-out');
+  bs.forEach(b=>b.addEventListener('click',()=>{ bs.forEach(x=>x.setAttribute('aria-pressed',x===b)); const n=NEEDS[+b.dataset.i]; out.innerHTML=`<b class="big">→ ${n[1]}</b>${n[2]}<br><span class="mono" style="color:var(--muted)">Then ask: what is the biggest assumption this prototype will test?</span>`; }));
+}
+
+/* ---------- Scene 2: fidelity ladder (SVG) ---------- */
+const LADDER=`<svg class="ladder" viewBox="0 0 640 230" role="img" aria-label="Fidelity ladder: sketch, paper, storyboard, mock-up, physical model, functional demo. Cost and time increase to the right.">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+<line x1="20" y1="205" x2="620" y2="205" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ar)"/>
+<text x="20" y="225" font-family="JetBrains Mono,monospace" font-size="11" fill="var(--muted)">low fidelity · minutes · free</text>
+<text x="620" y="225" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="11" fill="var(--muted)">high fidelity · days · costly</text>
+${[['Sketch',30],['Paper',55],['Storyboard',80],['Mock-up',110],['Model',140],['Working demo',175]].map(([t,h],i)=>{const x=30+i*98;return `<rect x="${x}" y="${195-h}" width="82" height="${h}" rx="6" fill="var(--wk)" opacity="${.35+i*.12}"/><text x="${x+41}" y="${187-h}" text-anchor="middle" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="13" font-weight="600" fill="var(--ink)">${t}</text>`}).join('')}
+</svg>`;
+
+Lecture.mount({
+  id:'ent142-w5', week:5, clo:1, course:'ENT 142', short:'Week 5 · Prototyping',
+  title:'Prototyping',
+  meta:'Byers et al (2019). Ch. 8, Pradeep & Rajib (2022) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'How do we turn an idea into something people can experience?', minutes:5,
+    narration:[
+     `Your team already has a social problem, an idea and an SDG. Today we make the idea <strong>visible, testable and easier to explain</strong>, and we start Project 1.`,
+     `Syllabus topics: <strong>Prototyping</strong> · <strong>Prototype Generation Techniques</strong> · <strong>Initial Prototype Development</strong>. This builds <strong>CLO 1</strong>: Explain the process of innovation, entrepreneurship and sustainability.`,
+     B.plain(`Key idea: <b>a prototype is a question you can hold</b>. You build it to learn, not to impress.`)],
+    src:`Reading: Byers et al (2019). Ch. 8, Pradeep &amp; Rajib (2022). Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
+    notes:[`2-hour lab (0-2-1). Most of the time is the build activity: protect those 30 minutes.`,`Teams of 4–5 sit together from the start.`],
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Hook: what first?`,10,'a'],[`What is a prototype?`,10,'l'],[`Six techniques`,15,'l'],[`Choose your technique`,10,'l'],[`Case: Embrace`,10,'l'],[`Activity: match the technique`,10,'a'],[`Activity: build v1`,30,'a'],[`Prototype → Project 1`,5,'l'],[`Key takeaways`,10,'l'],[`Exit check`,5,'c']])} },
+
+  { nav:'What first?', title:'Hook · What should the team do first?', kind:'activity', minutes:10,
+    narration:[
+     `A team wants an app that lets the CUD cafeteria sell surplus meals cheaply at the end of the day. They have 5 days. Vote: what should they do first?`],
+    think:`What would the team <em>learn</em> from each option, and how much would each cost them?`,
+    notes:[`Most students choose B or D. Use the reveal to introduce "learning per dirham and per hour".`],
+    fig:{label:`Vote`, build:el=>W.poll(el,{q:'First step for the surplus-meal app?',opts:['Build the full app','Survey 100 students online','Draw 3 paper screens and test with 5 students','Write the business plan'],
+      reveal:i=>(i===2?'<b>Best first step.</b> ':'<b>Suggested: C.</b> ')+'Three paper screens take an hour and show whether students understand and want it. A survey tells you what people <i>say</i>; a prototype shows what they <i>do</i>. Building the full app first risks weeks of work on a wrong guess.'})} },
+
+  { nav:'What is a prototype?', title:'A prototype makes an idea visible', minutes:10,
+    narration:[
+     B.plain(`A <b>prototype</b> is a simple representation of your solution that lets you <b>see</b> it, <b>explain</b> it and <b>test</b> it before you fully develop it.<ul><li><b>See:</b> what does it look like?</li><li><b>Experience:</b> how does the user interact?</li><li><b>Test:</b> what can we learn?</li></ul>`),
+     `Prototypes range from low fidelity (a sketch, in minutes) to high fidelity (a working demo, in days). Start low. Move up only when the cheap version has taught you all it can.`,
+     B.ex(`Jeff Hawkins tested the PalmPilot design by carrying a wooden model in his pocket, using a chopstick as a stylus. He took pretend notes in meetings and counted the steps for common tasks. A block of wood answered real design questions.`),
+     KEY(`The goal is not perfection. <b>The goal is learning.</b>`)],
+    src:`Computer History Museum. <em>The PalmPilot</em>. computerhistory.org/revolution/mobile-computing/18/321`,
+    fig:{label:`Idea → prototype → test → learn`, flow:[
+      {t:'Idea',s:'problem + solution',d:'Your team\'s idea, linked to a social problem and an SDG.'},
+      {t:'Prototype',s:'simplest version',d:'Build the cheapest thing that lets a user experience the idea.'},
+      {t:'Test',s:'real users',d:'Watch 5 or more real users try it. Do not explain or defend; observe.'},
+      {t:'Learn',s:'keep · change · drop',d:'Write down what surprised you. Decide what to keep, change or drop.'},
+      {t:'Iterate',s:'version 2',d:'Build version 2. Each loop should be faster and cheaper than the last.'}],
+      html:LADDER, caption:`Fidelity ladder (illustrative). Higher fidelity costs more time and money; climb only when needed.`} },
+
+  { nav:'Six techniques', title:'Prototype generation techniques', minutes:15,
+    narration:[
+     `Six techniques, from the slide: <strong>Sketch</strong> (show the idea), <strong>Storyboard</strong> (show the user journey), <strong>Paper</strong> (simulate interaction), <strong>Digital</strong> (show screens or interface), <strong>Physical</strong> (show the product), <strong>Role-play</strong> (simulate the service).`,
+     `Click each technique on the right for an example. Three are real company stories; the others are student-scale examples.`,
+     KEY(`Social enterprises are often <b>services</b>, not gadgets. Storyboards and role-play are valid prototypes.`)],
+    src:`Ries, E. (2011). <em>The lean startup</em>. Crown Business (Zappos). · Kincaid, J. (2011, October 19). Dropbox minimal viable product. <em>TechCrunch</em>.`,
+    fig:{label:`Six techniques · click for an example`, build:el=>W.picker(el,TECH,'Select a technique.')} },
+
+  { nav:'Choose your technique', title:'Choose the prototype that answers your question', minutes:10,
+    narration:[
+     `Do not choose the technique you like. Choose the one that tests your <strong>biggest assumption</strong>: the thing that must be true for your idea to work.`,
+     B.ex(`Idea: a WhatsApp service that matches retired professionals in Dubai with students for free career mentoring.<br>Biggest assumption: <i>retirees will reply within a day.</i><br>Prototype: run the service by hand for one week with 3 mentors and 5 students (role-play / concierge). No app needed.`),
+     KEY(`Ask: <b>What is the biggest assumption in our project?</b> Then pick the prototype that tests it.`)],
+    think:`Write your team's biggest assumption in one sentence. Is it about the user, the technology, or the money?`,
+    fig:{label:`I need to…`, build:chooser} },
+
+  { nav:'Case: Embrace', title:'Case · Embrace infant warmer', minutes:10,
+    narration:[
+     `In 2007, Stanford students Jane Chen, Rahul Panicker and Linus Liang worked on hypothermia in low-birth-weight babies in the course <em>Design for Extreme Affordability</em>.`,
+     B.plain(`Their early prototype looked like a <b>small sleeping bag for babies</b>, with a reusable pouch of phase-change material that, once heated, stays at body temperature for several hours. No constant electricity needed.`),
+     B.ex(`Hospital incubators can cost <b>up to $20,000</b>; Embrace was designed to cost about <b>$200</b>. Observing the needs of rural families in Nepal led the team to add a second, at-home model for mothers in rural areas: the prototype changed after meeting real users.`),
+     KEY(`This is a <b>social venture</b>: SDG 3 (Good health and well-being), a low-cost prototype, and a design that changed after field observation. Your Project 1 should tell the same kind of story.`)],
+    think:`What would the team have missed if they had only tested in a Stanford lab?`,
+    src:`Stanford Biodesign. <em>Embrace</em> (Global Health Innovation Insight Series). · Stanford Daily (2010, November 18). At-risk babies kept warm by Stanford innovation.`,
+    notes:[`Keep figures as written: “up to $20,000” and “about $200” are from the Stanford Biodesign case.`],
+    fig:{label:`Embrace in numbers`, html:`<div class="tiles"><div><div class="n">2007</div><div class="t">Started as a student project at Stanford</div></div><div><div class="n">$200</div><div class="t">Target cost, vs up to $20,000 for an incubator</div></div><div><div class="n">2</div><div class="t">Models after field observation: clinic and home</div></div></div>`} },
+
+  { nav:'Match the technique', title:'Activity 1 · Match the technique', kind:'activity', minutes:10,
+    narration:[`In your team, pick the best first prototype for each idea. Then reveal the suggestions and discuss any you disagree with.`],
+    fig:{label:`Sort the ideas`, build:el=>W.sort(el,{buckets:['Sketch / mock-up','Paper / digital','Physical model','Storyboard / role-play'],items:[
+      {t:`An app that shows the nearest recycling point for e-waste`,a:1,why:`The risk is whether users can find and use it. Test the screens.`},
+      {t:`A reusable lunch box made from date-palm fibre`,a:2,why:`Users must hold it, open it, carry it.`},
+      {t:`A weekend tutoring service by university students for refugee children`,a:3,why:`It is a service: act out sign-up, first session and follow-up.`},
+      {t:`A poster campaign to cut water use in student housing`,a:0,why:`Show draft posters and ask what people understood.`},
+      {t:`A website where cafés list surplus food at a discount`,a:1,why:`Paper screens first; the café side and the student side.`},
+      {t:`A bench with a solar phone charger for public parks`,a:2,why:`Scale model to test size, seating and where the panel goes.`}]})} },
+
+  { nav:'Build v1', title:'Activity 2 · Build your initial prototype', kind:'activity', minutes:30, wide:true,
+    narration:[
+     `Answer the four questions on the right as a team, then <strong>build</strong> the simplest version today. Use what you have: paper, Canva, slides, cardboard, a mock-up or role-play.`,
+     `Last 10 minutes: test it with <strong>another team</strong>. They play your user. Write down what they did, what confused them, and one thing to change.`,
+     KEY(`Take <b>photos</b> of every version and keep your notes. The prototype is not a separate exercise: it becomes evidence in Project 1.`)],
+    notes:[`Circulate: push teams that are drawing a logo to draw the user's experience instead.`,`At minute 20, call "swap": each team tests with the team to its left.`],
+    fig:{label:`Prototype canvas · saves in your browser`, build:el=>W.worksheet(el,{id:'ent142-w5-proto',title:'ENT 142 · Week 5 · Initial prototype',fields:[
+      {l:'01 · Our solution: what exactly are we proposing?',rows:2},
+      {l:'02 · Our user: who will experience it?',rows:2},
+      {l:'03 · Our assumption: what must be true for it to work?',hint:'Choose the riskiest one.',rows:2},
+      {l:'04 · Our prototype: what is the simplest version we can build today?',hint:'Technique + materials.',rows:2},
+      {l:'Test notes: what did the testers do, and what confused them?',rows:3},
+      {l:'One change for version 2',rows:2}]})} },
+
+  { nav:'Prototype → Project 1', title:'Project 1 starts here', minutes:5,
+    narration:[
+     `You already have the problem, idea and SDG. Now you develop the venture into a complete <strong>Social Enterprise Project</strong>.`,
+     `<ul><li><b>Week 5:</b> prototype + project briefing</li><li><b>Week 6:</b> market + competition</li><li><b>Then:</b> business model, pitching and the Project 1 report (see the course map for the syllabus weeks).</li></ul>`,
+     KEY(`Open the <a href="project-1.html">Project 1 guide</a>. It walks through every section of the report, with a check to pass before you move on.`)],
+    fig:{label:`Your path to Project 1`, flow:[
+      {t:'Prototype v1',s:'Week 5',d:'Build and test today. Keep photos and notes.'},
+      {t:'Market + competition',s:'Week 6',d:'Who else serves this need? How big is the market?'},
+      {t:'Business model',s:'Week 7',d:'Lean canvas: how the venture earns and stays sustainable.'},
+      {t:'Report',s:'Project 1A',d:'4000-word group report. Deadline on Moodle.'},
+      {t:'Pitch',s:'Project 1B',d:'Individual 1-minute presentation + 2-minute Q&A.'}]} },
+
+  { nav:'Key takeaways', full:true, title:'Key takeaways · Week 5', kind:'review', minutes:10,
+    narration:[
+     KEY(`<b>If you remember only this…</b><ul><li><b>Prototype</b> = simple representation to see, explain and test an idea.</li><li><b>Goal</b> = learning, not perfection.</li><li><b>Six techniques:</b> sketch, storyboard, paper, digital, physical, role-play.</li><li><b>Choose</b> the technique that tests your biggest assumption.</li><li><b>Start low fidelity</b>; climb only when needed.</li><li><b>Evidence:</b> photos, test notes and changes go into Project 1.</li></ul>`),
+     `Use the questions below to check your team is ready for next week.`],
+    fig:{mindmap:{center:'Prototyping',branches:[
+      {t:'What it is',items:['See · experience · test','Learning, not perfection']},
+      {t:'Techniques',items:['Sketch · storyboard','Paper · digital','Physical · role-play']},
+      {t:'Choosing',items:['Biggest assumption first','Low fidelity before high']},
+      {t:'Real cases',items:['PalmPilot wooden model','Dropbox demo video','Embrace infant warmer']},
+      {t:'For Project 1',items:['Photos of each version','Test notes + changes']}]},
+      label:`Mind map · then check your team`, build:el=>W.practice(el,[
+      {q:`What is our biggest assumption, and which prototype tests it?`,type:'team',hint:`One sentence for the assumption; a technique chosen because it tests that assumption.`},
+      {q:`Who tested our prototype, and what did they do?`,type:'team',hint:`Real people (not teammates), what they did, not only what they said.`},
+      {q:`What will change in version 2, and why?`,type:'team',hint:`A specific change linked to a test observation.`},
+      {q:`Explain the difference between low- and high-fidelity prototypes with an example.`,type:'explain',hint:`Low = fast, cheap, rough (paper screens); high = closer to the real product (clickable mock-up, working demo); start low.`}],{label:'Show what good looks like',prefix:'<b>Good answer:</b> '})} },
+
+  { nav:'Exit check', title:'Exit check', kind:'check', minutes:5,
+    narration:[
+     `Six quick questions.`,
+     `<strong>Before Week 6:</strong> read Byers et al (2019). Ch. 4,7. Bring your prototype photos and test notes. Week 6 covers Industry Barriers, Identifying Competition, Positioning and Positioning Map, Porter's 5 Forces and the Competition Matrix.`],
+    fig:{label:`Six questions`, build:el=>W.quiz(el,[
+      {q:`The main purpose of an early prototype is to…`,o:[`impress investors`,`learn whether the idea works for users`,`replace market research`,`finish the product faster`],a:1,why:`The goal is learning, not perfection.`},
+      {q:`Your venture is a tutoring service. The best first prototype is probably…`,o:[`a 3D print`,`a storyboard or role-play`,`a functional app`,`a logo`],a:1,why:`Services are prototyped by showing or acting out the journey.`},
+      {q:`Which technique simulates interaction with screens, cheaply?`,o:[`Paper prototype`,`Physical model`,`Role-play`,`Business plan`],a:0,why:`Paper screens swapped by a teammate.`},
+      {q:`Choose the prototype that…`,o:[`looks most professional`,`tests your biggest assumption`,`is the most expensive`,`your teacher likes`],a:1,why:`Start from the assumption that must be true for the idea to work.`},
+      {q:`What did Jeff Hawkins' wooden PalmPilot model show?`,o:[`That prototypes must be digital`,`That a simple object can test real design questions`,`That wood is a good material for phones`,`Nothing useful`],a:1,why:`He tested size and daily use before building the device.`},
+      {q:`Where does your Week 5 prototype end up?`,o:[`Nowhere, it is practice`,`As evidence in Project 1`,`Only in the final exam`,`In Project 2 only`],a:1,why:`The Prototype Development section of the Project 1 report.`}])} }
+  ]
+});
+</script>
+</body>
+</html>

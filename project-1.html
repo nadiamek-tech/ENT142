@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Project 1 Guide · Social Enterprise Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#B4521E;--wk-soft:rgba(180,82,30,.10);--wk-d:#F2A06B;--wk-soft-d:rgba(242,160,107,.14)}
+.gate{font-family:var(--f-display);font-size:.92rem;display:grid;gap:12px}
+.gate h4{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;font-weight:400}
+.gate label.ck{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer;margin-bottom:5px}
+.gate label.ck input{margin-top:3px;accent-color:var(--wk);width:16px;height:16px}
+.gate label.ck:has(input:checked){border-color:var(--good);background:color-mix(in srgb,var(--good) 8%,transparent)}
+.gate ul{margin:0;padding-left:1.1em}
+.gate .stranger{border-left:4px solid var(--wk);background:var(--surface);padding:8px 12px;border-radius:0 8px 8px 0}
+.gate .flags li{color:var(--bad)}
+.gate .flags li span{color:var(--ink)}
+.status{display:grid;gap:6px}
+.status .track{height:10px;background:var(--sunk);border-radius:5px;overflow:hidden}
+.status .fill{height:100%;background:var(--wk);transition:width .25s}
+.status.done .fill{background:var(--good)}
+.status .lbl2{font-family:var(--f-mono);font-size:.78rem}
+.budget{display:grid;gap:7px;font-family:var(--f-display);font-size:.88rem}
+.budget .r{display:grid;grid-template-columns:minmax(0,1fr) 74px;gap:4px 10px;align-items:center}
+.budget .r .nm{display:flex;justify-content:space-between;gap:8px}
+.budget .r .nm span:last-child{font-family:var(--f-mono);font-size:.74rem;color:var(--muted);white-space:nowrap}
+.budget .r input{width:74px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-family:var(--f-mono);font-size:.82rem;text-align:right;grid-row:span 2}
+.budget .bar{height:8px;background:var(--sunk);border-radius:4px;overflow:hidden;position:relative}
+.budget .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--wk);border-radius:4px}
+.budget .bar.over i{background:var(--bad)}
+.budget .bar.ok i{background:var(--good)}
+.budget .tot{border-top:1px solid var(--line);padding-top:8px;font-weight:700;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.rub details{border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:8px 12px;margin-bottom:6px;font-family:var(--f-display);font-size:.9rem}
+.rub summary{cursor:pointer;font-weight:700}
+.rub dl{margin:8px 0 0;display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 10px}
+.rub dt{font-family:var(--f-mono);font-size:.74rem;color:var(--wk)}
+.rub dd{margin:0}
+.rub .desc{color:var(--muted);margin:6px 0 0}
+.seg2{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.seg2 button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;cursor:pointer;font-family:var(--f-display);font-size:.86rem}
+.seg2 button[aria-pressed="true"]{border-color:var(--wk);background:var(--wk-soft);font-weight:700}
+.sum{display:grid;gap:6px;font-family:var(--f-display);font-size:.9rem}
+.sum .s{display:grid;grid-template-columns:minmax(0,1fr) 90px;gap:10px;align-items:center}
+.sum .s a{color:var(--ink)}
+.req{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.req div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);font-family:var(--f-display)}
+.req b{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.req span{font-weight:700;font-size:1.02rem}
+.brief{font-family:var(--f-display);font-size:.93rem}
+.brief ol,.brief ul{margin:.3em 0 0;padding-left:1.2em}
+.brief li{margin-bottom:2px}
+@media (max-width:560px){.rub dl{grid-template-columns:minmax(0,1fr)}.req{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<script src="assets/course.js"></script>
+<script>
+const {W,B} = Lecture;
+const esc=W.esc;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your report</b>${html}</div>`;
+const BRIEF = (items,ordered)=>`<div class="brief"><b>Questions to answer (from the project brief)</b>${ordered?'<ol>':'<ul>'}${items.map(x=>`<li>${x}</li>`).join('')}${ordered?'</ol>':'</ul>'}</div>`;
+const FICT = `<span class="tag">fictional example</span> `;
+
+/* ---------- Word budget (suggested split of 4000 counted words) ---------- */
+const SECTIONS=[
+ ['intro','Introduction',250,'max 250 (brief)'],
+ ['concept','Concept and Vision',450],
+ ['market','Market Analysis',650],
+ ['customer','Customers and Customer Development',800],
+ ['compet','Competition and Positioning',550],
+ ['model','Sustainable Business Model',550],
+ ['proto','Prototype Development',400],
+ ['learn','Learning and Adaptation',350]];
+function budget(el){
+  const key='ent142-p1-budget'; let saved={}; try{saved=JSON.parse(store.get(key)||'{}')}catch(e){}
+  el.innerHTML=`<div class="budget">${SECTIONS.map(([id,t,w,n])=>`<div class="r"><div class="nm"><span>${t}</span><span>target ${w}${n?' · '+n:''}</span></div><input type="number" min="0" inputmode="numeric" data-id="${id}" aria-label="Words written for ${t}" placeholder="0" value="${saved[id]||''}"><div class="bar" data-b="${id}"><i></i></div></div>`).join('')}
+   <div class="tot"><span>Counted words</span><span id="bt">0 / 4000</span></div>
+   <p class="mono" style="color:var(--muted);margin:0">Not counted: cover page, table of contents, executive summary. Type your current word count per section; it saves in this browser.</p></div>`;
+  const upd=()=>{ let tot=0; SECTIONS.forEach(([id,t,w])=>{ const v=+el.querySelector(`input[data-id="${id}"]`).value||0; tot+=v; saved[id]=v||''; const b=el.querySelector(`[data-b="${id}"]`); b.querySelector('i').style.width=Math.min(100,v/w*100)+'%'; b.classList.toggle('over', id==='intro'?v>250:v>w*1.15); b.classList.toggle('ok', v>=w*.85 && !(id==='intro'?v>250:v>w*1.15)); });
+    const bt=el.querySelector('#bt'); bt.textContent=`${tot} / 4000`+(tot>0?(tot<3600?' · keep going':tot>4400?' · too long, cut':' · on target'):''); store.set(key,JSON.stringify(saved)); };
+  el.querySelectorAll('input').forEach(i=>i.addEventListener('input',upd)); upd();
+}
+
+/* ---------- Validation gate ---------- */
+const GATES={};
+function gate(id, g){ GATES[id]=g; return el=>{
+  const key='ent142-p1-gate-'+id; let st=[]; try{st=JSON.parse(store.get(key)||'[]')}catch(e){}
+  const host=W.h('div',{style:'margin-top:14px'}); el.appendChild(host);
+  host.innerHTML=`<div class="gate">
+    <div><h4>Validate before you move on</h4>${g.checks.map((c,i)=>`<label class="ck"><input type="checkbox" data-i="${i}" ${st[i]?'checked':''}><span>${c}</span></label>`).join('')}</div>
+    <div class="status"><div class="track"><div class="fill"></div></div><span class="lbl2"></span></div>
+    ${g.evidence?`<div><h4>Evidence to keep</h4><ul>${g.evidence.map(x=>`<li>${x}</li>`).join('')}</ul></div>`:''}
+    ${g.stranger?`<div class="stranger"><h4>Stranger test</h4>Give this section to someone outside your team. They should be able to answer: <b>${g.stranger}</b></div>`:''}
+    ${g.flags?`<div class="flags"><h4>Red flags</h4><ul>${g.flags.map(x=>`<li><span>${x}</span></li>`).join('')}</ul></div>`:''}
+  </div>`;
+  const boxes=[...host.querySelectorAll('input[type=checkbox]')], s=host.querySelector('.status');
+  const upd=()=>{ const n=boxes.filter(b=>b.checked).length; st=boxes.map(b=>b.checked); store.set(key,JSON.stringify(st)); s.querySelector('.fill').style.width=(n/boxes.length*100)+'%'; s.classList.toggle('done',n===boxes.length); s.querySelector('.lbl2').textContent= n===boxes.length?`All ${n} checks passed · ready for the next section ✓`:`${n} of ${boxes.length} checks passed`; };
+  boxes.forEach(b=>b.addEventListener('change',upd)); upd();
+};}
+
+/* ---------- Rubrics (verbatim) ---------- */
+const RUB_SYL={bands:['21-25 marks','17-20 marks','14-17 marks','9-13 marks','5-8 marks','1-4 marks'],rows:[
+ ['Knowledge and understanding · 25 marks – 25%','',[`Thorough application of an extensive knowledge base to all aspects of the Business Plan.  Fully identifies relevant external factors and appreciates their impact.`,`Excellent application of a broad knowledge base to all areas of the Business Plan. Clear identification of external factors and their impact.`,`Has a good knowledge base and is able to apply this consistently throughout the business plan.  Identifies appropriate external factors and has an appreciation of their likely impact.`,`Has a working knowledge and generally applies this consistently to the business plan; some areas may lack coherence.  External factors may be identified, but the likely impact is not fully considered. There may be a few areas of weakness Some areas may not be fully developed.`,`Identifies knowledge related to study but lacks coherence. External factors largely identified but some confusion in application. Some weak areas, lacks development and focus.`,`Limited knowledge base with little application. External factors little considered and only limited attempt to apply to context. Inaccurate or inappropriate information.`]],
+ ['Analysis · 25 marks- 25%','',[`Excellent presentation of findings relevant to assignment. A wide range of information critically analyzed and applied to justify group’s proposal. Theories relating to the business framework fully considered.`,`Clear presentation of findings relevant to assignment. A range of information critically analyzed and applied to justify group’s proposal. Theories relating to the business framework well considered.`,`A good presentation of findings relevant to the assignment.  A range of sources of information are considered, analyzed and used to justify the proposal.  There is some integration of theory into the business plan`,`A generally good presentation of the group’s findings although some areas may lack clarity.  Analysis used to develop proposal but there may be occasional inconsistencies. Analysis may not be fully developed in some areas.`,`A range of information analyzed but lacks clarity. Analysis used to develop proposal but not always consistent. Analysis insufficiently developed in some areas.`,`Little information gathered/ or irrelevant. Analysis very limited or inappropriate in most areas. Limited understanding of purpose of assignment or context of a small business.`]],
+ ['Synthesis and Creativity · 25 marks – 25%','',[`Deals with business potential creatively whilst recognizing limitations.  Selects and imaginatively develops product/concept/ operation within limitations of brief. Information given fully supports proposal.`,`Has a realistic appreciation of the business potential.  Knowledge is applied creatively whilst recognizing limitations.  Selects and logically develops product/concept/ operation within limitations of brief. Information given to support proposal.`,`Has an appreciation of the potential of the business and recognizes limitations.  The product/concept/ operation developed is consistent with the information presented.  The plan conforms to the brief.`,`Well-developed proposal.  The business is recognized but may be a little unrealistic.  The product/concept/ operation proposed is generally consistent with the information presented. Information is generally considered creatively. Generally, meets the requirements of the brief.`,`Most aspects of proposal well developed and appropriate but some inconsistencies. Information creativity considered in most areas.`,`Data generally poorly interpreted. Little creativity and generally poor application.  Proposed product/ concept/operation is not justified and limited development of proposal.  Does not conform to the brief.`]],
+ ['Evaluation and Validation · 25 marks – 25%','',[`Very detailed and accurate assessment of impact of proposal in light of the information gathered. Justification and viability clearly evident throughout business plan. Rigorous attention to detail.`,`Accurately assesses impact of proposal in light of the information gathered. Justification and viability evident throughout business plan and rigorous attention to detail.`,`Considers the impact of the proposal in light of the information found.  The plan is generally well justified, and the business proposal is viable.  Good attention to detail.`,`Evaluates key information well and uses this to develop a well-supported rationale for the business plan.  Proposals are well justified and there is generally good attention to detail, although a few areas could be more fully developed.`,`Appropriate evaluation of key information used to develop rationale for business plan. Justification incorporated into proposal, but some sections lack clarity.`,`Evaluation of information gathered is weak.  There is little justification of the business proposal.  The business plan is incomplete, and the proposal lacks viability/ credibility.`]]],
+ foot:'Total Marks 100% · Adjusted for 40%'};
+const RUB_DECK={bands:['100-80 · 19-20 marks','79-70 · 16-18 marks','69-60 · 12-15 marks','59-50 · 8-11 marks','49-40 · 4-7 marks','39-20 · 1-3 marks','19-0 · 0 marks'],rows:[
+ ['KNOWLEDGE AND UNDERSTANDING · 20 marks – 20%',`This criterion demonstrates comprehensive/ detailed knowledge with specialization in depth and an awareness of the provisional nature of the state of knowledge.`,[`Extensive range, depth, and complexity of relevant material.`,`Clearly defined range and depth of relevant material in all areas.`,`Clearly defined range and depth of relevant material in most areas.`,`Comprehensive and relevant detail but lacking depth in some areas.`,`Has good working knowledge and relevant detail but lacking depth in most areas.`,`Moderate range with some relevant material, little depth.`,`Poor and limited use of relevant material.`]],
+ ['APPLICATION OF KNOWLEDGE · 20 marks- 20%',`Demonstration of knowledge through the use of models/ examples.`,[`Shows detailed application of relevant concepts and theories to issues of study.`,`All relevant concepts are covered and applied and are relevant to the area of study.`,`Most relevant concepts are covered and applied and are relevant to the area of study.`,`Understands most concepts which are related to study.`,`Understands some concepts which are related to study.`,`Understands concepts but application is incomplete or inappropriate.`,`Very limited use of concepts and theories. Application is not given or considered.`]],
+ ['ANALYSIS AND EVALUATION · 20 marks- 20%',`This criterion focuses on the analysis and evaluation of new and/or abstract data and situations without guidance using a wide range of techniques appropriate to the subject. Use of appropriate references to support the arguments.`,[`Well integrated study within depth original and critical analysis. In depth and critical evaluation of material. Draws detailed conclusions relevant to study.`,`Well integrated study with original and critical analysis. Critical evaluation of data. All conclusions relevant to study.`,`Largely integrated study with a good level of original and critical analysis. Critical evaluation of most data. Most conclusions relevant to study.`,`Largely integrated study with some original and critical analysis. Evaluates using selected techniques, judging value of information. Some conclusions do not follow on from data.`,`Shows an acceptable level of original and critical analysis. Evaluates using selected techniques judging value of most information.  Conclusions do not follow on from data.`,`Mainly descriptive, some level of originality and critical analysis. Unable to make judgements about relevance and significance of data.`,`Wholly descriptive. Unable to judge the value of information.`]],
+ ['COMMUNICATION/ PRESENTATION · 20 marks – 20%',`This criterion focuses on the use of professional language, visualizations, format, and referencing style.`,[`Always communicates effectively and excellently in an appropriate format/ language in a clear and concise manner.`,`Always communicates effectively in an appropriate format/language in a clear and concise manner.`,`Usually communicates effectively in an appropriate format/language. Usually presents information in a clear and concise manner.`,`Usually communicates in an appropriate format/language. Usually presents information in a clear and mostly concise manner.`,`Meaning is clear and format conforms to basic requirements. May either lack detail or include a considerable amount of irrelevant material.`,`Meaning is largely clear, but use of language and format is inappropriate.`,`Does not communicate effectively. Unclear and rambling.  Does not use appropriate format/ language.`]]],
+ foot:'Project 1 Part A: Report · rubric shown in the Week 5 briefing'};
+const RUB_PRES={bands:['Exemplary (4 Marks)','Proficient (3 Marks)','Novice (2 Marks)','Poor (1-0 Marks)'],rows:[
+ ['Content (4 Marks)','',[`Information is completely presented, and content is strongly supported and laid out`,`A good amount of information is presented, and content is well supported and laid out`,`Lack of information and content is not well supported`,`Presentation lacks any important information and lacks any content`]],
+ ['Thinking and Communication (4 Marks)','',[`The presentation shows extensive work, preparation and thought in development. Presentation is excellently communicated to the audience`,`The presentation shows a good amount of work, thought and time was put into it Presentation was well communicated to the audience`,`The presentation shows a barely adequate time or thought was placed Audience not convinced by presentation`,`Very little or no real effort placed Presentation lacks form. Points are confusing`]],
+ ['Illustration (4 Marks)','',[`Presentation supported by many aids and information`,`Presentation was supported by an adequate amount of material`,`Presentation not real supported by many aids at all`,`No aids were utilized in the presentation`]],
+ ['Presentation (4 Marks)','',[`Excellent presentation. Clear and confident. Points clearly expressed and grasped audience attention`,`Good presentation. Clear and confident. Points are well expressed and grasped audience attention for a period of time`,`Presentation lacks substance, but points are presented. Audience somewhat bored or lost`,`Poor presentation skill. Unclear and not confident in what is being expressed. Audience uninterested`]],
+ ['Question & Answers (4 Marks)','',[`Excellent response to question. Clear and confident while answering. Points clearly elaborate with logical evidence. Additional examples given in response to questions`,`Very good response to question. Clear and confident while answering. Points clearly elaborate with logical evidence.`,`Response lacking evidence to question. Not so much clear and confident while answering. Points are somewhat elaborate with reasons.`,`Poor response to question. Unclear and not confident in what is being expressed. Audience is uninterested.`]]],
+ foot:'Maximum Marks (20) · Marks Adjusted to 10%'};
+const rubHTML=r=>`<div class="rub">${r.rows.map(([t,d,cells],i)=>`<details ${i===0?'open':''}><summary>${t}</summary>${d?`<p class="desc">${d}</p>`:''}<dl>${cells.map((c,j)=>`<dt>${r.bands[j]}</dt><dd>${c}</dd>`).join('')}</dl></details>`).join('')}<p class="mono" style="color:var(--muted)">${r.foot}</p></div>`;
+function rubrics(el){
+  const tabs=[['Syllabus rubric (official, 4 × 25)',RUB_SYL],['Briefing rubric (4 × 20)',RUB_DECK]];
+  el.innerHTML=`<div class="seg2">${tabs.map((t,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===0}">${t[0]}</button>`).join('')}</div><div id="rb"></div>`;
+  const rb=el.querySelector('#rb'), bs=el.querySelectorAll('.seg2 button');
+  const show=i=>{ bs.forEach((b,j)=>b.setAttribute('aria-pressed',j===i)); rb.innerHTML=rubHTML(tabs[i][1]); };
+  bs.forEach(b=>b.addEventListener('click',()=>show(+b.dataset.i))); show(0);
+}
+
+/* ---------- Final check: reads every gate ---------- */
+function summary(el){
+  const ids=Object.keys(GATES).filter(k=>k!=='final');
+  const rows=ids.map(id=>{ let st=[]; try{st=JSON.parse(store.get('ent142-p1-gate-'+id)||'[]')}catch(e){} const n=st.filter(Boolean).length, t=GATES[id].checks.length; return [id,n,t]; });
+  const all=rows.reduce((a,r)=>a+r[1],0), tot=rows.reduce((a,r)=>a+r[2],0);
+  el.innerHTML=`<div class="sum">${rows.map(([id,n,t])=>`<div class="s"><span><a href="#s${GATES[id].scene}" data-go="${GATES[id].scene}">${GATES[id].name}</a></span><span class="tag ${n===t?'good':n?'warn':''}">${n}/${t} ${n===t?'✓':''}</span></div>`).join('')}
+    <div class="status ${all===tot?'done':''}" style="margin-top:6px"><div class="track"><div class="fill" style="width:${tot?all/tot*100:0}%"></div></div><span class="lbl2">${all} of ${tot} section checks passed</span></div></div><div id="fin" style="margin-top:16px"></div>`;
+  el.querySelectorAll('a[data-go]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); const b=document.querySelectorAll('.toc ol li button')[+a.dataset.go]; if(b) b.click(); }));
+  gate('final',{name:'Before you submit',checks:[
+    `Word document, one file for the whole group.`,
+    `Cover page: CUD logo, report title, names and student IDs of all members, course name and code, word count.`,
+    `Table of contents with page numbers that match the final file.`,
+    `Executive summary is one page or less and was written last.`,
+    `Every section from the brief is present, in the brief's order (Introduction → Learning and Adaptation).`,
+    `Counted words are close to 4000; the Introduction is 250 words or fewer.`,
+    `Every number, statistic and claim has an APA in-text citation and a full reference.`,
+    `No bare links in the reference list.`,
+    `Prototype photos or screenshots are inside the report, with captions.`,
+    `Every member has written their own part of Learning and Adaptation.`,
+    `One person has read the whole report aloud to check flow and language.`,
+    `Turnitin similarity is at or below 20%.`]})(el.querySelector('#fin'));
+}
+
+Lecture.mount({
+  id:'ent142-p1', week:'P1', course:'ENT 142', short:'Project 1 Guide', eyebrow:'Project 1 · CLO 1, 2, 3', endLabel:'End of guide',
+  title:'Project 1 · Social Enterprise Project',
+  meta:'Student guide · report (40%) + presentation (10%)',
+  scenes:[
+  { nav:'Start here', title:'Tell the “story” of your social venture', minutes:0,
+    narration:[
+     `Syllabus: <em>“In groups students will tell the "story" of their proposed social and sustainable venture in a written report. The report should include key areas such as concept, market analysis, customer development, competition, sustainable business model and prototype. Students are required to include how their enterprising skills developed between the time they chose their ideas to final project.”</em>`,
+     `You continue in your teams (4–5 members). This guide walks through the report <strong>one section at a time</strong>. Each section ends with a <strong>validation gate</strong>: a short list of checks your team must pass before moving on. Your ticks save in this browser.`,
+     B.plain(`A good report is not a list of answers. It is a <b>story with evidence</b>: we saw a problem → we had an idea → we tested it → people told us something → we changed → here is the venture now.`),
+     KEY(`Work in this order: <b>Customer evidence first</b>, then market and competition, then the business model. Write the Introduction and Executive Summary <b>last</b>.`)],
+    src:`Sources: ENT 142 syllabus (Assessment Methodology, Rubrics) and the Week 5 Project 1A briefing.`,
+    notes:[`Deadline is TBA in the briefing; the syllabus schedule lists the Project 1 Report in Week 9 and the Presentation in Week 10. Announce exact dates on Moodle.`],
+    fig:{label:`Project 1A · requirements`, html:`<div class="req"><div><b>Type</b><span>Group report</span></div><div><b>File</b><span>Word document</span></div><div><b>Length</b><span>4000 words</span></div><div><b>Submission</b><span>Turnitin · Moodle/MyCUD</span></div><div><b>Weight</b><span>Report 40% · Presentation 10%</span></div><div><b>Deadline</b><span>TBA on Moodle</span></div></div>
+      <table class="tbl" style="margin-top:14px"><thead><tr><th>CLO (as in the briefing)</th><th>GELO</th></tr></thead><tbody>
+      <tr><td>CLO1: Explain the process of innovation and entrepreneurship.</td><td>6</td></tr>
+      <tr><td>CLO2: Apply skills, or improvement on skills needed for effective diverse teams and presentation.</td><td>2</td></tr>
+      <tr><td>CLO3: Examine the value of innovation and entrepreneurship for their society and economy.</td><td>2, 6</td></tr></tbody></table>`} },
+
+  { nav:'Report map & words', title:'The report map and your word budget', minutes:0, wide:true,
+    narration:[
+     `The report has these parts, in this order: <strong>Cover Page · Table of Contents · Executive Summary · Introduction · Concept and Vision · Market Analysis · Customers and Customer Development · Competition and Positioning · Sustainable Business Model · Prototype Development · Learning and Adaptation · References</strong>.`,
+     B.plain(`The cover page, table of contents and executive summary are <b>not counted</b> in the 4000 words. The Introduction has a limit of <b>250 words</b>. The split on the right is a <b>suggested</b> budget: the biggest share goes to customer development, because that is where your evidence lives.`),
+     B.ex(`Your team has 820 words in Market Analysis and 300 in Customer Development. The budget shows the problem at once: you described the market but have not yet shown that real customers want your solution.`),
+     KEY(`Use the budget as a balance check, not a rule. A section far above or below its target usually signals padding or missing evidence.`)],
+    fig:{label:`Word budget · type your counts`, build:budget, caption:`Suggested targets add up to 4000. Green = within range; red = over.`} },
+
+  { nav:'How to validate', title:'How to validate each step', minutes:0, wide:true,
+    narration:[
+     `Every section passes three tests before you move on:`,
+     `<ul><li><b>1 · Brief test:</b> does it answer every question in the brief for that section? Tick them off.</li><li><b>2 · Evidence test:</b> is every claim supported by data, a source or your own research (interviews, survey, prototype test)? Opinions are labelled as opinions.</li><li><b>3 · Stranger test:</b> someone outside your team reads only this section and can answer one key question about it.</li></ul>`,
+     B.ex(`Claim: “Students want cheaper food.” Fails the evidence test. Better: “14 of the 18 students we interviewed said they skip dinner on campus because of price (team interviews, Week 6).” ${FICT}`),
+     `Keep one shared <strong>evidence log</strong> from today: every interview, survey, photo, source and change, with a date and who did it. Use the team plan on the right to share out sections.`,
+     KEY(`If a section fails a test, fix it before you start the next one. Problems in customer evidence spread into every later section.`)],
+    notes:[`Ask each team to show you their evidence log at the start of Weeks 6, 7 and 8. It is the quickest way to spot teams that are writing without research.`],
+    fig:{label:`Team plan · saves in your browser`, flow:[
+      {t:'Week 5',s:'prototype + brief',d:'Prototype v1 built and tested. Team plan agreed. Evidence log started.'},
+      {t:'Week 6',s:'market + competition',d:'Customer interviews done. Market and competition sections drafted.'},
+      {t:'Week 7',s:'business model',d:'Lean canvas → Sustainable Business Model section. Prototype v2.'},
+      {t:'Week 8',s:'full draft',d:'All sections drafted. Swap with another team for the stranger test.'},
+      {t:'Submit',s:'report',d:'Final edit, references, Turnitin, submit. Date on Moodle.'}], flowNote:'suggested milestones',
+      build:el=>W.worksheet(el,{id:'ent142-p1-team',title:'ENT 142 · Project 1 · Team plan',fields:[
+      {l:'Team name and venture name',rows:1},
+      {l:'Members and student IDs',rows:3},
+      {l:'Who leads each section?',hint:'One owner per section; everyone reviews.',rows:4},
+      {l:'Where is our shared evidence log?',hint:'e.g. a shared OneDrive folder',rows:1},
+      {l:'Our internal deadline for the full draft',rows:1}]})} },
+
+  { nav:'Cover, contents, summary', title:'Cover page, table of contents and executive summary', minutes:0,
+    narration:[
+     BRIEF([`<b>Cover page</b> (presented professionally): CUD Logo · Report Title · Name and Student IDs of Group Members · Course Name &amp; Code · Word count.`,`<b>Table of contents:</b> the contents of the report listed with the page numbers.`,`<b>Executive summary:</b> in not more than a page, summarise the entire document. Consider it similar to an abstract. Highlight the main items discussed in the document.`]),
+     B.plain(`None of these three count towards the word count. Build the table of contents automatically in Word (References → Table of Contents) using Heading styles, so page numbers stay correct. Write the executive summary <b>last</b>.`),
+     B.ex(`${FICT}<i>ShareBite is a student-led social venture that connects cafés near Dubai Knowledge Park with students who buy surplus meals at a discount before closing time. It supports SDG target 12.3 on food waste. We interviewed 18 students and 3 café managers and tested a paper prototype with 12 users, which led us to… Our model earns a 15% commission per meal… The next step is…</i>`),
+     KEY(`An executive summary answers: <b>problem · solution · who · evidence · how it earns · impact · next step</b>, in one page.`)],
+    fig:{label:`Gate · front matter`, build:gate('front',{name:'Cover, contents, summary',scene:3,checks:[
+      `Cover has all five items: CUD logo, title, names + IDs, course name and code, word count.`,
+      `Table of contents is generated from headings and page numbers match.`,
+      `Executive summary fits on one page.`,
+      `It mentions the problem, solution, customer, evidence, revenue model, impact and next step.`,
+      `It contains no new information that is not in the report.`],
+      stranger:`What does this venture do, for whom, and why should I believe it can work?`,
+      flags:[`An executive summary that only says what each chapter will contain (“Section 3 discusses…”).`,`Typed page numbers that no longer match.`]})} },
+
+  { nav:'Introduction', title:'Introduction · 250 words or fewer', minutes:0,
+    narration:[
+     BRIEF([`Provide an introduction to the project and the report you are preparing.`,`Talk about the social problem you are targeting in the report.`,`Provide details of the creative process behind the ideas.`,`This section should not be more than 250 words.`]),
+     B.plain(`Three short paragraphs: <b>(1)</b> the social problem, with one sourced fact; <b>(2)</b> how your team arrived at the idea (the design thinking steps from ENT 141 and Week 2 idea selection); <b>(3)</b> what this report covers.`),
+     B.ex(`${FICT}<i>An estimated 1.05 billion tonnes of food were wasted worldwide in 2022 (UNEP, 2024). On our campus, we noticed cafés discarding unsold sandwiches every evening. Using empathy interviews and an idea-selection matrix, our team narrowed 14 ideas down to ShareBite…</i><br><span class="mono">The UNEP figure is real; the campus details are fictional.</span>`),
+     KEY(`The social problem is stated with a <b>source</b>, and the creative process names the <b>methods</b> you used, not just “we brainstormed”.`)],
+    src:`United Nations Environment Programme (2024). <em>Food Waste Index Report 2024</em>. UNEP.`,
+    fig:{label:`Gate · introduction`, build:gate('intro',{name:'Introduction',scene:4,checks:[
+      `250 words or fewer.`,
+      `The social problem is stated clearly, with at least one cited fact.`,
+      `The SDG (and target if possible) is named.`,
+      `The creative process names real methods (e.g. interviews, idea-selection matrix, prototype).`,
+      `Last sentences tell the reader what the report covers.`],
+      stranger:`What problem is this team solving, and why does it matter?`,
+      flags:[`Opening with a dictionary definition of entrepreneurship.`,`Big unsourced claims (“millions of people suffer…”).`]})} },
+
+  { nav:'Concept & vision', title:'Concept and Vision', minutes:0,
+    narration:[
+     BRIEF([`How did you generate the entrepreneurial idea?`,`Explain what the market opportunity is and how your solution addresses this.`,`What makes your solution particularly compelling? How does it make the world a better place?`,`Has anyone tried something like this before?`,`If so, why did they fail or succeed, and why is the opportunity still attractive?`]),
+     B.plain(`Write a one-sentence <b>value proposition</b> first: <i>For [user] who [problem], [venture] is a [category] that [benefit]. Unlike [alternative], we [difference].</i> Then explain the opportunity, the social impact (link your SDG and the triple bottom line from Week 4), and who has tried this before.`),
+     B.ex(`${FICT}<i>For university students in Dubai who find campus food too expensive, ShareBite is a surplus-meal app that sells cafés' unsold food at up to 50% off. Unlike throwing food away, cafés recover some revenue and cut waste.</i><br>Who tried before: food-rescue apps such as Too Good To Go in Europe (real); in the UAE, the UAE Food Bank (launched January 2017) collects surplus food from hotels, restaurants and grocery chains for people in need (real). Explain what you learn from them.`),
+     KEY(`“Has anyone tried this before?” is never answered with “no”. Find the closest examples and explain why your opportunity is <b>still attractive</b>.`)],
+    src:`UAE Cabinet (2017). Mohammed bin Rashid Al Maktoum launches first UAE Food Bank. uaecabinet.ae`,
+    fig:{label:`Gate · concept and vision`, build:gate('concept',{name:'Concept and Vision',scene:5,checks:[
+      `A one-sentence value proposition opens the section.`,
+      `The market opportunity is explained (who needs this and why now).`,
+      `The social and environmental benefit is linked to a named SDG.`,
+      `At least two similar past or current ventures are named and cited.`,
+      `You explain why they succeeded or failed, and why your opportunity is still attractive.`],
+      stranger:`How is this different from what already exists?`,
+      flags:[`“Our idea is unique and has no competitors.”`,`Vision written as a slogan with no explanation.`]})} },
+
+  { nav:'Market analysis', title:'Market Analysis', minutes:0, wide:true,
+    narration:[
+     BRIEF([`What industry or sector of the economy are you addressing?`,`Why is this market attractive?`,`What segment of the overall market are you pursuing?`,`What market research can be done to describe this market need?`,`What is the total industry or category sales over the past three years?`,`How attractive is the industry?`,`If this is a new market potential, what is the best analogous market data that illustrates the opportunity?`,`Project the potential market size and growth for your opportunity.`]),
+     B.plain(`Size the market in three circles. <b>TAM</b>: everyone who could use this. <b>SAM</b>: the part you can serve (your city, your segment). <b>SOM</b>: the part you can realistically reach in year 1–3. Show your calculation step by step and cite every input.`),
+     B.ex(`<span class="tag">illustrative numbers</span> Students in Dubai (TAM, from an official source) → students at universities in one area, e.g. Dubai Knowledge Park (SAM) → 5% of those who buy one meal a week in year 1 (SOM). Then: SOM users × meals per year × average price = potential revenue. Replace every number with a sourced one.`),
+     `Useful sources: UAE Federal Competitiveness and Statistics Centre (fcsc.gov.ae), Dubai Statistics Center (dsc.gov.ae), the UAE open data portal (bayanat.ae), World Bank Open Data (data.worldbank.org), industry reports in the CUD library databases, and news from WAM, The National, Gulf News or Khaleej Times.`,
+     KEY(`If no data exists for your new market, use an <b>analogous market</b> and say so: e.g. food-delivery or food-rescue data in a similar city.`)],
+    notes:[`Most common weakness: a single big number (“the global food market is $X trillion”) with no segment and no calculation. Ask for TAM → SAM → SOM with sources.`],
+    fig:{label:`TAM · SAM · SOM`, html:`<svg viewBox="0 0 400 250" style="width:100%;height:auto;display:block" role="img" aria-label="Three nested circles: TAM contains SAM contains SOM">
+      <circle cx="200" cy="125" r="118" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="1.5"/>
+      <circle cx="200" cy="150" r="80" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="1.5"/>
+      <circle cx="200" cy="180" r="42" fill="var(--wk)" opacity=".85"/>
+      <text x="200" y="40" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="15" fill="var(--ink)">TAM · total market</text>
+      <text x="200" y="100" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="14" fill="var(--ink)">SAM · you can serve</text>
+      <text x="200" y="185" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="13" fill="var(--on-wk)">SOM · year 1–3</text></svg>`,
+      build:gate('market',{name:'Market Analysis',scene:6,checks:[
+      `The industry or sector is named.`,
+      `Your target segment is defined (who, where, how many).`,
+      `Industry or category sales for the past three years are reported with sources, or an analogous market is used and explained.`,
+      `TAM → SAM → SOM (or similar) is calculated step by step, every input cited.`,
+      `Growth is projected and the assumption behind it is stated.`,
+      `You conclude whether the market is attractive and why.`],
+      evidence:[`Screenshots or tables of the source data, saved in the evidence log.`,`Your calculation in a small table.`],
+      stranger:`How many customers could this venture realistically reach, and how do you know?`,
+      flags:[`Numbers with no source.`,`Global figures only, with no link to your segment.`,`Sources that are blogs with no author or date.`]})} },
+
+  { nav:'Customer development', title:'Customers and Customer Development', minutes:0, wide:true,
+    narration:[
+     BRIEF([`Who is your primary customer/user?`,`What specific problem or need does this customer experience?`,`How does the customer currently deal with this problem?`,`Why is this problem important to the customer?`,`What are the customer's main pain points or difficulties?`,`How did you research and understand your customer?`,`How many potential customers/users did you reach?`,`What did you learn from your customer research?`,`What was the most important feedback you received?`,`Did customer feedback confirm or challenge your original assumptions?`,`Did you change your idea, solution, or target customer based on the feedback?`,`What exactly did you change and why?`,`What evidence suggests that customers would use or value your solution?`,`What do you still need to learn about your customer?`,`What is your next customer-development action?`],true),
+     B.plain(`This is the heart of the report. Talk to <b>real potential users</b>, not just friends. Ask about <b>what they did last time</b>, not what they might do. (“When did you last throw food away? What happened?” beats “Would you use an app for this?”)`),
+     B.ex(`${FICT}Evidence table:<br>• Interviews: 18 students, 3 café managers<br>• Survey: 42 responses<br>• Prototype test: 12 users<br><b>Assumption challenged:</b> we thought students wanted delivery; 11 of 18 preferred to collect, to keep the price low. <b>Change:</b> we dropped delivery.`),
+     KEY(`Markers look for the loop: <b>assumption → research → what we learned → what we changed</b>. Show at least one real change.`)],
+    notes:[`Suggested minimum for teams of 4–5: about 10–15 interviews plus one prototype test round. Adjust to your expectation and announce it.`],
+    fig:{label:`Gate · customer development`, build:gate('customer',{name:'Customer Development',scene:7,checks:[
+      `The primary customer is described precisely (not “everyone”).`,
+      `Their problem, current workaround and pain points are described in their own words (quotes).`,
+      `Research methods and numbers are reported (how many interviews, survey responses, tests).`,
+      `At least one original assumption is confirmed or challenged with evidence.`,
+      `At least one change to the idea, solution or customer is explained (what and why).`,
+      `There is evidence that customers would use or value the solution.`,
+      `Open questions and the next customer-development action are stated.`],
+      evidence:[`Interview notes (anonymised), survey results, prototype test notes, photos.`,`Short quotes you can use in the report and the pitch.`],
+      stranger:`What did this team learn from customers that changed their idea?`,
+      flags:[`Only a survey of friends with yes/no questions.`,`“Everyone loved our idea.”`,`No change at all between the first idea and the final one.`]})} },
+
+  { nav:'Competition & positioning', title:'Competition and Positioning', minutes:0,
+    narration:[
+     BRIEF([`Who else serves this customer need?`,`Who might attempt to serve this market in the future?`,`What advantages and weaknesses do these competitors and would-be competitors have?`,`What share of the market do specific competitors serve?`,`What are the barriers to entry for you?`,`What are the barriers to entry for additional competitors?`,`How could partners and allies best help you overcome competition from established enterprises or other startups?`]),
+     B.plain(`List three kinds of competition: <b>direct</b> (same solution), <b>indirect</b> (different solution, same need) and <b>substitutes</b> (what people do today, including doing nothing). Use the Week 6 tools: a <b>competition matrix</b>, a <b>positioning map</b> on two axes your customers care about, and <b>Porter's 5 Forces</b> for barriers.`),
+     B.ex(`${FICT}Positioning map for ShareBite: x-axis = price for students, y-axis = convenience. Direct: other surplus-food apps. Indirect: café discounts at closing time. Substitute: cooking at home, or the food simply being thrown away. Partner: the café owners' association and the university.`),
+     KEY(`A competitor table must show <b>weaknesses you can use</b> and <b>barriers you must overcome</b>, not only names.`)],
+    fig:{label:`Gate · competition`, build:gate('compet',{name:'Competition and Positioning',scene:8,checks:[
+      `Direct, indirect and substitute competitors are listed (at least 3 in total), with sources.`,
+      `A competition matrix compares you on 4–6 factors customers care about.`,
+      `A positioning map shows where you sit and the gap you target.`,
+      `Barriers to entry for you and for future competitors are explained (Porter's 5 Forces or similar).`,
+      `Market share is given where data exists, or the gap in data is stated.`,
+      `Partners or allies are named, with how they help.`],
+      stranger:`Why would a customer choose you over the alternatives?`,
+      flags:[`“We have no competitors.”`,`Axes on the map that customers do not care about (e.g. “innovation”).`]})} },
+
+  { nav:'Business model', title:'Sustainable Business Model', minutes:0,
+    narration:[
+     BRIEF([`Since you have discovered an opportunity and discussed this with potential customers, how will you turn it into a business?`,`What is the business model?`,`How will you generate revenue?`,`What is the major risk to address right away (e.g., market or technical)?`]),
+     B.plain(`Summarise your <b>Lean Canvas</b> (Week 7). Explain <b>who pays</b> (it may not be the user), <b>for what</b>, and <b>how much</b>, and show that costs are covered. A social enterprise reports on the <b>triple bottom line</b>: people, planet and profit (Week 4).`),
+     B.ex(`${FICT}Users pay the discounted price; ShareBite keeps a 15% commission from the café. Second stream: a monthly sustainability report sold to cafés for their CSR reporting. Impact measure: kilograms of food saved per month. Major risk: cafés may not list food consistently, so we will test with 3 cafés for 4 weeks first.`),
+     KEY(`Name <b>one major risk</b> and the <b>first test</b> you will run to reduce it. That is what “sustainable” means for a new venture.`)],
+    fig:{label:`Gate · business model`, build:gate('model',{name:'Sustainable Business Model',scene:9,checks:[
+      `The business model is explained in plain words (a Lean Canvas figure helps).`,
+      `Revenue streams are clear: who pays, for what, at what price.`,
+      `Main costs are listed and you show how revenue can cover them (simple estimate).`,
+      `Social and environmental impact is measured with at least one indicator.`,
+      `The major risk is named, with the first action to address it.`],
+      stranger:`How does this venture make enough money to keep going?`,
+      flags:[`“We will earn money from ads” with no numbers.`,`Relying only on donations with no plan to secure them.`]})} },
+
+  { nav:'Prototype development', title:'Prototype Development', minutes:0,
+    narration:[
+     BRIEF([`From the analysis and evaluation of your idea and its potential benefit, prepare a prototype (2D/3D) that encompasses the main concept and visual presentation of the idea.`]),
+     B.plain(`Use your Week 5 work. Show the prototype (photos, screenshots, storyboard), explain <b>what assumption it tested</b>, <b>who tested it</b>, <b>what happened</b>, and <b>what changed</b> between version 1 and version 2.`),
+     B.ex(`${FICT}Figure 4: paper prototype v1 (3 screens). Tested with 12 students. 7 could not find the pickup time. Figure 5: digital mock-up v2 (Canva) with the pickup time on the first screen; 11 of 12 found it.`),
+     KEY(`Every figure needs a <b>caption</b> and a reference in the text (“see Figure 4”). The prototype is evidence, not decoration.`)],
+    src:`See <a href="week-05.html">Week 5 · Prototyping</a>.`,
+    fig:{label:`Gate · prototype`, build:gate('proto',{name:'Prototype Development',scene:10,checks:[
+      `A 2D or 3D prototype is shown with clear images and captions.`,
+      `The technique chosen is explained and linked to the assumption it tests.`,
+      `Test details are reported: who, how many, what they did.`,
+      `Changes from version 1 to version 2 are shown and explained.`,
+      `The prototype matches the solution described in the rest of the report.`],
+      stranger:`What does the solution look like, and what did testing change?`,
+      flags:[`Only a logo or a poster.`,`A prototype that was never tested with anyone.`]})} },
+
+  { nav:'Learning & adaptation', title:'Learning and Adaptation', minutes:0,
+    narration:[
+     BRIEF([`What did each group member learn from ENT141 and ENT142?`,`How have your enterprising skills developed between the time you chose the idea and producing the final project?`,`Is this idea a true opportunity or not?`]),
+     B.plain(`Each member writes a short paragraph in their own voice using <b>Before → Experience → Now → Evidence</b>: what I could do before, what I did, what I can do now, and proof (a moment, a task, a result). Then the team answers together: <b>is this a true opportunity?</b> An honest “not yet, because…” can score well if it is justified.`),
+     B.ex(`${FICT}<i>Before ENT 142 I avoided talking to strangers. Running 6 café-manager interviews taught me to prepare questions and listen without defending our idea. Evidence: the manager at Café X suggested the CSR report, which became our second revenue stream.</i>`),
+     KEY(`This section links to CLO 2 (teamwork) and prepares Project 2, your reflective portfolio. Name <b>specific</b> skills and moments.`)],
+    fig:{label:`Gate · learning`, build:gate('learn',{name:'Learning and Adaptation',scene:11,checks:[
+      `Every member has their own paragraph, with their name.`,
+      `Each paragraph names a specific skill and a specific moment or task as evidence.`,
+      `Learning from both ENT 141 and ENT 142 is mentioned.`,
+      `The team gives a justified answer to “Is this a true opportunity?”.`],
+      stranger:`What can each member do now that they could not do before?`,
+      flags:[`Identical paragraphs for each member.`,`General phrases (“I learned teamwork is important”) without an example.`]})} },
+
+  { nav:'References & format', title:'References and format', minutes:0,
+    narration:[
+     BRIEF([`List the academic and non-academic references for your report.`,`It must be in APA format; incorrect references will not be accepted.`,`Links are not references. If you have pasted links as references, they will not be considered.`,`More references that are relevant to the project show that the report has been prepared after extensive research.`]),
+     B.plain(`APA 7: <b>Author. (Year). <i>Title</i>. Publisher or site. URL</b>. In the text: (Byers et al., 2019) or Byers et al. (2019) argue that…`),
+     B.ex(`<b>Book:</b> Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <i>Technology ventures: From idea to enterprise</i> (5th ed.). McGraw-Hill Education.<br><b>Report:</b> United Nations Environment Programme. (2024). <i>Food waste index report 2024</i>. UNEP.<br><b>Not a reference:</b> https://www.example.com/article123`),
+     `The syllabus limit applies: the maximum permissible similarity index is <strong>20%</strong> for assignments submitted through Turnitin.`,
+     KEY(`Use the course textbook and reference books where they fit (Byers et al., 2019; Liedtka et al., 2017; Bridge et al., 2020). Mix academic and credible non-academic sources.`)],
+    fig:{label:`Gate · references`, build:gate('refs',{name:'References and format',scene:12,checks:[
+      `Every reference is in APA 7 format, in alphabetical order.`,
+      `Every in-text citation has a reference, and every reference is cited in the text.`,
+      `No bare links; web sources have author or organisation, year and title.`,
+      `At least one course text (textbook or reference book) is used.`,
+      `Headings, figure captions and table titles are consistent throughout.`],
+      flags:[`References copied from a chatbot without checking they exist.`,`A list of URLs.`]})} },
+
+  { nav:'Rubrics', title:'How the report is marked', minutes:0, wide:true,
+    narration:[
+     `Two versions of the report rubric are shown on the right. The <strong>syllabus rubric</strong> is the official one (four criteria × 25 marks, adjusted to 40%). The <strong>briefing rubric</strong> from the Week 5 slides uses four criteria × 20 marks and adds <em>Communication/Presentation</em>.`,
+     B.plain(`Both reward the same things: <b>knowledge applied to your venture</b>, <b>analysis supported by sources</b>, <b>a creative but realistic proposal</b>, and <b>evaluation and validation</b> of the idea with evidence. The gates in this guide check exactly these.`),
+     KEY(`The top bands use words like <b>critically analyzed</b>, <b>justify</b>, <b>viability</b> and <b>rigorous attention to detail</b>. Description alone stays in the lower bands.`)],
+    notes:[`The two rubrics differ (4 × 25 vs 4 × 20). Tell students which one you will apply.`],
+    fig:{label:`Report rubrics · verbatim`, build:rubrics} },
+
+  { nav:'Final check', title:'Final check before you submit', kind:'check', minutes:0, wide:true,
+    narration:[
+     `On the right: every section gate you have ticked in this browser, then a final submission checklist.`,
+     `Do the final check <strong>together as a team</strong>, with the full Word file open, two days before the deadline.`,
+     KEY(`Submit one Word file through <b>Turnitin on Moodle/MyCUD</b>. Check the similarity report and fix any section above the 20% limit before the deadline.`)],
+    fig:{label:`Your progress`, build:summary} },
+
+  { nav:'Presentation (1B)', title:'Project 1B · Social Enterprise Project Presentation', minutes:0, wide:true,
+    narration:[
+     `Syllabus: <em>“This part requires students to present their project along with their group to the course instructor. This is graded individually based on the communication skills, confidence, and knowledge exhibited during the session.”</em>`,
+     `<ul><li>Worth <b>10%</b> of the overall course grade · PowerPoint presentation · groups of 4–5</li><li><b>1-minute</b> individual presentation + <b>2 minutes</b> Q&amp;A · <b>7 minutes</b> in total</li><li>Submit slides to Turnitin before the presentation date</li></ul>`,
+     BRIEF([`Cover slide with team name, and students' names/ID numbers`,`Introduction of each member of the team`,`The Problem &amp; Solution: the problem and effectiveness of the proposed solution. How well the solution addresses and solves the identified problem.`,`Market Opportunity and Innovation: target market and market size, innovation of the solution. Uniqueness and creativity in the proposed solution.`,`Impact of the Solution: potential for long-term positive effects. Discussion of how the solution contributes to sustainability.`,`Presentation and Pitch: ability to pitch the idea and engage the audience. Skills in responding to questions and maintaining audience interest and quality of slides.`],true),
+     KEY(`You are marked <b>individually</b>. Each member must be able to answer questions on <b>any</b> part of the report, not only their own slide.`)],
+    fig:{label:`Presentation rubric · syllabus (verbatim)`, html:rubHTML(RUB_PRES), caption:`The briefing also lists an “Investor panel” criterion (10 marks): presentation and Q&A to an investor panel pitch.`} }
+  ]
+});
+</script>
+</body>
+</html>
