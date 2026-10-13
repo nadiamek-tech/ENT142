@@ -74,8 +74,7 @@ Lecture.mount({
   { nav:'Start here', title:'How do we turn an idea into something people can experience?', minutes:5,
     narration:[
      `Your team already has a social problem, an idea and an SDG. Today we make the idea <strong>visible, testable and easier to explain</strong>, and we start Project 1.`,
-     `Syllabus topics: <strong>Prototyping</strong> · <strong>Prototype Generation Techniques</strong> · <strong>Initial Prototype Development</strong>. This builds <strong>CLO 1</strong>: Explain the process of innovation, entrepreneurship and sustainability.`,
-     B.plain(`Key idea: <b>a prototype is a question you can hold</b>. You build it to learn, not to impress.`)],
+     `Syllabus topics: <strong>Prototyping</strong> · <strong>Prototype Generation Techniques</strong> · <strong>Initial Prototype Development</strong>. This builds <strong>CLO 1</strong>: Explain the process of innovation, entrepreneurship and sustainability.`],
     src:`Reading: Byers et al (2019). Ch. 8, Pradeep &amp; Rajib (2022). Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
     notes:[`2-hour lab (0-2-1). Most of the time is the build activity: protect those 30 minutes.`,`Teams of 4–5 sit together from the start.`],
     fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Hook: what first?`,10,'a'],[`What is a prototype?`,10,'l'],[`Six techniques`,15,'l'],[`Choose your technique`,10,'l'],[`Prototype Helper`,10,'a'],[`Case: Embrace`,10,'l'],[`Activity: match the technique`,10,'a'],[`Activity: build v1`,25,'a'],[`Prototype → Project 1`,5,'l'],[`Key takeaways`,5,'l'],[`Exit check`,5,'c']])} },
@@ -92,8 +91,7 @@ Lecture.mount({
     narration:[
      B.plain(`A <b>prototype</b> is a simple representation of your solution that lets you <b>see</b> it, <b>explain</b> it and <b>test</b> it before you fully develop it.<ul><li><b>See:</b> what does it look like?</li><li><b>Experience:</b> how does the user interact?</li><li><b>Test:</b> what can we learn?</li></ul>`),
      `Prototypes range from low fidelity (a sketch, in minutes) to high fidelity (a working demo, in days). Start low. Move up only when the cheap version has taught you all it can.`,
-     B.ex(`Jeff Hawkins tested the PalmPilot design by carrying a wooden model in his pocket, using a chopstick as a stylus. He took pretend notes in meetings and counted the steps for common tasks. A block of wood answered real design questions.`),
-     KEY(`The goal is not perfection. <b>The goal is learning.</b>`)],
+     B.ex(`Jeff Hawkins tested the PalmPilot design by carrying a wooden model in his pocket, using a chopstick as a stylus. He took pretend notes in meetings and counted the steps for common tasks. A block of wood answered real design questions.`)],
     src:`Computer History Museum. <em>The PalmPilot</em>. computerhistory.org/revolution/mobile-computing/18/321`,
     fig:{label:`Idea → prototype → test → learn`, flow:[
       {t:'Idea',s:'problem + solution',d:'Your team\'s idea, linked to a social problem and an SDG.'},
@@ -106,25 +104,20 @@ Lecture.mount({
   { nav:'Six techniques', title:'Prototype generation techniques', minutes:15,
     narration:[
      `Six techniques, from the slide: <strong>Sketch</strong> (show the idea), <strong>Storyboard</strong> (show the user journey), <strong>Paper</strong> (simulate interaction), <strong>Digital</strong> (show screens or interface), <strong>Physical</strong> (show the product), <strong>Role-play</strong> (simulate the service).`,
-     `Click each technique on the right for an example. Three are real company stories; the others are student-scale examples.`,
-     KEY(`Social enterprises are often <b>services</b>, not gadgets. Storyboards and role-play are valid prototypes.`)],
+     `Click each technique on the right for an example. Three are real company stories; the others are student-scale examples.`],
     src:`Ries, E. (2011). <em>The lean startup</em>. Crown Business (Zappos). · Kincaid, J. (2011, October 19). Dropbox minimal viable product. <em>TechCrunch</em>.`,
     fig:{label:`Six techniques · click for an example`, build:el=>W.picker(el,TECH,'Select a technique.')} },
 
   { nav:'Choose your technique', title:'Choose the prototype that answers your question', minutes:10,
     narration:[
      `Do not choose the technique you like. Choose the one that tests your <strong>biggest assumption</strong>: the thing that must be true for your idea to work.`,
-     B.ex(`Idea: a WhatsApp service that matches retired professionals in Dubai with students for free career mentoring.<br>Biggest assumption: <i>retirees will reply within a day.</i><br>Prototype: run the service by hand for one week with 3 mentors and 5 students (role-play / concierge). No app needed.`),
-     KEY(`Ask: <b>What is the biggest assumption in our project?</b> Then pick the prototype that tests it.`)],
-    think:`Write your team's biggest assumption in one sentence. Is it about the user, the technology, or the money?`,
+     B.ex(`Idea: a WhatsApp service that matches retired professionals in Dubai with students for free career mentoring.<br>Biggest assumption: <i>retirees will reply within a day.</i><br>Prototype: run the service by hand for one week with 3 mentors and 5 students (role-play / concierge). No app needed.`)],
     fig:{label:`I need to…`, build:chooser} },
 
   { nav:'Prototype Helper', title:'Ask the Prototype Helper', kind:'activity', minutes:10, wide:true,
     narration:[
-     `Not sure which prototype fits your idea? Describe it to the <strong>Prototype Helper</strong> on the right. It asks three short questions (type of idea, what you need to learn, how much time you have) and suggests a first prototype, how to build it and how to test it.`,
-     B.plain(`The helper uses only the rules from this lecture, mainly the slide <b>“Choose the prototype that answers your question”</b>. It is not AI and does not search the internet, so it cannot invent facts.`),
-     KEY(`The helper gives a starting point, not a final answer. Your team still decides, based on your <b>biggest assumption</b>.`)],
-    think:`Did the helper suggest what your team expected? If not, which of your answers changed the result?`,
+     `Describe your idea to the <strong>Prototype Helper</strong>. Three questions, then a first-prototype plan to copy into the Build v1 worksheet.`,
+     B.plain(`The helper uses only the rules from this lecture, mainly the slide <b>“Choose the prototype that answers your question”</b>. It is not AI and does not search the internet, so it cannot invent facts.`)],
     notes:[`Each team runs its idea through the helper, then copies the plan into the Build v1 worksheet.`,`Rule-based on purpose: free, works on any phone, and stays inside the lecture content.`],
     fig:{label:`Prototype Helper · chat`, build:el=>ProtoBot(el)} },
 
@@ -132,9 +125,7 @@ Lecture.mount({
     narration:[
      `In 2007, Stanford students Jane Chen, Rahul Panicker and Linus Liang worked on hypothermia in low-birth-weight babies in the course <em>Design for Extreme Affordability</em>.`,
      B.plain(`Their early prototype looked like a <b>small sleeping bag for babies</b>, with a reusable pouch of phase-change material that, once heated, stays at body temperature for several hours. No constant electricity needed.`),
-     B.ex(`Hospital incubators can cost <b>up to $20,000</b>; Embrace was designed to cost about <b>$200</b>. Observing the needs of rural families in Nepal led the team to add a second, at-home model for mothers in rural areas: the prototype changed after meeting real users.`),
-     KEY(`This is a <b>social venture</b>: SDG 3 (Good health and well-being), a low-cost prototype, and a design that changed after field observation. Your Project 1 should tell the same kind of story.`)],
-    think:`What would the team have missed if they had only tested in a Stanford lab?`,
+     B.ex(`Hospital incubators can cost <b>up to $20,000</b>; Embrace was designed to cost about <b>$200</b>. Observing the needs of rural families in Nepal led the team to add a second, at-home model for mothers in rural areas: the prototype changed after meeting real users.`)],
     src:`Stanford Biodesign. <em>Embrace</em> (Global Health Innovation Insight Series). · Stanford Daily (2010, November 18). At-risk babies kept warm by Stanford innovation.`,
     notes:[`Keep figures as written: “up to $20,000” and “about $200” are from the Stanford Biodesign case.`],
     fig:{label:`Embrace in numbers`, html:`<div class="tiles"><div><div class="n">2007</div><div class="t">Started as a student project at Stanford</div></div><div><div class="n">$200</div><div class="t">Target cost, vs up to $20,000 for an incubator</div></div><div><div class="n">2</div><div class="t">Models after field observation: clinic and home</div></div></div>`} },
@@ -167,7 +158,7 @@ Lecture.mount({
     narration:[
      `You already have the problem, idea and SDG. Now you develop the venture into a complete <strong>Social Enterprise Project</strong>.`,
      `<ul><li><b>Week 5:</b> prototype + project briefing</li><li><b>Week 6:</b> market + competition</li><li><b>Then:</b> business model, pitching and the Project 1 report (see the course map for the syllabus weeks).</li></ul>`,
-     KEY(`Open the <a href="project-1.html">Project 1 guide</a>. It walks through every section of the report, with a check to pass before you move on.`)],
+     KEY(`Next: <a href="project-1.html">Project 1 Lab</a>, Steps 1–3.`)],
     fig:{label:`Your path to Project 1`, flow:[
       {t:'Prototype v1',s:'Week 5',d:'Build and test today. Keep photos and notes.'},
       {t:'Market + competition',s:'Week 6',d:'Who else serves this need? How big is the market?'},

@@ -4,8 +4,7 @@ Narrated, visual lab notes and project guides for ENT 142 (Canadian University D
 
 - `index.html`: course map ("Start here")
 - `week-05.html`: Week 5 · Prototyping
-- `project-1.html`: Project 1 student guide (Social Enterprise Project report and presentation)
-- `venture-studio.html`: Venture Studio (verified open data, evidence bank, guided section builders, validation scorecard)
+- `project-1.html`: Project 1 Lab (11 steps from venture card to submitted report)
 - `assets/`: shared styles and lecture engine (same engine as the GED 102 lectures)
 
 Open `index.html` in a browser, or serve the folder with GitHub Pages.
