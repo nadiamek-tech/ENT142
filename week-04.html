@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 4 · Sustainable Innovation and Entrepreneurship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#15803D;--wk-soft:rgba(21,128,61,.10);--wk-d:#5BCB8E;--wk-soft-d:rgba(91,203,142,.14)}
+.sdg{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:6px}
+.sdg button{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:8px;text-align:left;cursor:pointer;font-family:var(--f-display);font-size:.78rem;line-height:1.25;min-height:64px}
+.sdg button b{display:block;font-size:1.1rem;color:var(--wk)}
+.sdg button[aria-pressed="true"]{background:var(--wk);border-color:var(--wk);color:var(--on-wk)}
+.sdg button[aria-pressed="true"] b{color:var(--on-wk)}
+.sdg button.sec{border-color:var(--wk);background:var(--wk-soft)}
+.tbl3{display:grid;gap:8px;font-family:var(--f-display);font-size:.9rem}
+.tbl3 .r{display:grid;grid-template-columns:80px minmax(0,1fr) 70px;gap:8px;align-items:center}
+.tbl3 input[type=text]{width:100%;min-width:0;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit}
+.tbl3 input[type=range]{width:70px;accent-color:var(--wk)}
+.tbl3 svg{width:100%;max-width:340px;height:auto;margin:0 auto;display:block}
+@media (max-width:560px){.tbl3 .r{grid-template-columns:minmax(0,1fr) 70px}.tbl3 .r input[type=text]{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<script src="assets/course.js"></script>
+<script>
+const {W,B} = Lecture;
+const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your project</b>${html}</div>`;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const SDGS=['No poverty','Zero hunger','Good health and well-being','Quality education','Gender equality','Clean water and sanitation','Affordable and clean energy','Decent work and economic growth','Industry, innovation and infrastructure','Reduced inequalities','Sustainable cities and communities','Responsible consumption and production','Climate action','Life below water','Life on land','Peace, justice and strong institutions','Partnerships for the goals'];
+function sdgPicker(el){
+  const key='ent142-w4-sdg'; let st={p:null,s:[]}; try{st=JSON.parse(store.get(key)||'null')||st}catch(e){}
+  const draw=()=>{
+    el.innerHTML=`<p class="mono" style="color:var(--muted);margin:0 0 8px">First click = main goal. Next clicks = up to 2 secondary goals. Click again to remove.</p><div class="sdg">${SDGS.map((t,i)=>{ const n=i+1; return `<button type="button" data-n="${n}" aria-pressed="${st.p===n}" class="${st.s.includes(n)?'sec':''}"><b>${n}</b>${t}</button>`; }).join('')}</div>
+     <div class="feedback" style="margin-top:10px">${st.p?`<b>Main goal: SDG ${st.p}, ${SDGS[st.p-1]}.</b>${st.s.length?` Secondary: ${st.s.map(n=>'SDG '+n).join(', ')}.`:''}<br>Now open <a href="https://sdgs.un.org/goals/goal${st.p}" target="_blank" rel="noopener">sdgs.un.org/goals/goal${st.p}</a>, read the <b>targets</b> (e.g. 12.3) and pick the one your product moves.`:'Choose your main goal.'}</div>`;
+    el.querySelectorAll('.sdg button').forEach(b=>b.addEventListener('click',()=>{ const n=+b.dataset.n;
+      if(st.p===n){ st.p=st.s.shift()||null; } else if(st.s.includes(n)){ st.s=st.s.filter(x=>x!==n); } else if(!st.p){ st.p=n; } else if(st.s.length<2){ st.s.push(n); }
+      store.set(key,JSON.stringify(st)); draw(); }));
+  };
+  draw();
+}
+
+function tbl(el){
+  const key='ent142-w4-tbl'; let st; try{st=JSON.parse(store.get(key)||'null')}catch(e){}
+  if(!st) st={people:{v:4,t:'Affordable meals sold to students per month'},planet:{v:4,t:'Kilograms of food saved from landfill per month'},profit:{v:3,t:'Monthly surplus after costs'}};
+  const P=[['people','People'],['planet','Planet'],['profit','Profit']];
+  el.innerHTML=`<div class="tbl3">${P.map(([k,l])=>`<div class="r"><b>${l}</b><input type="text" id="t-${k}" value="${esc(st[k].t)}" aria-label="${l} indicator"><span><input type="range" id="r-${k}" min="1" max="5" value="${st[k].v}" aria-label="${l} score"> <span class="mono" id="v-${k}">${st[k].v}</span></span></div>`).join('')}<div id="tri"></div><div class="feedback" id="tri-o"></div></div>`;
+  const draw=()=>{ const cx=170,cy=150,R=110; const ang=[-90,30,150].map(a=>a*Math.PI/180); const pt=(i,v)=>[cx+Math.cos(ang[i])*R*v/5,cy+Math.sin(ang[i])*R*v/5];
+    const grid=[1,2,3,4,5].map(g=>`<polygon points="${[0,1,2].map(i=>pt(i,g).join(',')).join(' ')}" fill="none" stroke="var(--line)"/>`).join('');
+    const vals=P.map(([k])=>st[k].v); const poly=`<polygon points="${vals.map((v,i)=>pt(i,v).join(',')).join(' ')}" fill="var(--wk)" fill-opacity=".3" stroke="var(--wk)" stroke-width="2"/>`;
+    const lab=P.map(([k,l],i)=>{ const [x,y]=pt(i,6.1); return `<text x="${x}" y="${y+4}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="13" fill="var(--ink)">${l} ${st[k].v}</text>`; }).join('');
+    el.querySelector('#tri').innerHTML=`<svg viewBox="0 0 340 300" role="img" aria-label="Triple bottom line triangle">${grid}${poly}${lab}</svg>`;
+    const low=P.filter(([k])=>st[k].v<=2).map(p=>p[1]); el.querySelector('#tri-o').innerHTML=low.length?`Weak on <b>${low.join(' and ')}</b>: a social venture needs all three to last. What would raise it?`:`Balanced. Make sure each score is backed by an indicator you can measure.`; store.set(key,JSON.stringify(st)); };
+  P.forEach(([k])=>{ el.querySelector('#r-'+k).addEventListener('input',e=>{ st[k].v=+e.target.value; el.querySelector('#v-'+k).textContent=st[k].v; draw(); }); el.querySelector('#t-'+k).addEventListener('input',e=>{ st[k].t=e.target.value; draw(); }); });
+  draw();
+}
+
+Lecture.mount({
+  id:'ent142-w4', week:4, clo:'1, 3', course:'ENT 142', short:'Week 4 · Sustainable Innovation',
+  title:'Sustainable Innovation and Entrepreneurship', meta:'UN SDGs, Qian et al., (2024) and Bridge et al 2020 Ch1 · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'Can a venture make money and make things better?', minutes:5,
+    narration:[
+     `This week you place your venture in the <strong>social economy</strong>, measure it on the <strong>triple bottom line</strong>, and link it to a specific <strong>SDG target</strong>.`,
+     `Syllabus topics: <strong>Sustainable Innovation and Entrepreneurship</strong> · <strong>Introduction to the Third Sector and Social Economy</strong> · <strong>Recap of Triple Bottom-line Framework</strong> · <strong>Recap of SDGs and Linking the SDGs to the Product</strong>. CLO 1 and CLO 3.`],
+    src:`Reading: UN SDGs (sdgs.un.org) · Qian, H., Wu, J. &amp; Zheng, S. (2024). Entrepreneurship, sustainability, and urban development. <em>Small Bus Econ</em> 62, 463–469. · Bridge, S., Murtagh, &amp; O’Neill (2020). <em>Understanding the Social Economy and the Third Sector</em>, Ch. 1. Bloomsbury.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Hook`,5,'a'],[`Third sector and social economy`,15,'l'],[`Which sector?`,10,'a'],[`Triple bottom line`,15,'l'],[`Score your venture`,15,'a'],[`SDGs recap`,10,'l'],[`Link your product to an SDG target`,30,'a'],[`Key takeaways`,10,'l'],[`Exit check`,5,'c']])} },
+
+  { nav:'Hook', title:'Hook · Social or profitable?', kind:'activity', minutes:5,
+    narration:[`Vote.`],
+    fig:{label:`Vote`, build:el=>W.poll(el,{q:'A venture that solves a social problem…',opts:['should be a charity and never make profit','can earn revenue and reinvest it in its mission','must be run by the government','is not a real business'],reveal:i=>(i===1?'<b>Yes.</b> ':'<b>Suggested: B.</b> ')+'Social enterprises earn revenue like businesses but put their social or environmental mission first.'})} },
+
+  { nav:'Third sector', title:'Introduction to the third sector and social economy', minutes:15,
+    narration:[
+     B.plain(`Three sectors: the <b>public sector</b> (government), the <b>private sector</b> (businesses seeking profit) and the <b>third sector</b> (organisations driven by a social mission: charities, NGOs, foundations, cooperatives, social enterprises). The <b>social economy</b> is the economic activity of these mission-driven organisations.`),
+     B.ex(`<b>Charity model:</b> the UAE Food Bank (launched 2017) collects surplus food from hotels, restaurants and grocery chains and distributes it to people in need. <b>Social business model:</b> Grameen Bank in Bangladesh gives small loans without collateral, mostly to women; Muhammad Yunus and Grameen Bank shared the 2006 Nobel Peace Prize.`)],
+    src:`UAE Cabinet (2017). UAE Food Bank launch. · NPR (2006, October 13). Microcredit pioneers win Nobel Peace Prize.`,
+    fig:{label:`From charity to business · a spectrum`, html:`<svg viewBox="0 0 640 150" style="width:100%;height:auto" role="img" aria-label="Spectrum from charity to traditional business">
+      <defs><linearGradient id="sp" x1="0" x2="1"><stop offset="0" stop-color="var(--wk)"/><stop offset="1" stop-color="var(--muted)"/></linearGradient></defs>
+      <rect x="20" y="60" width="600" height="14" rx="7" fill="url(#sp)"/>
+      ${[[20,'Charity','grants and donations'],[180,'Social enterprise','sells to fund its mission'],[360,'Responsible business','profit first, with CSR'],[540,'Traditional business','profit only']].map(([x,t,s])=>`<circle cx="${x+40}" cy="67" r="9" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><text x="${x+40}" y="44" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="13" fill="var(--ink)">${t}</text><text x="${x+40}" y="98" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-size="11" fill="var(--muted)">${s}</text>`).join('')}
+      <text x="20" y="135" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--muted)">mission first ←</text><text x="620" y="135" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="10" fill="var(--muted)">→ profit first</text></svg>`} },
+
+  { nav:'Which sector?', title:'Activity · Which sector?', kind:'activity', minutes:10,
+    narration:[`Sort each organisation (descriptions are generic). Then decide where <b>your</b> venture sits.`],
+    fig:{label:`Sort`, build:el=>W.sort(el,{buckets:['Public','Private','Third sector'],items:[
+      {t:`A government hospital run by a ministry`,a:0,why:`Owned and run by the state.`},
+      {t:`A café chain that aims to maximise returns for its owners`,a:1,why:`Profit-seeking business.`},
+      {t:`A non-profit that collects surplus food for families in need`,a:2,why:`Mission-driven, no private profit.`},
+      {t:`A company that sells recycled-plastic bags and reinvests most profit in clean-up programmes`,a:2,why:`A social enterprise: trades, but the mission comes first.`},
+      {t:`A farmers' cooperative owned by its members`,a:2,why:`Member-owned; part of the social economy.`}]})} },
+
+  { nav:'Triple bottom line', title:'Recap of the triple bottom line', minutes:15,
+    narration:[
+     B.plain(`John Elkington introduced the <b>triple bottom line</b> in 1994: judge a business on <b>People</b> (social), <b>Planet</b> (environmental) and <b>Profit</b> (economic), not on profit alone.`),
+     B.ex(`For a surplus-meal app: <b>People:</b> affordable meals sold to students per month. <b>Planet:</b> kilograms of food saved from landfill. <b>Profit:</b> monthly surplus after costs. Each one is a number you can track.`)],
+    src:`HEC Paris, SO Institute. What is the triple bottom line? (executive factsheet).`,
+    fig:{label:`Score your venture · drag the sliders`, build:tbl, caption:`Example values are illustrative. Use your own indicators in Step 7 of the Project 1 Lab.`} },
+
+  { nav:'SDGs recap', title:'Recap of the SDGs', minutes:10,
+    narration:[
+     `The <strong>17 Sustainable Development Goals</strong> were adopted by all UN member states in 2015 as part of the 2030 Agenda. Each goal has <strong>targets</strong> (169 in total), and each target has indicators.`,
+     B.plain(`Linking to “SDG 12” is too vague. Link to a <b>target</b>: e.g. <b>12.3</b>: “By 2030, halve per capita global food waste at the retail and consumer levels and reduce food losses along production and supply chains, including post-harvest losses.”`)],
+    src:`United Nations. <em>The 17 Goals</em>. sdgs.un.org/goals`,
+    fig:{label:`Choose your SDGs`, build:sdgPicker} },
+
+  { nav:'Link to a target', title:'Activity · Link your product to an SDG target', kind:'activity', minutes:30,
+    narration:[
+     `Build the chain from what your product <b>does</b> to the SDG <b>target</b> it moves. Each link must be something you could measure.`,
+     B.ex(`<b>Product:</b> app listing surplus café meals → <b>Output:</b> 2,000 meals sold a month → <b>Outcome:</b> less food thrown away near campus → <b>Measure:</b> kg of food saved → <b>Target:</b> SDG 12.3.`)],
+    fig:{label:`Impact chain · saves in your browser`, flow:[
+      {t:'Product',s:'what it does',d:'The activity or product.'},
+      {t:'Output',s:'what you deliver',d:'Countable: meals, sessions, units.'},
+      {t:'Outcome',s:'what changes',d:'The change for people or planet.'},
+      {t:'Measure',s:'the indicator',d:'How you will count that change.'},
+      {t:'SDG target',s:'e.g. 12.3',d:'The specific target the change contributes to.'}],
+      build:el=>W.worksheet(el,{id:'ent142-w4-chain',title:'ENT 142 · Week 4 · Impact chain',fields:[
+      {l:'Product: what it does',rows:1},{l:'Output: what we deliver (a number)',rows:1},{l:'Outcome: what changes',rows:2},{l:'Measure: our indicator',rows:1},{l:'SDG target (number and wording from sdgs.un.org)',rows:2}]})} },
+
+  { nav:'Key takeaways', full:true, title:'Key takeaways · Week 4', kind:'review', minutes:10,
+    narration:[KEY(`<ul><li>Three sectors: public, private, third; the social economy is mission-driven activity.</li><li>Social enterprises earn revenue and put the mission first.</li><li>Triple bottom line (Elkington, 1994): People, Planet, Profit, each with a measurable indicator.</li><li>17 SDGs, 169 targets: link your product to a <b>target</b>, not just a goal.</li><li>Impact chain: product → output → outcome → measure → target.</li></ul>`),
+     `These answers go into Steps 3 (Concept) and 7 (Business model) of the <a href="project-1.html">Project 1 Lab</a>.`],
+    fig:{mindmap:{center:'Sustainable venture',branches:[
+      {t:'Sectors',items:['Public · private','Third sector']},
+      {t:'Social economy',items:['Charities · NGOs','Cooperatives','Social enterprises']},
+      {t:'Triple bottom line',items:['People','Planet','Profit']},
+      {t:'SDGs',items:['17 goals · 169 targets','Link to a target']},
+      {t:'Impact chain',items:['Output → outcome','Measure → target']}]}} },
+
+  { nav:'Exit check', title:'Exit check', kind:'check', minutes:5,
+    narration:[`Five questions.`,`<strong>Before Week 5:</strong> read Byers et al (2019). Ch. 8, Pradeep &amp; Rajib (2022). Bring your idea, your SDG target and your MVP result.`],
+    fig:{label:`Five questions`, build:el=>W.quiz(el,[
+      {q:`A social enterprise…`,o:[`relies only on donations`,`earns revenue and puts its mission first`,`is run by government`,`maximises owner profit`],a:1,why:`Trading for a social or environmental mission.`},
+      {q:`The triple bottom line measures…`,o:[`price, product, place`,`people, planet, profit`,`plan, pitch, product`,`profit three times`],a:1,why:`Elkington, 1994.`},
+      {q:`How many SDGs are there?`,o:[`8`,`12`,`17`,`169`],a:2,why:`17 goals, 169 targets.`},
+      {q:`The strongest SDG link is…`,o:[`“we support all SDGs”`,`“we support SDG 12”`,`“we contribute to target 12.3, measured in kg of food saved”`,`an SDG logo on the cover`],a:2,why:`A specific target with an indicator.`},
+      {q:`Grameen Bank is known for…`,o:[`luxury banking`,`small loans without collateral, mostly to women`,`crypto trading`,`government grants`],a:1,why:`Microcredit; 2006 Nobel Peace Prize with Muhammad Yunus.`}])} }
+  ]
+});
+</script>
+</body>
+</html>

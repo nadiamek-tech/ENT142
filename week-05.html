@@ -77,7 +77,7 @@ Lecture.mount({
      `Syllabus topics: <strong>Prototyping</strong> · <strong>Prototype Generation Techniques</strong> · <strong>Initial Prototype Development</strong>. This builds <strong>CLO 1</strong>: Explain the process of innovation, entrepreneurship and sustainability.`],
     src:`Reading: Byers et al (2019). Ch. 8, Pradeep &amp; Rajib (2022). Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
     notes:[`2-hour lab (0-2-1). Most of the time is the build activity: protect those 30 minutes.`,`Teams of 4–5 sit together from the start.`],
-    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Hook: what first?`,10,'a'],[`What is a prototype?`,10,'l'],[`Six techniques`,15,'l'],[`Choose your technique`,10,'l'],[`Prototype Helper`,10,'a'],[`Case: Embrace`,10,'l'],[`Activity: match the technique`,10,'a'],[`Activity: build v1`,25,'a'],[`Prototype → Project 1`,5,'l'],[`Key takeaways`,5,'l'],[`Exit check`,5,'c']])} },
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Hook: what first?`,10,'a'],[`What is a prototype?`,10,'l'],[`Six techniques`,15,'l'],[`Prototype Helper`,20,'a'],[`Case: Embrace`,10,'l'],[`Activity: match the technique`,10,'a'],[`Activity: build v1`,25,'a'],[`Prototype → Project 1`,5,'l'],[`Key takeaways`,5,'l'],[`Exit check`,5,'c']])} },
 
   { nav:'What first?', title:'Hook · What should the team do first?', kind:'activity', minutes:10,
     narration:[
@@ -108,18 +108,13 @@ Lecture.mount({
     src:`Ries, E. (2011). <em>The lean startup</em>. Crown Business (Zappos). · Kincaid, J. (2011, October 19). Dropbox minimal viable product. <em>TechCrunch</em>.`,
     fig:{label:`Six techniques · click for an example`, build:el=>W.picker(el,TECH,'Select a technique.')} },
 
-  { nav:'Choose your technique', title:'Choose the prototype that answers your question', minutes:10,
+  { nav:'Prototype Helper', title:'Choose your prototype · Prototype Helper', kind:'activity', minutes:20, wide:true,
     narration:[
-     `Do not choose the technique you like. Choose the one that tests your <strong>biggest assumption</strong>: the thing that must be true for your idea to work.`,
-     B.ex(`Idea: a WhatsApp service that matches retired professionals in Dubai with students for free career mentoring.<br>Biggest assumption: <i>retirees will reply within a day.</i><br>Prototype: run the service by hand for one week with 3 mentors and 5 students (role-play / concierge). No app needed.`)],
-    fig:{label:`I need to…`, build:chooser} },
-
-  { nav:'Prototype Helper', title:'Ask the Prototype Helper', kind:'activity', minutes:10, wide:true,
-    narration:[
-     `Describe your idea to the <strong>Prototype Helper</strong>. Three questions, then a first-prototype plan to copy into the Build v1 worksheet.`,
-     B.plain(`The helper uses only the rules from this lecture, mainly the slide <b>“Choose the prototype that answers your question”</b>. It is not AI and does not search the internet, so it cannot invent facts.`)],
-    notes:[`Each team runs its idea through the helper, then copies the plan into the Build v1 worksheet.`,`Rule-based on purpose: free, works on any phone, and stays inside the lecture content.`],
-    fig:{label:`Prototype Helper · chat`, build:el=>ProtoBot(el)} },
+     `Rule from the slide: choose the prototype that tests your <strong>biggest assumption</strong>, the thing that must be true for your idea to work.`,
+     `<b>Try it:</b> click an example idea to load it into the box, change it to your own idea, and press <b>Send</b>. Answer three questions and copy the plan into the Build v1 worksheet.`,
+     B.ex(`Idea: a WhatsApp service that matches retired professionals in Dubai with students for career mentoring. Biggest assumption: <i>retirees will reply within a day</i>. Prototype: run it by hand for one week with 3 mentors and 5 students (role-play). No app needed.`)],
+    notes:[`Each team runs its own idea through the helper, then copies the plan into the Build v1 worksheet.`,`Rule-based on purpose: free, works on any phone, answers only from this lecture.`],
+    fig:{label:`Prototype Helper · type your idea`, build:el=>ProtoBot(el)} },
 
   { nav:'Case: Embrace', title:'Case · Embrace infant warmer', minutes:10,
     narration:[

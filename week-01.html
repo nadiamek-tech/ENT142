@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 1 · Overview of the Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#6B4FB8;--wk-soft:rgba(107,79,184,.10);--wk-d:#B9A3F5;--wk-soft-d:rgba(185,163,245,.14)}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.grid4 .q{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);display:grid;gap:6px;min-width:0}
+.grid4 .q b{font-family:var(--f-display);font-size:.9rem;color:var(--wk)}
+.grid4 textarea{width:100%;min-width:0;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--surface);color:var(--ink);font:inherit;font-size:.9rem}
+@media (max-width:560px){.grid4{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<script src="assets/course.js"></script>
+<script>
+const {W,B} = Lecture;
+const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your project</b>${html}</div>`;
+
+/* assessment weights, drawn to scale (syllabus section 8) */
+const ASSESS=[['Project 1 · Report',40,'Week 9'],['Project 1 · Presentation',10,'Week 10'],['Project 2 · Reflective Portfolio',30,'Week 16'],['Activity 1',10,'Week 6'],['Activity 2',10,'Week 13']];
+function weights(el){
+  let x=0; const cols=['var(--wk)','color-mix(in srgb,var(--wk) 60%,var(--bg))','color-mix(in srgb,var(--wk) 35%,var(--bg))','var(--muted)','color-mix(in srgb,var(--muted) 55%,var(--bg))'];
+  el.innerHTML=`<svg viewBox="0 0 600 70" style="width:100%;height:auto" role="img" aria-label="Assessment weights">${ASSESS.map(([t,w],i)=>{ const r=`<rect x="${x*6}" y="10" width="${w*6-2}" height="40" rx="4" fill="${cols[i]}"/><text x="${x*6+w*3}" y="36" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="14" fill="${i<1?'var(--on-wk)':'var(--ink)'}">${w}%</text>`; x+=w; return r; }).join('')}</svg>
+  <table class="tbl" style="margin-top:8px"><thead><tr><th>Assessment</th><th>Weight</th><th>Syllabus week</th></tr></thead><tbody>${ASSESS.map(a=>`<tr><td>${a[0]}</td><td>${a[1]}%</td><td>${a[2]}</td></tr>`).join('')}</tbody></table>`;
+}
+
+/* feedback capture grid */
+function grid(el){
+  const key='ent142-w1-grid'; let s={}; try{s=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+  const Q=[['like','I like…','What worked for the user?'],['wish','I wish…','What confused or annoyed them?'],['q','Questions','What did they ask?'],['what','What if…','New ideas from the test']];
+  el.innerHTML=`<div class="grid4">${Q.map(([k,t,h])=>`<div class="q"><b>${t}</b><label class="mono" for="g-${k}" style="color:var(--muted)">${h}</label><textarea id="g-${k}" rows="4">${(s[k]||'').replace(/</g,'&lt;')}</textarea></div>`).join('')}</div><p class="mono" style="color:var(--muted)">Saves in this browser. Copy it into your evidence notes for Project 1.</p>`;
+  Q.forEach(([k])=>{ const t=el.querySelector('#g-'+k); t.addEventListener('input',()=>{ s[k]=t.value; try{localStorage.setItem(key,JSON.stringify(s))}catch(e){} }); });
+}
+
+Lecture.mount({
+  id:'ent142-w1', week:1, clo:'1, 3', course:'ENT 142', short:'Week 1 · Overview of the Course',
+  title:'Overview of the Course', meta:'Liedtka et al., (2017) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'How do we turn a social problem into a venture people use?', minutes:5,
+    narration:[
+     `ENT 142 continues ENT 141. This semester your team takes one real social problem, linked to a UN Sustainable Development Goal, and turns it into a <strong>social venture</strong> with evidence.`,
+     `Syllabus topics: <strong>Overview of the Course</strong> · <strong>Course Material</strong> · <strong>Course Assessment</strong> · <strong>Revisiting the Design Thinking Process</strong> · <strong>Recap of the DTP</strong> · <strong>Step 4: Prototyping</strong> · <strong>Step 5: Testing</strong>.`,
+     `<strong>CLO 1:</strong> Explain the process of innovation, entrepreneurship and sustainability. <strong>CLO 3:</strong> Analyze the impact of innovation, entrepreneurship and sustainability on society and the economy.`],
+    src:`Reading: Liedtka, J., Salzman, R., &amp; Azer, D. (2017). <em>Design thinking for the greater good: Innovation in the social sector</em>. Columbia University Press.`,
+    notes:[`Lab format (0-2-1): short input, then team work. Students sit in provisional teams; final teams form in Week 2.`],
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Course map and assessment`,15,'l'],[`Hook`,5,'a'],[`Design thinking recap`,15,'l'],[`Define your problem`,20,'a'],[`Step 4 · Prototyping`,10,'l'],[`Step 5 · Testing`,10,'l'],[`Test exchange`,25,'a'],[`Key takeaways`,10,'l'],[`Exit check`,5,'c']])} },
+
+  { nav:'Course map', title:'Course material and assessment', minutes:15,
+    narration:[
+     `<b>Material:</b> textbook Byers, Dorf &amp; Nelson (2019), <em>Technology ventures</em>; reference books by Liedtka et al. (2017), Ray &amp; Shaw (2023) and Bridge et al. (2020); HBR articles; weekly pages on this site; announcements on Moodle.`,
+     `<b>Assessment:</b> the bar on the right is drawn to scale. Half of your grade is Project 1, built step by step in the <a href="project-1.html">Project 1 Lab</a> from Week 5.`,
+     B.plain(`Due dates are confirmed on Moodle. The weeks shown are the syllabus schedule. Turnitin similarity must be 20% or lower.`)],
+    fig:{label:`Assessment weights · syllabus`, build:weights} },
+
+  { nav:'Hook', title:'Hook · Where does design thinking start?', kind:'activity', minutes:5,
+    narration:[`Vote before we recap.`],
+    fig:{label:`Vote`, build:el=>W.poll(el,{q:'A team wants to reduce food waste on campus. Where should design thinking start?',opts:['Brainstorm app features','Watch and talk to the people involved','Build a prototype','Write a business plan'],reveal:i=>(i===1?'<b>Yes.</b> ':'<b>Suggested: B.</b> ')+'Design thinking starts with <b>empathy</b>: understanding the people with the problem before deciding what to build.'})} },
+
+  { nav:'Design thinking recap', title:'Recap of the design thinking process', minutes:15,
+    narration:[
+     B.plain(`Five steps, used in loops, not a straight line: <b>Empathize</b> (understand people) → <b>Define</b> (state the real problem) → <b>Ideate</b> (many ideas) → <b>Prototype</b> (make it tangible) → <b>Test</b> (learn from users).`),
+     B.ex(`Bank of America and the design firm IDEO noticed through research that customers rounded up their transactions for speed and convenience. The result, <b>Keep the Change</b> (October 2005), rounds each debit-card purchase up to the next dollar and moves the difference into savings. Bloomberg reported 2.5 million customers signed up, with more than 700,000 new checking accounts and 1 million new savings accounts.`)],
+    src:`Bloomberg (2006, June 18). Case study: Bank of America. · Fast Company (2008). Fast 50: IDEO.`,
+    fig:{label:`The five steps · click or play`, flow:[
+      {t:'Empathize',s:'understand',d:'Observe and listen to the people who have the problem. Write down what they do, say and feel.'},
+      {t:'Define',s:'the real problem',d:'Write one point-of-view statement: [user] needs [need] because [insight].'},
+      {t:'Ideate',s:'many ideas',d:'Generate many ideas before judging any. Quantity first.'},
+      {t:'Prototype',s:'make it real',d:'Build the cheapest version a user can experience (Week 5).'},
+      {t:'Test',s:'learn',d:'Let users try it, observe, and loop back to any earlier step.'}]} },
+
+  { nav:'Define your problem', title:'Activity · Define your problem', kind:'activity', minutes:20,
+    narration:[
+     `In your team, write one <strong>point-of-view statement</strong> and turn it into a <strong>“How might we…”</strong> question.`,
+     B.ex(`<b>POV:</b> Students who eat on campus in the evening need affordable meals because they skip dinner when food is expensive.<br><b>HMW:</b> How might we make good evening meals affordable for students without adding waste?`)],
+    fig:{label:`Problem definition · saves in your browser`, build:el=>W.worksheet(el,{id:'ent142-w1-pov',title:'ENT 142 · Week 1 · Problem definition',fields:[
+      {l:'User: who has the problem?',rows:1},{l:'Need: what do they need (a verb)?',rows:1},{l:'Insight: why? What did you notice?',rows:2},
+      {l:'Our point-of-view statement',ph:'[user] needs [need] because [insight]',rows:2},{l:'Our “How might we…” question',rows:2},{l:'Which SDG does it relate to?',rows:1}]})} },
+
+  { nav:'Step 4 · Prototyping', title:'Step 4 · Prototyping (preview)', minutes:10,
+    narration:[
+     B.plain(`A prototype is the cheapest thing that lets a user <b>experience</b> your idea: a sketch, paper screens, a storyboard, a cardboard model or a role-play. You build it to learn, not to impress.`),
+     B.ex(`Before the PalmPilot existed, Jeff Hawkins carried a wooden model in his pocket and used a chopstick as a stylus to test how the device would fit into his day.`),
+     `Week 5 covers prototyping in depth, with a Prototype Helper that recommends a technique for your idea.`],
+    src:`Computer History Museum. <em>The PalmPilot</em>.`,
+    fig:{label:`Low → high fidelity`, html:`<table class="tbl"><thead><tr><th>Fidelity</th><th>Example</th><th>Time</th></tr></thead><tbody><tr><td>Low</td><td>Sketch, paper screens, role-play</td><td>Minutes</td></tr><tr><td>Medium</td><td>Canva mock-up, cardboard model, storyboard</td><td>Hours</td></tr><tr><td>High</td><td>Clickable app, working demo</td><td>Days to weeks</td></tr></tbody></table>`} },
+
+  { nav:'Step 5 · Testing', title:'Step 5 · Testing', minutes:10,
+    narration:[
+     `<b>How to test:</b> give the user a task, stay silent, watch what they do, then ask open questions. Do not explain or defend your idea.`,
+     B.plain(`Capture feedback in four boxes: <b>I like</b> · <b>I wish</b> · <b>Questions</b> · <b>What if</b>. This feedback grid is widely used in design thinking.`),
+     B.ex(`A tester taps the wrong button twice on your paper screen. That is not a user mistake; it is a design finding. Write it under <b>I wish</b>.`)],
+    fig:{label:`Test in four steps`, flow:[
+      {t:'Task',s:'give one',d:'“Please reserve a meal for 7 pm.” One clear task.'},
+      {t:'Watch',s:'stay silent',d:'Observe where they hesitate or get stuck. Do not help.'},
+      {t:'Ask',s:'open questions',d:'“What did you expect to happen?” “What was confusing?”'},
+      {t:'Capture',s:'feedback grid',d:'I like · I wish · Questions · What if.'}]} },
+
+  { nav:'Test exchange', title:'Activity · Test exchange', kind:'activity', minutes:25,
+    narration:[
+     `Use your ENT 141 prototype, or sketch one in 5 minutes. Swap with the team on your left: each team tests the other's prototype for 8 minutes, then switches.`,
+     `Fill in the feedback grid with what <b>your</b> testers said and did.`],
+    notes:[`Time-box strictly: 5 min sketch, 8 + 8 min tests, 4 min to agree one change.`],
+    fig:{label:`Feedback capture grid`, build:grid} },
+
+  { nav:'Key takeaways', full:true, title:'Key takeaways · Week 1', kind:'review', minutes:10,
+    narration:[KEY(`<ul><li>Project 1 (report 40% + presentation 10%) is half the grade.</li><li>Design thinking: empathize → define → ideate → prototype → test, in loops.</li><li>Define the problem as <b>[user] needs [need] because [insight]</b>.</li><li>Prototype cheaply; test by watching, not explaining.</li><li>Capture feedback: I like · I wish · Questions · What if.</li></ul>`)],
+    fig:{mindmap:{center:'Week 1',branches:[
+      {t:'Course',items:['Project 1: 50%','Project 2: 30%','Activities: 20%']},
+      {t:'Design thinking',items:['Empathize · Define','Ideate','Prototype · Test']},
+      {t:'Define',items:['User · need · insight','How might we…?']},
+      {t:'Prototype',items:['Cheapest experience','Low fidelity first']},
+      {t:'Test',items:['Task · watch · ask','I like · I wish · What if']}]}} },
+
+  { nav:'Exit check', title:'Exit check', kind:'check', minutes:5,
+    narration:[`Five questions.`,`<strong>Before Week 2:</strong> read Byers et al (2019). Ch. 1. Each member brings <b>3 ideas</b> for a social venture, each linked to a problem and an SDG.`],
+    fig:{label:`Five questions`, build:el=>W.quiz(el,[
+      {q:`Which step comes first in design thinking?`,o:[`Ideate`,`Empathize`,`Prototype`,`Test`],a:1,why:`Understand the people before deciding what to build.`},
+      {q:`A good point-of-view statement contains…`,o:[`a feature list`,`user, need and insight`,`a price`,`a logo`],a:1,why:`[user] needs [need] because [insight].`},
+      {q:`While a user tests your prototype, you should…`,o:[`explain how it works`,`stay silent and observe`,`defend the design`,`fix it on the spot`],a:1,why:`Their hesitation is the finding.`},
+      {q:`What share of the grade is Project 1 (report + presentation)?`,o:[`30%`,`40%`,`50%`,`60%`],a:2,why:`Report 40% + presentation 10%.`},
+      {q:`Keep the Change came from noticing that customers…`,o:[`hated banks`,`rounded up their transactions`,`wanted cash`,`used cheques`],a:1,why:`Research showed people rounded up for speed and convenience.`}])} }
+  ]
+});
+</script>
+</body>
+</html>

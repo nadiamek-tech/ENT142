@@ -16,7 +16,7 @@
 .pb-card p{margin:0}
 .pb-card ul{margin:0;padding-left:1.1em}
 .pb-quick{display:flex;flex-wrap:wrap;gap:6px}
-.pb-quick button{border:1px solid var(--wk);background:var(--wk-soft);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;font:inherit;font-size:.86rem}
+.pb-quick button{text-align:left;border:1px solid var(--wk);background:var(--wk-soft);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;font:inherit;font-size:.86rem}
 .pb-quick button:hover{background:var(--wk);color:var(--on-wk)}
 .pb-in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px}
 .pb-in input{min-width:0;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:.92rem}
@@ -132,7 +132,9 @@
       if(f) say(f.a+`<span class="pb-src">${SRC}</span>`);
       else say(`I can only answer from the Week 5 lecture on prototyping. Try asking about: <i>what a prototype is, the six techniques, fidelity, your biggest assumption, materials, how many users to test with, or the PalmPilot, Dropbox, Zappos and Embrace cases</i>. Or type <b>new idea</b> to start again.`);
     }
-    function restart(){ st.idea='';st.type=null;st.need=null;st.time=null;st.stage='idea'; say(`Describe your idea in one or two sentences: <b>what</b> it is and <b>who</b> it is for.`); input.focus(); }
+    const EX=['An app that lets campus cafés sell surplus meals to students at a discount','A reusable lunch box made from date-palm fibre for university students','A weekend tutoring service where university students teach coding to refugee children','A smart sensor that tells building managers when water is leaking','A social media campaign to cut single-use plastic bottles on campus'];
+    function examples(){ quick.innerHTML='<span class="pb-note" style="width:100%">Click an example to load it, then edit it:</span>'; EX.forEach(t=>{ const b=document.createElement('button'); b.type='button'; b.textContent=t; b.addEventListener('click',()=>{ input.value=t; input.focus(); input.setSelectionRange(t.length,t.length); }); quick.appendChild(b); }); }
+    function restart(){ st.idea='';st.type=null;st.need=null;st.time=null;st.stage='idea'; say(`Describe your idea in one or two sentences: <b>what</b> it is and <b>who</b> it is for.`,examples); input.focus(); }
 
     form.addEventListener('submit',e=>{
       e.preventDefault(); const t=input.value.trim(); if(!t) return; input.value=''; add(esc(t),'me'); quick.innerHTML='';
@@ -148,6 +150,6 @@
 
     add(`Hi! I'm the <b>Prototype Helper</b>. Describe your team's idea and I'll suggest the best <b>first prototype</b>, using what we covered in the Week 5 lecture.`);
     add(`Describe your idea in one or two sentences: <b>what</b> it is and <b>who</b> it is for.`);
-    chips([['Example: a surplus-meal app for students',()=>{ st.idea='An app that lets campus cafés sell surplus meals to students at a discount'; st.type=guessType(st.idea); askType(); }],['What is a prototype?',()=>answer('what is a prototype')]]);
+    examples();
   };
 })();

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 2 · Idea Selection and Evaluation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#0E7490;--wk-soft:rgba(14,116,144,.10);--wk-d:#5ED0E8;--wk-soft-d:rgba(94,208,232,.14)}
+.mx{display:grid;gap:10px;font-family:var(--f-display);font-size:.9rem}
+.mx-wrap{overflow-x:auto}
+.mx table{border-collapse:collapse;width:100%;min-width:520px}
+.mx th,.mx td{border-bottom:1px solid var(--line);padding:6px;text-align:left}
+.mx th{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.mx input{width:100%;min-width:0;padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit}
+.mx input[type=number]{width:56px}
+.bars{display:grid;gap:6px}
+.bars .b{display:grid;grid-template-columns:minmax(0,1fr) 76px;gap:8px;align-items:center}
+.bars .t{height:16px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.bars .f{height:100%;background:var(--wk)}
+.bars .b.top .f{background:var(--good)}
+</style>
+</head>
+<body>
+<script src="assets/course.js"></script>
+<script>
+const {W,B} = Lecture;
+const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your project</b>${html}</div>`;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* weighted idea-selection matrix */
+const CRIT=[['d','Desirability','Do real people need it?',30],['f','Feasibility','Can our team build it this semester?',25],['v','Viability','Can it pay for itself?',20],['i','Impact','Does it advance our SDG?',25]];
+const SAMPLE=[{n:'Surplus-meal app for students',d:4,f:4,v:3,i:4},{n:'Date-palm fibre lunch boxes',d:3,f:2,v:3,i:4},{n:'Coding tutoring for refugee children',d:5,f:4,v:2,i:5}];
+function matrix(el){
+  const key='ent142-w2-matrix'; let rows; try{rows=JSON.parse(store.get(key)||'null')}catch(e){} if(!rows) rows=SAMPLE.map(r=>({...r})).concat([{n:'',d:'',f:'',v:'',i:''},{n:'',d:'',f:'',v:'',i:''}]);
+  let wts; try{wts=JSON.parse(store.get(key+'-w')||'null')}catch(e){} if(!wts) wts=Object.fromEntries(CRIT.map(c=>[c[0],c[3]]));
+  const draw=()=>{
+    el.innerHTML=`<div class="mx"><div class="mx-wrap"><table><thead><tr><th>Idea</th>${CRIT.map(c=>`<th title="${c[2]}">${c[1]}<br><input type="number" min="0" max="100" data-w="${c[0]}" value="${wts[c[0]]}" aria-label="Weight for ${c[1]}">%</th>`).join('')}</tr></thead><tbody>${rows.map((r,i)=>`<tr><td><input type="text" data-r="${i}" data-k="n" value="${String(r.n).replace(/"/g,'&quot;')}" placeholder="Idea ${i+1}" aria-label="Idea ${i+1}"></td>${CRIT.map(c=>`<td><input type="number" min="1" max="5" data-r="${i}" data-k="${c[0]}" value="${r[c[0]]}" aria-label="${c[1]} score for idea ${i+1}"></td>`).join('')}</tr>`).join('')}</tbody></table></div>
+      <p class="mono" style="color:var(--muted);margin:0">Score 1 (weak) to 5 (strong). Weights should add up to 100% (now: <span id="wsum"></span>%). Example rows are illustrative: replace them.</p>
+      <div class="bars" id="mx-bars"></div><div class="feedback" id="mx-out"></div><button type="button" class="btn ghost" id="mx-reset">Reset to the example</button></div>`;
+    el.querySelectorAll('input[data-r]').forEach(i=>i.addEventListener('input',()=>{ rows[+i.dataset.r][i.dataset.k]=i.dataset.k==='n'?i.value:i.value; store.set(key,JSON.stringify(rows)); result(); }));
+    el.querySelectorAll('input[data-w]').forEach(i=>i.addEventListener('input',()=>{ wts[i.dataset.w]=+i.value||0; store.set(key+'-w',JSON.stringify(wts)); result(); }));
+    el.querySelector('#mx-reset').addEventListener('click',()=>{ rows=SAMPLE.map(r=>({...r})).concat([{n:'',d:'',f:'',v:'',i:''},{n:'',d:'',f:'',v:'',i:''}]); wts=Object.fromEntries(CRIT.map(c=>[c[0],c[3]])); store.set(key,JSON.stringify(rows)); store.set(key+'-w',JSON.stringify(wts)); draw(); });
+    result();
+  };
+  const result=()=>{
+    const sw=CRIT.reduce((a,c)=>a+(+wts[c[0]]||0),0); el.querySelector('#wsum').textContent=sw;
+    const sc=rows.filter(r=>r.n&&CRIT.every(c=>+r[c[0]]>=1)).map(r=>({n:r.n,s:CRIT.reduce((a,c)=>a+(+r[c[0]])*(+wts[c[0]]||0),0)/(sw||1),low:CRIT.filter(c=>+r[c[0]]<=2).map(c=>c[1])})).sort((a,b)=>b.s-a.s);
+    el.querySelector('#mx-bars').innerHTML=sc.map((r,i)=>`<div class="b ${i===0?'top':''}"><div><div style="margin-bottom:2px">${r.n.replace(/</g,'&lt;')}</div><div class="t"><div class="f" style="width:${r.s/5*100}%"></div></div></div><span class="mono">${r.s.toFixed(2)} / 5</span></div>`).join('');
+    el.querySelector('#mx-out').innerHTML=sc.length?`<b>Top idea: ${sc[0].n.replace(/</g,'&lt;')}</b> (${sc[0].s.toFixed(2)} / 5).${sc[0].low.length?` Watch out: low score on ${sc[0].low.join(', ')}. Can you fix that, or is the second idea safer?`:''}${sc[1]&&sc[0].s-sc[1].s<0.3?` The top two are close: discuss before you decide.`:''}`:'Score at least one idea on all four criteria.';
+  };
+  draw();
+}
+
+Lecture.mount({
+  id:'ent142-w2', week:2, clo:'1, 3', course:'ENT 142', short:'Week 2 · Idea Selection and Evaluation',
+  title:'Idea Selection and Evaluation', meta:'Byers et al (2019). Ch. 1 · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'Which idea deserves our next 12 weeks?', minutes:5,
+    narration:[
+     `Today each team chooses <strong>one</strong> idea to develop all semester, and forms its final team.`,
+     `Syllabus topics: <strong>Idea Selection and Evaluation</strong> · <strong>How to Identify Effective Ideas</strong> · <strong>Discussion of Ideas</strong> · <strong>Group Formation</strong>. CLO 1 and CLO 3.`],
+    src:`Reading: Byers et al (2019). Ch. 1. Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Hook`,5,'a'],[`What makes an idea effective`,15,'l'],[`Idea or opportunity?`,10,'l'],[`Pitch round`,25,'a'],[`Score your ideas`,25,'a'],[`Form your team`,20,'a'],[`Key takeaways`,10,'l'],[`Exit check`,5,'c']])} },
+
+  { nav:'Hook', title:'Hook · Is the most creative idea the best one?', kind:'activity', minutes:5,
+    narration:[`Vote.`],
+    fig:{label:`Vote`, build:el=>W.poll(el,{q:'The best idea for a student venture is the one that is…',opts:['the most creative','the cheapest','solving a real problem people already feel','the one the team likes most'],reveal:i=>(i===2?'<b>Yes.</b> ':'<b>Suggested: C.</b> ')+'Creativity helps, but an idea is only effective when it solves a real, frequent problem for people you can reach.'})} },
+
+  { nav:'Effective ideas', title:'How to identify effective ideas', minutes:15,
+    narration:[
+     B.plain(`Test every idea on four lenses. <b>Desirability:</b> do real people need it? <b>Feasibility:</b> can your team build it with your skills and time? <b>Viability:</b> can it pay for itself? <b>Impact:</b> does it move your SDG forward?`),
+     B.ex(`“An app for everyone to be healthier” fails desirability (too vague) and feasibility (too big). “A weekly fruit-box pickup for students in one residence hall” is specific, buildable and testable.`)],
+    fig:{label:`Four lenses`, html:`<svg viewBox="0 0 400 300" style="width:100%;height:auto" role="img" aria-label="Desirability, feasibility, viability and impact overlap at the effective idea">
+      ${[[150,120,'Desirability'],[250,120,'Feasibility'],[150,190,'Viability'],[250,190,'Impact']].map(([x,y,t],i)=>`<circle cx="${x}" cy="${y}" r="78" fill="var(--wk)" fill-opacity=".14" stroke="var(--wk)"/><text x="${x+(i%2?40:-40)}" y="${y+(i<2?-38:48)}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="14" fill="var(--ink)">${t}</text>`).join('')}
+      <circle cx="200" cy="155" r="18" fill="var(--wk)"/><text x="200" y="290" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-size="13" fill="var(--muted)">The effective idea sits where all four overlap</text></svg>`} },
+
+  { nav:'Idea or opportunity?', title:'Idea or opportunity?', minutes:10,
+    narration:[
+     `An <strong>idea</strong> is a solution you thought of. An <strong>opportunity</strong> is an idea with a real problem, a reachable customer and a reason <em>now</em>.`,
+     B.ex(`<b>Idea:</b> “a recycling app.” <b>Opportunity:</b> “students in shared housing in Dubai do not know where to drop e-waste; a map of drop-off points near campuses saves them a trip.”`)],
+    fig:{label:`Quick test · sort`, build:el=>W.sort(el,{buckets:['Idea only','Opportunity'],items:[
+      {t:`An app to make people happier`,a:0,why:`No specific user, problem or reason now.`},
+      {t:`Weekend coding tutoring for refugee children in Sharjah, run by student volunteers`,a:1,why:`Clear users, need and a delivery model.`},
+      {t:`A smart water bottle`,a:0,why:`A product without a problem or customer.`},
+      {t:`Discounted surplus meals from cafés near campus at closing time`,a:1,why:`Real waste, price-sensitive students, a daily moment.`},
+      {t:`Something with AI for the environment`,a:0,why:`Too vague to test.`}]})} },
+
+  { nav:'Pitch round', title:'Activity · Discussion of ideas: pitch round', kind:'activity', minutes:25,
+    narration:[
+     `Each member pitches their best idea in <strong>60 seconds</strong>: <b>problem → who → solution → why now</b>.`,
+     `Listeners give one line each: <b>I like · I wish · What if</b>. Then each person places <b>2 dots</b> (votes) on the ideas they would work on all semester.`],
+    notes:[`Keep strict 60-second timing. Groups of 8–10 for the pitch round; dots on sticky notes or the board.`],
+    fig:{label:`60-second pitch builder`, build:el=>W.worksheet(el,{id:'ent142-w2-pitch',title:'ENT 142 · Week 2 · My 60-second pitch',fields:[
+      {l:'Problem (one sentence, with a fact if you have one)',rows:2},{l:'Who has it (be specific)',rows:1},{l:'Solution (what it is, not features)',rows:2},{l:'Why now',rows:1},{l:'Feedback I received (I like · I wish · What if)',rows:3}]})} },
+
+  { nav:'Score your ideas', title:'Activity · Score your top ideas', kind:'activity', minutes:25, wide:true,
+    narration:[
+     `Take the 3–5 ideas with the most dots. Score each on the four lenses, adjust the weights if your team agrees, and read the ranking.`,
+     `The matrix supports the decision; it does not make it. If the top two are close, choose the one you can <b>test fastest</b>.`],
+    fig:{label:`Weighted idea-selection matrix`, build:matrix, caption:`Your chosen idea becomes Step 1 (Venture card) in the Project 1 Lab.`} },
+
+  { nav:'Form your team', title:'Activity · Group formation', kind:'activity', minutes:20,
+    narration:[
+     `Teams of <strong>4–5</strong>, built around the chosen ideas. Give every member a lead role; everyone still contributes to every section.`,
+     `<table class="tbl"><thead><tr><th>Role</th><th>Leads in the Project 1 Lab</th></tr></thead><tbody><tr><td>Coordinator</td><td>Plan, deadlines, final assembly (Step 11)</td></tr><tr><td>Data lead</td><td>Verified data and market (Steps 2, 5)</td></tr><tr><td>Customer lead</td><td>Customers and competition (Steps 4, 6)</td></tr><tr><td>Design lead</td><td>Prototype (Step 8)</td></tr><tr><td>Business lead</td><td>Business model (Step 7)</td></tr></tbody></table>`],
+    fig:{label:`Team charter · saves in your browser`, build:el=>W.worksheet(el,{id:'ent142-w2-charter',title:'ENT 142 · Team charter',fields:[
+      {l:'Team name and chosen idea',rows:1},{l:'Members, student IDs and lead roles',rows:4},{l:'When and where we meet each week',rows:1},{l:'Our communication channel',rows:1},{l:'How we decide when we disagree',rows:2},{l:'What happens if someone misses a deadline',rows:2}]})} },
+
+  { nav:'Key takeaways', full:true, title:'Key takeaways · Week 2', kind:'review', minutes:10,
+    narration:[KEY(`<ul><li>An effective idea passes four lenses: desirability, feasibility, viability, impact.</li><li>An opportunity = real problem + reachable customer + reason now.</li><li>Pitch in 60 seconds: problem → who → solution → why now.</li><li>Use a weighted matrix to support, not replace, the team decision.</li><li>Teams of 4–5 with a charter and lead roles.</li></ul>`)],
+    fig:{mindmap:{center:'Week 2',branches:[
+      {t:'Four lenses',items:['Desirability · Feasibility','Viability · Impact']},
+      {t:'Opportunity',items:['Real problem','Reachable customer','Reason now']},
+      {t:'Discussion',items:['60-second pitch','I like · I wish · What if','Dot voting']},
+      {t:'Selection',items:['Weighted matrix','Test fastest if close']},
+      {t:'Team',items:['4–5 members','Lead roles · charter']}]}} },
+
+  { nav:'Exit check', title:'Exit check', kind:'check', minutes:5,
+    narration:[`Five questions.`,`<strong>Before Week 3:</strong> read Byers et al (2019). Ch. 4 and the HBR article: Blank, S. (2013). Why the lean start-up changes everything. <em>Harvard Business Review</em>.`],
+    fig:{label:`Five questions`, build:el=>W.quiz(el,[
+      {q:`“Can our team build it this semester?” tests…`,o:[`desirability`,`feasibility`,`viability`,`impact`],a:1,why:`Feasibility = skills, time and resources.`},
+      {q:`Which is an opportunity rather than just an idea?`,o:[`An app to make people happier`,`Surplus meals from cafés near campus for price-sensitive students at closing time`,`A smart bottle`,`AI for the environment`],a:1,why:`Specific problem, customer and moment.`},
+      {q:`A 60-second pitch follows…`,o:[`features → price → logo`,`problem → who → solution → why now`,`history → team → thanks`,`solution only`],a:1,why:`Start from the problem, not the product.`},
+      {q:`Two ideas score 3.9 and 3.8. You should…`,o:[`pick 3.9 automatically`,`discuss and prefer the one you can test fastest`,`drop both`,`average them`],a:1,why:`The matrix supports the decision.`},
+      {q:`Recommended team size for Project 1 is…`,o:[`2–3`,`4–5`,`6–8`,`any size`],a:1,why:`The Project 1 brief asks for teams of 4–5.`}])} }
+  ]
+});
+</script>
+</body>
+</html>
