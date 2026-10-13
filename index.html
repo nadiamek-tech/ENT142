@@ -24,6 +24,10 @@
 .mast p{margin:0 0 12px;max-width:52ch}
 .byline{font-family:var(--f-display);font-size:.92rem;color:var(--muted)}
 .byline b{color:var(--ink)}
+.trial{font-family:var(--f-display);font-size:.95rem;color:var(--muted);margin:20px 0 0;max-width:46ch}
+.start.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+html{scroll-behavior:smooth}
+.mast{padding-block:40px 32px}
 .start{display:inline-flex;align-items:center;gap:10px;margin-top:10px;background:var(--ink);color:var(--bg);text-decoration:none;padding:11px 18px;border-radius:10px;font-family:var(--f-display);font-weight:700}
 .how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-block:1px solid var(--line);margin-bottom:44px}
 .how div{padding:16px 18px;border-left:1px solid var(--line);font-family:var(--f-display);font-size:.9rem}
@@ -67,6 +71,7 @@ h2.sec{font-size:1.5rem;font-weight:800;margin-bottom:6px}
 .brandrow{display:flex;align-items:center;gap:12px;min-width:0}
 .cudlogo{height:44px;width:auto;display:block;background:#fff;border-radius:8px;padding:4px 8px}
 .find,.faq{margin-bottom:40px}
+.find{margin-top:12px}
 .findbox{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;max-width:640px}
 .findbox input{min-width:0;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-family:var(--f-display);font-size:1rem}
 .findres{display:grid;gap:6px;margin-top:12px;max-width:760px}
@@ -85,15 +90,14 @@ h2.sec{font-size:1.5rem;font-weight:800;margin-bottom:6px}
     <div>
       <span class="code">ENT 142 · 0-2-1 · LAB 30 HRS · PRE-REQUISITE ENT 141</span>
       <h1>Innovation &amp; Entrepreneurship 2<span>from idea to social venture</span></h1>
+      <p class="trial">A trial of a more interactive way to run this course. Your comments and recommendations are very welcome.</p>
     </div>
     <div>
-      <p>Short lab notes, real examples, and a step-by-step lab for your project.</p>
       <div class="byline">Course lecturer <b>Eng. Nadia Mek</b></div>
-      <div class="row" style="gap:10px"><a class="start" href="week-01.html">Start with Week 1 →</a><a class="start" href="project-1.html" style="background:transparent;color:var(--ink);border:1px solid var(--line)">Project 1 Lab</a><a class="start" href="week-05.html#s4" style="background:transparent;color:var(--ink);border:1px solid var(--line)">Prototype Helper</a><span id="reg-slot"></span></div>
+      <div class="row" style="gap:10px"><a class="start" href="#map">Lectures</a><a class="start ghost" href="project-1.html">Project Labs</a><a class="start ghost" href="week-05.html#s4">Prototype Helper</a><span id="reg-slot"></span></div>
     </div>
   </section>
 
-  <p class="mono" style="color:var(--muted);margin:0 0 28px">Each page: short scenes · ← → keys · Listen reads aloud · 🙂 Ask me (bottom right) answers from the course.</p>
 
   <section class="find" aria-label="Search the course">
     <h2 class="sec">Find anything</h2>
@@ -111,7 +115,7 @@ h2.sec{font-size:1.5rem;font-weight:800;margin-bottom:6px}
     <span class="open">Open lab →</span>
   </a>
 
-  <h2 class="sec">Course map</h2>
+  <h2 class="sec" id="map">Course map</h2>
   <p class="sub">Topics as written in the syllabus. Pages open as they are released.</p>
   <div class="clos">
     <div style="--cc:var(--c1)"><b>CLO 1</b>Explain the process of innovation, entrepreneurship and sustainability.</div>
@@ -158,7 +162,7 @@ document.getElementById('ledger').innerHTML=WEEKS.map(([n,t,subs,clo,ref,ass,hre
     <div class="st">${href?'<span class="open">Open lecture →</span>':'<span class="tag">In preparation</span>'}</div></${tag}>`; }).join('');
 
 /* team registration */
-(()=>{ const r=window.ENT142_REG; document.getElementById('reg-slot').outerHTML=r?`<a class="start" href="${r}" target="_blank" rel="noopener" style="background:var(--c3)">Register your team →</a>`:`<span class="mono" style="align-self:center;color:var(--muted)">Team registration link: coming soon</span>`; })();
+(()=>{ const r=window.ENT142_REG; document.getElementById('reg-slot').outerHTML=r?`<a class="start" href="${r}" target="_blank" rel="noopener" style="background:var(--c3);color:var(--bg)">Register your team</a>`:`<span class="mono" style="align-self:center;color:var(--muted)">Team registration link: coming soon</span>`; })();
 /* search + FAQ */
 const FAQ=['When is Project 1 due?','How many words is the Project 1 report?','How is the course graded?','Do we need a survey or interviews?','Where do I find verified data?','Can I use ChatGPT or AI as a source?','How do I submit the report?','How do we register our team?','How big is a team?','How does the presentation work?','Which prototype should we build?'];
 const KBX=window.ENT142_KB||[];
