@@ -128,6 +128,7 @@ h2.sec{font-size:1.5rem;font-weight:800;margin-bottom:6px}
 </div>
 
 <script src="assets/scorm.js"></script>
+<script src="assets/supports.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/kb.js"></script>
 <script src="assets/search-index.js"></script>
@@ -172,7 +173,7 @@ document.getElementById('find-f').addEventListener('submit',ev=>{ ev.preventDefa
   const r=window.ENT142Assistant.search(q); const items=[];
   r.kb.filter(x=>x.s>=1.6).slice(0,3).forEach(x=>items.push(`<a href="${x.e.l}"><b>${esc(x.e.q)}</b>${esc(x.e.a)}<br><small>${esc(window.ENT142Assistant.label(x.e.l))}</small></a>`));
   r.idx.filter(x=>x.s>=2&&!r.kb.slice(0,3).some(k=>k.e.l===x.e.l)).slice(0,4).forEach(x=>items.push(`<a href="${x.e.l}"><b>${esc(x.e.pt)} · ${esc(x.e.n)}</b><small>${esc(x.e.t)}</small></a>`));
-  box.innerHTML=items.length?items.join(''):`<p class="mono" style="color:var(--muted)">Try one key word, or ask the assistant.</p><button type="button" class="btn" id="find-ask">🙂 Ask me: “${esc(q)}”</button>`;
+  box.innerHTML=items.length?items.join(''):`<p class="mono" style="color:var(--muted)">Try one key word, or ask the assistant.</p><button type="button" class="btn" id="find-ask">Ask me: “${esc(q)}”</button>`;
   const fa=document.getElementById('find-ask'); if(fa) fa.addEventListener('click',()=>window.ENT142Assistant.open(q)); });
 </script>
 </body>

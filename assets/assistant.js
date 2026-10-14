@@ -18,7 +18,7 @@
   /* ---------- styles ---------- */
   const css=`
 .ca-btn{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:10px 16px 10px 10px;background:var(--wk,#2F5BD3);color:var(--on-wk,#fff);font:700 .95rem var(--f-display,Arial,sans-serif);cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.18)}
-.ca-btn .face{font-size:1.5rem;line-height:1}
+.ca-btn .face{line-height:0}
 .ca-panel{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:61;width:min(380px,calc(100vw - 32px));max-height:min(620px,calc(100vh - 110px));display:flex;flex-direction:column;background:var(--surface,#fff);color:var(--ink,#16202B);border:1px solid var(--line,#D6DDE5);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.22);overflow:hidden;font-family:var(--f-display,Arial,sans-serif)}
 .ca-panel[hidden]{display:none}
 .ca-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line,#D6DDE5)}
@@ -70,16 +70,16 @@
     if(places.length||(top&&top.s>=1)){
       msg(`Here is where the course covers that:${places.length?'<br>'+places.map(p=>'• '+link(p.e.l,`${p.e.pt} · ${p.e.n}`)).join('<br>'):''}${top?`<br><br>Closest answer: ${esc(top.e.a)} ${link(top.e.l,'More')}`:''}`);
       setChips((top?r.kb.slice(0,3).map(x=>x.e.q):[]).concat(SUGGEST[page]||[]).slice(0,3)); return; }
-    msg(`I'm tall, but not that tall 😄 From up here I can see this course. Pick a topic, or ask with a key word like “MVP” or “market size”.`);
+    msg(`Not found in this course. Pick a topic, or ask with a key word like “MVP” or “market size”.`);
     setChips(TOPICS);
   }
   function build(){
-    const btn=document.createElement('button'); btn.className='ca-btn'; btn.type='button'; btn.setAttribute('aria-label','Open the course assistant'); btn.innerHTML='<span class="face" aria-hidden="true">🙂</span><span class="lbl">Ask me</span>';
+    const btn=document.createElement('button'); btn.className='ca-btn'; btn.type='button'; btn.setAttribute('aria-label','Open the course assistant'); btn.innerHTML='<span class="face"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span><span class="lbl">Ask me</span>';
     panel=document.createElement('div'); panel.className='ca-panel'; panel.hidden=true; panel.setAttribute('role','dialog'); panel.setAttribute('aria-label','Course assistant');
-    panel.innerHTML=`<div class="ca-head"><span style="font-size:1.4rem" aria-hidden="true">🙂</span><b>Course assistant</b><button type="button" aria-label="Close">×</button></div><div class="ca-log" role="log" aria-live="polite"></div><div class="ca-chips"></div><form class="ca-in"><input type="text" id="ca-q" placeholder="Ask about the course…" aria-label="Your question" autocomplete="off"><button type="submit">Ask</button></form>`;
+    panel.innerHTML=`<div class="ca-head"><b>Course assistant</b><button type="button" aria-label="Close">×</button></div><div class="ca-log" role="log" aria-live="polite"></div><div class="ca-chips"></div><form class="ca-in"><input type="text" id="ca-q" placeholder="Ask about the course…" aria-label="Your question" autocomplete="off"><button type="submit">Ask</button></form>`;
     document.body.append(btn,panel);
     log=panel.querySelector('.ca-log'); chips=panel.querySelector('.ca-chips'); input=panel.querySelector('#ca-q');
-    const toggle=open=>{ panel.hidden=!open; if(open){ if(!opened){ opened=true; msg(`Hi! I'm your course assistant. Not smarter than you, but taller: I can see the whole course from the top. 😄<br>I won't do the work for you, but I'll make your life easier.`); setChips(SUGGEST[page]||SUGGEST['index.html']); } input.focus(); } };
+    const toggle=open=>{ panel.hidden=!open; if(open){ if(!opened){ opened=true; msg(`Ask about any topic, date or task in the course. I point you to the right page.`); setChips(SUGGEST[page]||SUGGEST['index.html']); } input.focus(); } };
     btn.addEventListener('click',()=>toggle(panel.hidden));
     panel.querySelector('.ca-head button').addEventListener('click',()=>toggle(false));
     document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!panel.hidden) toggle(false); });
