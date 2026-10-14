@@ -277,3 +277,7 @@ textarea,input[type=text]{width:100%;border:1px solid var(--line);background:var
 .toclogo{display:inline-block;background:#fff;border-radius:8px;padding:4px 8px;margin-bottom:12px}
 .toclogo img{height:34px;width:auto;display:block}
 @media (max-width:899px){.toclogo{display:none}}
+
+.cert{margin-top:16px;padding:12px 14px;border:1px solid var(--line,#ddd);border-left:4px solid var(--wk,#2a6);border-radius:10px;display:flex;flex-direction:column;gap:3px}
+.cert a{font-weight:600;color:inherit}
+.cert small{opacity:.75}

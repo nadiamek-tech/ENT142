@@ -268,6 +268,7 @@
       if(s.think) narr.appendChild(h('div',{class:'think'},`<span class="eyebrow">Pause and think</span>${s.think}`));
       if(s.video){ const vd=h('div',{class:'videos'}); [].concat(s.video).forEach(v=>W.video(vd,v)); narr.appendChild(vd); }
       if(s.src) narr.appendChild(h('div',{class:'src'},s.src));
+      if(s.cert) [].concat(s.cert).forEach(c=>narr.appendChild(h('div',{class:'cert'},`<span class="eyebrow">Going further · optional</span><a href="${c.url}" target="_blank" rel="noopener">${c.name}</a><small>${c.by} · ${c.what}</small>`)));
       if(s.notes) narr.appendChild(h('div',{class:'notes'},`<span class="eyebrow">Teacher notes${s.minutes?` · ${s.minutes} min`:''}</span><ul>${s.notes.map(n=>`<li>${n}</li>`).join('')}</ul>`));
       split.appendChild(narr);
       if(s.fig){ const f=h('figure',{class:'fig',style:'margin:0'}); if(s.fig.label) f.appendChild(h('span',{class:'eyebrow'},esc(s.fig.label)));

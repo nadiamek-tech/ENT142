@@ -4,6 +4,7 @@
 window.ENT142_REG='https://forms.cloud.microsoft/r/B905PpvTTv';  /* ENT 142 Project 1 progress & team form (CUD account) */
 window.ENT142_KB=[
 /* ---------- course & assessment ---------- */
+{q:'Are there free certificates I can take?',k:'certificate badge credential certification free online course cv linkedin extra going further ibm unssc hp',a:'Optional, not graded: IBM Enterprise Design Thinking Practitioner (Weeks 1 and 5), IBM Be an Entrepreneur (Week 3), UNSSC SDG Primer 1 (Week 4), HP LIFE Effective Presentations (presentation tips). All free; look for the Going further box on those scenes.',l:'week-01.html#s2'},
 {q:'How is the course graded?',k:'grade marks weight worth assessment percentage breakdown',a:'Project 1 Report 40%, Project 1 Presentation 10%, Project 2 Reflective Portfolio 30%, Activity 1 10%, Activity 2 10%.',l:'week-01.html#s1'},
 {q:'When is Project 1 due?',k:'deadline due date submission report when',a:'Tuesday 27 October 2026: report submission and presentation on the same day.',l:'project-1.html#s0'},
 {q:'How many words is the Project 1 report?',k:'word count length 4000 words limit',a:'4000 words. The cover page, table of contents and executive summary are not counted.',l:'project-1.html#s11'},
