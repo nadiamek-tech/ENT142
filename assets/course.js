@@ -250,9 +250,12 @@
       if(qi>=queue.length){ finish(); return; }
       if(!synth){ stop(); return; }
       const el=queue[qi++]; el.classList.add('speaking'); el.scrollIntoView({block:'nearest',behavior:'smooth'});
-      const u=new SpeechSynthesisUtterance(el.innerText.replace(/^Pause and think\s*/i,'Pause and think. ')); if(voice) u.voice=voice; u.rate=0.98;
-      u.onend=()=>{ if(speaking) next(); }; u.onerror=()=>{ if(speaking) next(); };
-      synth.speak(u);
+      if(!voice) pickVoice();
+      const u=new SpeechSynthesisUtterance(el.innerText.replace(/^Pause and think\s*/i,'Pause and think. ')); if(voice) u.voice=voice; u.lang=(voice&&voice.lang)||'en-GB'; u.rate=0.98;
+      window.__ttsU=u; /* keep a reference: some browsers drop unreferenced utterances and never fire onend */
+      u.onend=()=>{ if(speaking) next(); }; u.onerror=e=>{ if(speaking&&e.error!=='interrupted'&&e.error!=='canceled') next(); };
+      /* Chrome/Edge drop a speak() issued right after cancel(); wait a moment and make sure the queue is not paused */
+      setTimeout(()=>{ if(!speaking) return; try{ synth.resume(); }catch(x){} synth.speak(u); },120);
     }
 
     function render(){
