@@ -3,178 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ENT 142 · Innovation and Entrepreneurship 2</title>
-<meta name="description" content="Narrated, visual lab notes and project guides for ENT 142 – Fundamentals of Innovation and Entrepreneurship 2, Canadian University Dubai.">
+<title>ENT 142 Innovation and Entrepreneurship 2</title>
+<meta name="description" content="ENT 142 Fundamentals of Innovation and Entrepreneurship 2: lab notes, Project 1 report guide, presentation, calendar and help.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 <link rel="stylesheet" href="assets/course.css">
-<style>
-/* Hub layout: masthead with course identity, a 4-step "how it works" strip, then the 16-week map as a ledger grouped by CLO. */
-:root{--c1:#0F7B6C;--c2:#2F55C8;--c3:#B4521E;--c4:#6B4FB8}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--c1:#4FD1BA;--c2:#8AA6FF;--c3:#F2A06B;--c4:#B9A3F5}}
-:root[data-theme="dark"]{--c1:#4FD1BA;--c2:#8AA6FF;--c3:#F2A06B;--c4:#B9A3F5}
-.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:0 56px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:16px;border-bottom:1px solid var(--line)}
-.top .mono{color:var(--muted)}
-.mast{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;padding-block:48px 36px;align-items:end}
-.mast h1{font-size:clamp(2.2rem,5.2vw,4.2rem);overflow-wrap:anywhere;font-weight:800;letter-spacing:-.035em;line-height:.95}
-.mast h1 span{display:block;color:var(--muted);font-weight:600}
-.mast .code{font-family:var(--f-mono);font-size:.8rem;letter-spacing:.1em;color:var(--muted);margin-bottom:14px;display:block}
-.mast p{margin:0 0 12px;max-width:52ch}
-.byline{font-family:var(--f-display);font-size:.92rem;color:var(--muted)}
-.byline b{color:var(--ink)}
-.trial{font-family:var(--f-display);font-size:.95rem;color:var(--muted);margin:20px 0 0;max-width:46ch}
-.start.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-html{scroll-behavior:smooth}
-.mast{padding-block:40px 32px}
-.start{display:inline-flex;align-items:center;gap:10px;margin-top:10px;background:var(--ink);color:var(--bg);text-decoration:none;padding:11px 18px;border-radius:10px;font-family:var(--f-display);font-weight:700}
-.how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-block:1px solid var(--line);margin-bottom:44px}
-.how div{padding:16px 18px;border-left:1px solid var(--line);font-family:var(--f-display);font-size:.9rem}
-.how div:first-child{border-left:0;padding-left:0}
-.how b{display:block;font-size:1rem;margin-bottom:4px}
-.how .k{font-family:var(--f-mono);font-size:.7rem;border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:var(--surface)}
-h2.sec{font-size:1.5rem;font-weight:800;margin-bottom:6px}
-.sub{font-family:var(--f-display);color:var(--muted);margin:0 0 18px;font-size:.95rem}
-.clos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:26px}
-.clos div{font-family:var(--f-display);font-size:.88rem;border-top:3px solid var(--cc);padding-top:8px}
-.clos b{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;color:var(--cc);display:block;margin-bottom:2px}
-.ledger{display:grid;gap:0;border-top:1px solid var(--line)}
-.wk{display:grid;grid-template-columns:64px minmax(0,1fr) 150px 130px 110px;gap:16px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);position:relative}
-.wk .no{font-family:var(--f-display);font-weight:800;font-size:1.6rem;line-height:1;color:var(--cc);font-variant-numeric:tabular-nums}
-.wk h3{font-size:1.04rem;font-weight:700;margin-bottom:3px}
-.wk ul{margin:0;padding-left:1.05em;font-size:.88rem;color:var(--muted);font-family:var(--f-display)}
-.wk .meta{font-family:var(--f-display);font-size:.84rem;color:var(--muted)}
-.wk .meta b{display:block;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;font-weight:400}
-.wk .st{justify-self:end;text-align:right}
-.wk.ready{background:linear-gradient(90deg,color-mix(in srgb,var(--cc) 8%,transparent),transparent 70%)}
-.wk.ready:hover h3{text-decoration:underline;text-decoration-color:var(--cc)}
-.wk.ready .open{font-family:var(--f-display);font-weight:700;color:var(--cc);font-size:.9rem;white-space:nowrap}
-.wk:not(.ready) h3{color:var(--muted)}
-.foot{margin-top:28px;font-family:var(--f-display);font-size:.84rem;color:var(--muted)}
-@media (max-width:900px){
-  .mast{grid-template-columns:minmax(0,1fr);gap:20px;padding-block:32px 24px}
-  .how{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .how div:nth-child(3){border-left:0;padding-left:0}
-  .how div{border-top:1px solid var(--line)} .how div:nth-child(-n+2){border-top:0}
-  .clos{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .wk{grid-template-columns:48px minmax(0,1fr);gap:6px 12px}
-  .wk .meta,.wk .st{grid-column:2;justify-self:start;text-align:left}
-}
-@media (max-width:480px){.how{grid-template-columns:minmax(0,1fr)}.how div{border-left:0!important;padding-left:0;border-top:1px solid var(--line)!important}.how div:first-child{border-top:0!important}}
-.proj{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;border:1px solid var(--line);border-left:6px solid var(--c3);border-radius:12px;padding:18px 20px;margin-bottom:16px;background:var(--surface);text-decoration:none;color:var(--ink)}
-.proj h3{font-size:1.25rem;font-weight:800;margin-bottom:4px}
-.proj p{margin:0;font-family:var(--f-display);font-size:.92rem;color:var(--muted)}
-.proj .open{font-family:var(--f-display);font-weight:700;color:var(--c3);white-space:nowrap}
-.proj:hover h3{text-decoration:underline}
-@media (max-width:560px){.proj{grid-template-columns:minmax(0,1fr)}}
-.brandrow{display:flex;align-items:center;gap:12px;min-width:0}
-.cudlogo{height:44px;width:auto;display:block;background:#fff;border-radius:8px;padding:4px 8px}
-.find,.faq{margin-bottom:40px}
-.find{margin-top:12px}
-.findbox{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;max-width:640px}
-.findbox input{min-width:0;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-family:var(--f-display);font-size:1rem}
-.findres{display:grid;gap:6px;margin-top:12px;max-width:760px}
-.findres a{display:block;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none;color:var(--ink);font-family:var(--f-display);font-size:.92rem}
-.findres a b{display:block;color:var(--wk)}
-.findres a small{color:var(--muted)}
-.faq .acc{max-width:760px}
-</style>
+<link rel="stylesheet" href="assets/portal.css">
+<style>body{font-family:var(--f-display);background:var(--bg);color:var(--ink);margin:0}:root{--wk:#B4521E;--wk-soft:rgba(180,82,30,.09);--wk-d:#F2A06B;--wk-soft-d:rgba(242,160,107,.14)}</style>
 </head>
-<body>
-
-<div class="wrap">
-  <div class="top"><span class="brandrow"><img src="assets/cud-logo.png" alt="Canadian University Dubai" class="cudlogo" onerror="this.remove()"><span class="mono">ENT 142</span></span><button type="button" class="pill" id="theme">◐ Theme</button></div>
-
-  <section class="mast">
-    <div>
-      <span class="code">ENT 142 · 0-2-1 · LAB 30 HRS · PRE-REQUISITE ENT 141</span>
-      <h1>Innovation &amp; Entrepreneurship 2<span>from idea to social venture</span></h1>
-      <p class="trial">A trial of a more interactive way to run this course. Your comments and recommendations are very welcome.</p>
-    </div>
-    <div>
-      <div class="byline">Course lecturer <b>Eng. Nadia Mek</b></div>
-      <div class="row" style="gap:10px"><a class="start" href="#map">Lectures</a><a class="start ghost" href="projects.html">Projects</a><a class="start ghost" href="week-05.html#s3">Prototype Helper</a><span id="reg-slot"></span></div>
-    </div>
-  </section>
-
-
-  <section class="find" aria-label="Search the course">
-    <h2 class="sec">Find anything</h2>
-    <form id="find-f" class="findbox" role="search"><input id="find-q" type="search" placeholder="Try: MVP, market size, deadline…" aria-label="Search the course" autocomplete="off"><button type="submit" class="btn">Search</button></form>
-    <div id="find-r" class="findres" aria-live="polite"></div>
-  </section>
-
-  <section class="faq" aria-label="Frequently asked questions">
-    <h2 class="sec">FAQ</h2>
-    <div class="acc" id="faq"></div>
-  </section>
-
-  <a class="proj" href="projects.html">
-    <div><span class="eyebrow">Report 40% · Presentation 10% · Portfolio 30% · Activities 20%</span><h3>Projects</h3><p>Project 1 lab and presentation tips, plus what is coming next.</p></div>
-    <span class="open">Open →</span>
-  </a>
-
-  <h2 class="sec" id="map">Course map</h2>
-  <p class="sub">Topics as written in the syllabus. Pages open as they are released.</p>
-  <div class="clos">
-    <div style="--cc:var(--c1)"><b>CLO 1</b>Explain the process of innovation, entrepreneurship and sustainability.</div>
-    <div style="--cc:var(--c2)"><b>CLO 2</b>Apply skills required for effective teamwork and presentations, emphasizing sustainable approaches to solving real-life social issues through innovation.</div>
-    <div style="--cc:var(--c3)"><b>CLO 3</b>Analyze the impact of innovation, entrepreneurship and sustainability on society and the economy.</div>
-    <div style="--cc:var(--c4)"><b>CLO 4</b>Articulate the value of innovation, entrepreneurship, and sustainability in shaping own career paths focusing on continuous learning and personal development.</div>
-  </div>
-  <div class="ledger" id="ledger"></div>
-  <p class="foot">Assessment: Project 1 Report (40%), Project 1 Presentation (10%), Project 2 Reflective Portfolio (30%), Activity 1 (10%), Activity 2 (10%). Textbook: Byers, Dorf &amp; Nelson (2019), <em>Technology ventures: From idea to enterprise</em> (5th ed.). Due dates are announced on Moodle.</p>
-</div>
-
-<script src="assets/scorm.js"></script>
+<body data-home>
+<div id="hub" data-cur=""></div>
+<main id="portal"></main>
+<footer class="pt-foot">This website is interactive course support. It does not replace classes, attendance or class activities.<br> <b>Eng. Nadia Mek</b></footer>
 <script src="assets/supports.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/kb.js"></script>
 <script src="assets/search-index.js"></script>
 <script src="assets/assistant.js"></script>
-<script>
-document.getElementById('theme').addEventListener('click',()=>GED102Theme.toggle());
-const WEEKS=[
- [1,'Overview of the Course',['Course Material','Course Assessment','Revisiting the Design Thinking Process','Recap of the DTP','Step 4: Prototyping','Step 5: Testing'],'1,3','Liedtka et al., (2017)','','week-01.html'],
- [2,'Idea Selection and Evaluation',['How to Identify Effective Ideas','Discussion of Ideas','Group Formation'],'1,3','Byers et al (2019). Ch. 1','','week-02.html'],
- [3,'Lean Startups',['Introduction to Lean Startups','Minimum Viable Product (MVP)'],'1,3','Byers et al (2019). Ch. 4, HBR','','week-03.html'],
- [4,'Sustainable Innovation and Entrepreneurship',['Introduction to the Third Sector and Social Economy','Recap of Triple Bottom-line Framework','Recap of SDGs and Linking the SDGs to the Product'],'1,3','UN SDGs, Qian et al., (2024) and Bridge et al 2020 Ch1','','week-04.html'],
- [5,'Prototyping',['Prototype Generation Techniques','Initial Prototype Development'],'1','Byers et al (2019). Ch. 8, Pradeep & Rajib (2022)','Project 1 briefing','week-05.html'],
- [6,'Industry Barriers',['Identifying Competition','Positioning and Positioning Map','Porter’s 5 Forces','Competition Matrix'],'1,3','Byers et al (2019). Ch. 4,7','Project 3 · Activity 1'],
- [7,'Lean Model Canvas',['Components of the Lean Canvas','Deploying strategies in the canvas'],'1','Byers et al (2019). Ch. 5, HBR',''],
- [8,'Pitching Workshop',['Breaking the Ice','Time Management'],'2','Byers et al (2019).  Ch. 19',''],
- [9,'Presenting the Idea',['Constructive Pitching','Professional Engagement'],'2,3','Byers et al (2019).  Ch. 19','Project 1 Report'],
- [10,'Reflection Workshop',['Introduction to Reflection','Importance of Reflection'],'4','HBR','Project 1 Presentation'],
- [11,'Reflection and Reflective Assessment',['Why do Entrepreneurs Reflect?','How to Reflect?'],'4','HBR',''],
- [12,'Elevator Pitch',['What is an Elevator Pitch?','How to plan your pitch?'],'2','Byers et al (2019).  Ch. 6',''],
- [13,'Elevator Pitch Workshop (Part 1)',['Constructing the Pitch'],'2','Stanford eCorner','Project 3 -Activity 2'],
- [14,'Elevator Pitch Workshop (Part 2)',['Constructing the Pitch','How to be creative with the Pitch?'],'2','Stanford  eCorner',''],
- [15,'Course Reflection (Part 1)',['Enterprising Tendencies','Report Review'],'4','Byers et al (2019).  Ch. 6, HBR',''],
- [16,'Course Reflection (Part 2)',['Enterprising Tendencies','Report Review'],'4','Byers et al (2019).  Ch. 6, HBR','Project 2 Reflective Portfolio']
-];
-const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-document.getElementById('ledger').innerHTML=WEEKS.map(([n,t,subs,clo,ref,ass,href])=>{
-  const tag=href?'a':'div'; const cc=`var(--c${clo[0]})`;
-  return `<${tag} class="wk${href?' ready':''}" ${href?`href="${href}"`:''} style="--cc:${cc}">
-    <span class="no">${String(n).padStart(2,'0')}</span>
-    <div><h3>${esc(t)}</h3>${subs.length?`<ul>${subs.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`:''}</div>
-    <div class="meta">${ref?`<b>Reading</b>${esc(ref)}`:''}</div>
-    <div class="meta"><b>CLO</b>${esc(clo)}${ass?`<b style="margin-top:6px">Assessment</b>${ass}`:''}</div>
-    <div class="st">${href?'<span class="open">Open lecture →</span>':'<span class="tag">In preparation</span>'}</div></${tag}>`; }).join('');
-
-/* team registration */
-(()=>{ const r=window.ENT142_REG; document.getElementById('reg-slot').outerHTML=r?`<a class="start" href="${r}" target="_blank" rel="noopener" style="background:var(--c3);color:var(--bg)">Register your team</a>`:`<span class="mono" style="align-self:center;color:var(--muted)">Team registration link: coming soon</span>`; })();
-/* search + FAQ */
-const FAQ=['When is Project 1 due?','How many words is the Project 1 report?','How is the course graded?','Do we need a survey or interviews?','Where do I find verified data?','Can I use ChatGPT or AI as a source?','How do I submit the report?','How do we register our team?','How big is a team?','How does the presentation work?','Which prototype should we build?'];
-const KBX=window.ENT142_KB||[];
-document.getElementById('faq').innerHTML=FAQ.map(q=>KBX.find(e=>e.q===q)).filter(Boolean).map(e=>`<details><summary>${esc(e.q)}</summary><p>${esc(e.a)} <a href="${e.l}">Open →</a></p></details>`).join('');
-document.getElementById('find-f').addEventListener('submit',ev=>{ ev.preventDefault(); const q=document.getElementById('find-q').value.trim(); const box=document.getElementById('find-r'); if(!q){ box.innerHTML=''; return; }
-  const r=window.ENT142Assistant.search(q); const items=[];
-  r.kb.filter(x=>x.s>=1.6).slice(0,3).forEach(x=>items.push(`<a href="${x.e.l}"><b>${esc(x.e.q)}</b>${esc(x.e.a)}<br><small>${esc(window.ENT142Assistant.label(x.e.l))}</small></a>`));
-  r.idx.filter(x=>x.s>=2&&!r.kb.slice(0,3).some(k=>k.e.l===x.e.l)).slice(0,4).forEach(x=>items.push(`<a href="${x.e.l}"><b>${esc(x.e.pt)} · ${esc(x.e.n)}</b><small>${esc(x.e.t)}</small></a>`));
-  box.innerHTML=items.length?items.join(''):`<p class="mono" style="color:var(--muted)">Try one key word, or ask the assistant.</p><button type="button" class="btn" id="find-ask">Ask me: “${esc(q)}”</button>`;
-  const fa=document.getElementById('find-ask'); if(fa) fa.addEventListener('click',()=>window.ENT142Assistant.open(q)); });
-</script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script>Portal.home();</script>
 </body>
 </html>

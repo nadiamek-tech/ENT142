@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lectures · ENT 142</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="assets/portal.css">
+<style>
+:root{--wk:#B4521E;--wk-soft:rgba(180,82,30,.09);--wk-d:#F2A06B;--wk-soft-d:rgba(242,160,107,.14)}
+body{font-family:var(--f-display);background:var(--bg);color:var(--ink);margin:0}
+.lw{max-width:1100px;margin:0 auto;padding:0 16px 60px}
+.lw h1{font-size:clamp(1.8rem,4vw,2.5rem);margin:24px 0 4px}
+.lw .lead{color:var(--muted);margin:0 0 18px}
+.lc{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.lc a,.lc div{border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:16px;text-decoration:none;color:var(--ink);display:grid;gap:4px;align-content:start}
+.lc a:hover{border-color:var(--wk)}
+.lc .no{font:600 .75rem var(--f-mono);color:var(--wk);letter-spacing:.06em;text-transform:uppercase}
+.lc b{font-size:1.1rem}
+.lc div{opacity:.6}
+.lc div .no{color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="hub" data-cur="lectures"></div>
+<main class="lw"><h1>Lectures</h1><p class="lead">One page per week. Later weeks open as they are released.</p><div class="lc" id="lc"></div></main>
+<footer class="pt-foot">This website is interactive course support. It does not replace classes, attendance or class activities.<br> <b>Eng. Nadia Mek</b></footer>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script>
+Portal.header('lectures');
+document.getElementById('lc').innerHTML=COURSE.weeks.map(w=>{ const [t,h]=Array.isArray(w.lec)?w.lec:[w.lec];
+  return h?`<a href="${h}"><span class="no">Week ${w.w}</span><b>${Portal.esc?Portal.esc(t):t}</b></a>`:`<div><span class="no">Week ${w.w} · in preparation</span><b>${t}</b></div>`; }).join('');
+</script>
+</body>
+</html>

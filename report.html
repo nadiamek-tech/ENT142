@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Report Template · ENT 142</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="assets/portal.css">
+<link rel="stylesheet" href="assets/lab.css">
+<link rel="stylesheet" href="assets/report.css">
+<style>
+:root{--wk:#B4521E;--wk-soft:rgba(180,82,30,.09);--wk-d:#F2A06B;--wk-soft-d:rgba(242,160,107,.14)}
+body{font-family:var(--f-display);background:var(--bg);color:var(--ink);margin:0}
+.pw{max-width:1040px;margin:0 auto;padding:0 16px 60px}
+.pw h1{font-size:clamp(1.7rem,4vw,2.4rem);margin:22px 0 4px;letter-spacing:-.01em}
+.pw .lead{color:var(--muted);margin:0 0 14px}
+.bar{position:sticky;top:58px;z-index:30;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(6px);margin-bottom:12px}
+.seg{display:inline-flex;border:1.5px solid var(--wk);border-radius:999px;overflow:hidden}
+.seg button{font:700 .95rem var(--f-display);border:none;background:transparent;color:var(--ink);padding:8px 16px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--wk);color:var(--on-wk,#fff)}
+.bbtn{font:700 .9rem var(--f-display);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.bbtn:hover{border-color:var(--wk)}
+.bbtn.pri{background:var(--wk);border-color:var(--wk);color:var(--on-wk,#fff)}
+.prog{font:600 .85rem var(--f-mono);color:var(--muted);margin-left:auto}
+.exnote{display:none;background:var(--wk-soft);border-left:4px solid var(--wk);border-radius:8px;padding:10px 14px;margin:0 0 14px;font-size:.95rem}
+.exmode .exnote{display:block}
+#print-root{display:none}
+
+@media (max-width:720px){.pw{padding:0 0 60px}.pw h1,.pw .lead,.bar,.exnote{margin-left:16px;margin-right:16px}.bar{top:50px}.prog{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+<div id="hub" data-cur="project"></div>
+<main class="pw" id="pw">
+  <h1>Your report</h1>
+  <p class="lead">Your drafts from the Report Lab, laid out as the final report. Click “Write this section” to work on a part.</p>
+  <div class="bar">
+    <div class="seg" role="group" aria-label="Show"><button type="button" data-m="edit" aria-pressed="true">Our report</button><button type="button" data-m="ex" aria-pressed="false">Example</button></div>
+    <a class="bbtn" href="project-1.html">Project guide</a>
+    <button type="button" class="bbtn pri" id="print">Print or save PDF</button>
+    <span class="prog" id="prog"></span>
+  </div>
+  <p class="exnote"><b>Example:</b> ShareBite is a made-up venture built on real, cited data, to show what each section looks like. Your report must be your own.</p>
+  <div id="report"></div>
+</main>
+<div id="print-root"></div>
+<footer class="pt-foot">This website is interactive course support. It does not replace classes, attendance or class activities.<br> <b>Eng. Nadia Mek</b></footer>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script>window.LAB_NO_MOUNT=true;</script>
+<script src="assets/lab.js"></script>
+<script src="assets/report.js"></script>
+<script>
+Portal.header('project');
+const el=document.getElementById('report'), pw=document.getElementById('pw'); let mode='edit';
+function draw(){ Report.render(el,{mode:mode==='edit'?'edit':'view',example:mode==='ex'}); pw.classList.toggle('exmode',mode==='ex');
+  const n=Report.SECS.filter(c=>Report.done(c.key)).length; document.getElementById('prog').textContent=mode==='edit'?`${n} of ${Report.SECS.length} sections drafted`:''; }
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{ mode=b.dataset.m; document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b)); draw(); }));
+document.getElementById('print').addEventListener('click',()=>{ Report.render(document.getElementById('print-root'),{mode:'view',example:mode==='ex'}); window.print(); });
+window.addEventListener('storage',draw); draw();
+function hl(){ const m=location.hash.match(/^#r-(\w+)$/); const z=m&&document.getElementById('r-'+m[1]); if(z) z.scrollIntoView({block:'start'}); }
+window.addEventListener('hashchange',hl); setTimeout(hl,50);
+</script>
+</body>
+</html>
