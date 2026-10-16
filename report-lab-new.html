@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Report Lab · ENT 142</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="assets/portal.css">
+<link rel="stylesheet" href="assets/studio.css">
+<style>:root{--wk:#B4521E;--wk-soft:rgba(180,82,30,.09);--wk-d:#F2A06B;--wk-soft-d:rgba(242,160,107,.14)}body{font-family:var(--f-display);background:var(--bg);color:var(--ink);margin:0}</style>
+</head>
+<body>
+<div id="hub" data-cur="project"></div>
+<main class="st-w">
+  <nav class="st-tabs" id="tabs" aria-label="Report Lab steps"></nav>
+  <div class="st-head"><h1 id="h"></h1><p id="t"></p></div>
+  <div id="step"></div>
+</main>
+<nav class="st-nav"><div class="st-nav-in"><button type="button" id="prev">← Back</button><button type="button" class="nx" id="next">Next →</button></div></nav>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script>window.LAB_NO_MOUNT=true;</script>
+<script src="assets/lab.js"></script>
+<script src="assets/studio.js"></script>
+<script>
+Portal.header('project');
+const NSTEPS=[
+ {n:5,k:'market',sh:'Market',h:'Market Analysis',t:'How big is your market, and how much can you reach in year one?',f:Studio.market,cfg:MARKET},
+ {n:6,k:'compet',sh:'Competition',h:'Competition and Positioning',t:'Who else solves the problem, and where do you stand?',f:Studio.compet,cfg:COMPET},
+ {n:7,k:'model',sh:'Business model',h:'Sustainable Business Model',t:'Do you make more than you spend?',f:Studio.model,cfg:MODEL}];
+let i=0;
+function tabs(){ document.getElementById('tabs').innerHTML=`<a href="report-lab.html#s1">Steps 1–4</a>`+NSTEPS.map((s,j)=>`<button type="button" data-j="${j}" ${j===i?'aria-current="step"':''} class="${(s.cfg.gen(sec(s.k)).gaps||[]).length?'':'ok'}">${s.n} · ${s.sh}</button>`).join('')+`<a href="report-lab.html#s8">Steps 8–11</a>`;
+  document.querySelectorAll('#tabs [data-j]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.j))); }
+function go(j){ i=Math.max(0,Math.min(NSTEPS.length-1,j)); const s=NSTEPS[i];
+  document.getElementById('h').textContent=`Step ${s.n} · ${s.h}`; document.getElementById('t').textContent=s.t;
+  const el=document.getElementById('step'); s.f(el);
+  const ex=el.querySelector('.b-ex'); if(ex) ex.addEventListener('click',()=>{ if(S.data.length&&!confirm('Replace your work with the example?')) return; S=JSON.parse(JSON.stringify(EXAMPLE)); save(); go(i); });
+  el.addEventListener('input',tabs); el.addEventListener('click',()=>setTimeout(tabs,0));
+  tabs(); try{ history.replaceState(null,'','#'+s.k); }catch(e){} window.scrollTo({top:0});
+  document.getElementById('prev').textContent=i===0?'← Step 4':'← Back'; document.getElementById('next').textContent=i===NSTEPS.length-1?'Step 8 →':'Next →'; }
+document.getElementById('prev').addEventListener('click',()=>i===0?location.href='report-lab.html#s4':go(i-1));
+document.getElementById('next').addEventListener('click',()=>i===NSTEPS.length-1?location.href='report-lab.html#s8':go(i+1));
+const fromHash=()=>{ const j=NSTEPS.findIndex(s=>'#'+s.k===location.hash); if(j>=0&&j!==i) go(j); };
+window.addEventListener('hashchange',fromHash);
+go(Math.max(0,NSTEPS.findIndex(s=>'#'+s.k===location.hash)));
+</script>
+</body>
+</html>
