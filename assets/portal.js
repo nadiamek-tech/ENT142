@@ -1,6 +1,6 @@
 /* Course portal · shared by every course site (same file in each repo).
    Reads window.COURSE from assets/course-info.js. Only that file changes from course to course.
-   Portal.header(cur)  sticky header: course code · Lectures · Labs · Exams · theme
+   Portal.header(cur)  sticky menu: code + title · Home · Lectures · Labs · Exams · extras (C.navExtra) · Theme
    Portal.home()       main page: hero, 3 buttons, help agents, FAQ, calendar, CLOs and grades, submissions
    Portal.calendar(el) Portal.examCards(el) Portal.submissions(el)  pieces reused on other pages */
 (function(){
@@ -46,8 +46,10 @@
   /* ---------- header ---------- */
   function header(cur){
     const el=document.getElementById('hub'); if(!el||el.children.length) return;
-    const nav=NAV().map(n=>[n.href,n.label,n.key]);
-    el.className='pt-hub'; el.innerHTML=`<div class="pt-hub-in"><a class="crs" href="index.html">${esc(C.code)}</a><nav aria-label="Course sections">${nav.map(([h,t,k])=>`<a href="${h}" ${k===cur?'aria-current="page"':''}>${t}</a>`).join('')}</nav><button type="button" class="pt-theme" title="Light or dark">◐</button></div>`;
+    /* menu: Home · main sections · extras (C.navExtra = [[href,label,key]], e.g. My Credentials) · Theme */
+    const nav=[['index.html','Home','home']].concat(NAV().map(n=>[n.href,n.label,n.key]),C.navExtra||[]);
+    const sub=C.short||[].concat(C.title||[]).join(' ');
+    el.className='pt-hub'; el.innerHTML=`<div class="pt-hub-in"><a class="crs" href="index.html"><b>${esc(C.code)}</b>${sub?`<span>${esc(sub)}</span>`:''}</a><nav aria-label="Course">${nav.map(([h,t,k])=>`<a href="${esc(h)}"${k===cur?' aria-current="page"':''}>${esc(t)}</a>`).join('')}</nav><button type="button" class="pt-theme" title="Light or dark">◐ Theme</button></div>`;
     el.querySelector('.pt-theme').addEventListener('click',()=>window.GED102Theme&&GED102Theme.toggle());
   }
 
@@ -177,7 +179,7 @@
 
   /* ---------- home ---------- */
   function home(){
-    header('');
+    header('home');
     const root=document.getElementById('portal'); const P=C.pages||{}, n=nextExam(), hl=!n&&C.highlight&&byId(C.highlight);
     root.className='pt pt-wrap';
     root.innerHTML=`
@@ -198,5 +200,5 @@ ${n?`<button type="button" class="pt-next" data-a="${n.id}"><b>Next: ${esc(n.nam
     f.addEventListener('submit',e=>{ e.preventDefault(); if(C.search) show(); else if(C.openSearch) C.openSearch(inp.value); });
   }
 
-  window.Portal={header,home,calendar,examCards,submissions,assess,agent,faq};
+  window.Portal={header,home,agents,calendar,examCards,submissions,assess,agent,faq};
 })();
