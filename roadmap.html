@@ -125,10 +125,10 @@ document.getElementById('score').innerHTML=SC.map(([t,w,d,s,l])=>`<div class="${
 
 const STEPS=[
  [10,'Where we are','This table. Project 2 is due Monday 16 Nov.','#score','Overview'],
- [35,'Part A · Reflect on Project 1','Answer the six Gibbs questions in the builder.','project-2.html#s1','Open Part A'],
- [30,'Part B · Rank your SWOT','Three per box, ranked, each with proof. Swap with a partner and challenge one item.','project-2.html#s2','Open Part B'],
- [30,'Part C · Three-year plan','Two SMART goals per year, each linked to your SWOT.','project-2.html#s3','Open Part C'],
- [15,'Part D · Peer review and save','Add the review email screenshot and your reviewer\'s details. Save as Word.','project-2.html#s4','Open Part D']];
+ [35,'Part A · Reflect on Project 1','Answer the six Gibbs questions in the builder.','project-2.html#pA','Open Part A'],
+ [30,'Part B · Rank your SWOT','Three per box, ranked, each with proof. Swap with a partner and challenge one item.','project-2.html#pB','Open Part B'],
+ [30,'Part C · Three-year plan','Two SMART goals per year, each linked to your SWOT.','project-2.html#pC','Open Part C'],
+ [15,'Part D · Peer review and save','Add the review email screenshot and your reviewer\'s details. Save as Word.','project-2.html#pD','Open Part D']];
 const COL=['var(--muted)','var(--wk)','color-mix(in srgb,var(--wk) 70%,var(--bg))','color-mix(in srgb,var(--wk) 45%,var(--bg))','var(--good)'];
 document.getElementById('tbar').innerHTML=STEPS.map((s,i)=>`<i style="width:${s[0]/1.2}%;background:${COL[i]}" title="${s[1]} · ${s[0]} min"></i>`).join('');
 document.getElementById('steps').innerHTML=STEPS.map(([m,t,p,l,b])=>`<li><span class="m">${m}<small>min</small></span><div><b>${esc(t)}</b><p>${esc(p)}</p></div><a class="go" href="${l}">${b} →</a></li>`).join('');

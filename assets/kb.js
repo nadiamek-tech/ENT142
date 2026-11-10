@@ -5,7 +5,7 @@ window.ENT142_REG='https://forms.cloud.microsoft/r/B905PpvTTv';  /* ENT 142 Proj
 window.ENT142_KB=[
 /* ---------- course & assessment ---------- */
 {q:'What is Activity 2?',k:'activity 2 video pitch elevator 30 45 seconds record phone',a:'A 30–45 second video pitch to camera (10%, individual): hook, problem, solution, proof, ask. Due Tue 24 Nov on Moodle.',l:'activity-2.html'},
-{q:'How is Project 2 marked?',k:'project 2 marks rubric portfolio grading',a:'Out of 100, adjusted to 30%: Reflection 30, SWOT 25, Action plan 25, Evidence and writing 20.',l:'project-2.html#s6'},
+{q:'How is Project 2 marked?',k:'project 2 marks rubric portfolio grading',a:'Out of 100, adjusted to 30%: Reflection 30, SWOT 25, Action plan 25, Evidence and writing 20.',l:'project-2.html#submit'},
 {q:'What is the Gibbs reflective cycle?',k:'gibbs reflective cycle reflection stages description feelings evaluation analysis conclusion action',a:'Six stages: description, feelings, evaluation, analysis, conclusion, action plan (Gibbs, 1988). Use it for Part A of Project 2.',l:'week-10.html'},
 {q:'What is a SMART goal?',k:'smart goal specific measurable achievable relevant time action plan',a:'Specific, Measurable, Achievable, Relevant, Time-bound (Doran, 1981). Each goal in Part C of Project 2 must be SMART.',l:'week-15.html'},
 {q:'Are there free certificates I can take?',k:'certificate badge credential certification free online course cv linkedin extra going further ibm unssc hp',a:'Optional, not graded: IBM Enterprise Design Thinking Practitioner (Weeks 1 and 5), IBM Be an Entrepreneur (Week 3), UNSSC SDG Primer 1 (Week 4), HP LIFE Effective Presentations (presentation tips). All free; look for the Going further box on those scenes.',l:'week-01.html#s2'},

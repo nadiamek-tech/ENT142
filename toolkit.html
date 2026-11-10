@@ -216,7 +216,7 @@ const T4={id:'evidence',tab:'Evidence bank',part:'D',html:()=>`<div><h2>Evidence
 
 /* ---------- 5 · Word budget ---------- */
 const T5={id:'budget',tab:'Word budget',part:'Σ',html:()=>`<div><h2>Word budget</h2><p class="what">Your notes so far against each part's target. Notes grow when you write them into paragraphs.</p><div class="big" id="wt"></div><p class="note">of about 1500 words</p>
-  <div class="row2"><a class="btn2" href="project-2.html#s6" style="text-decoration:none">Download my portfolio →</a></div></div>
+  <div class="row2"><a class="btn2" href="project-2.html#submit" style="text-decoration:none">Download my portfolio →</a></div></div>
   <div><span class="lbl2">Per part</span><div class="budget" id="wb"></div></div>`,
   init(){ const P=[['A · Reflection',[0,1,2,3,4,5].map(i=>'g'+i),600],['B · SWOT',Q.flatMap(([k])=>[0,1,2].map(i=>'sw-'+k+i)),400],['C · Plan',[0,1,2].flatMap(i=>['pl-'+i+'a','pl-'+i+'b']),400]];
     let tot=0; document.getElementById('wb').innerHTML=P.map(([t,ids,tg])=>{ const n=ids.reduce((a,id)=>a+words(D[id]),0); tot+=n; return `<div class="r"><span>${t}</span><span class="tr"><i class="${n>tg*1.15?'over':''}" style="width:${Math.min(100,n/tg*100)}%"></i></span><span>${n} / ${tg}</span></div>`; }).join('')+`<div class="r"><span>D · Evidence</span><span class="tr"><i style="width:${Math.min(100,Object.keys(JSON.parse(D.ev||'{}')).length/5*100)}%"></i></span><span>${Object.keys(JSON.parse(D.ev||'{}')).length} items</span></div>`;
