@@ -129,3 +129,10 @@ details.rb>summary{cursor:pointer;font-weight:700;color:var(--wk)}
 .rub dt{font-family:var(--f-mono);font-size:.74rem;color:var(--wk)}
 .rub dd{margin:0}
 .rub .desc{color:var(--muted);margin:6px 0 0}
+
+/* one-page mode */
+.deck.all{display:grid;gap:18px;padding-bottom:60px}
+.deck.all .sl-f{min-height:0;animation:none;scroll-margin-top:120px}
+.allnav{position:sticky;top:0;z-index:30;display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:10px 16px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.allnav a{font:700 .88rem var(--f-display);text-decoration:none;color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface)}
+.allnav a:hover{border-color:var(--wk)}

@@ -18,12 +18,24 @@ function doc(title,parts){
   const blob=new Blob(['﻿',html],{type:'application/msword'}); const a=document.createElement('a');
   a.href=URL.createObjectURL(blob); a.download=title.replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_')+'.doc'; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },500);
 }
-function mount({slides,key,onInput}){
+function mount({slides,key,onInput,all}){
   KEY=key; load();
   const deck=document.getElementById('deck'), dots=document.getElementById('dots');
   deck.innerHTML=slides.map((s,i)=>`<section class="sl-f${s.one?' one':''}" id="s${i}" aria-label="Slide ${i+1} of ${slides.length}">${s.html()}</section>`).join('');
   dots.innerHTML=slides.map((s,i)=>`<button type="button" class="${s.part?'part':''}" data-i="${i}" title="${esc(s.nav)}" aria-label="Slide ${i+1}: ${esc(s.nav)}">${s.part||'•'}</button>`).join('');
   const secs=[...deck.children]; let cur=0;
+  if(all){ deck.classList.add('all'); const nv=document.querySelector('.dnav'); if(nv) nv.remove();
+    const bar=document.createElement('nav'); bar.className='allnav'; bar.setAttribute('aria-label','Parts');
+    bar.innerHTML=slides.map((s,i)=>`<a href="#s${i}">${esc(s.part?'Part '+s.part:s.nav)}</a>`).join(''); deck.before(bar);
+    secs.forEach((sec,i)=>{ sec.classList.add('on'); if(slides[i].after) slides[i].after(sec); });
+    const jump=i=>{ const t=secs[i]; if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); };
+    deck.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(g){ e.preventDefault(); jump(+g.dataset.go); }
+      const x=e.target.closest('[data-mode]'); if(x){ const sec=x.closest('.sl-f'); const ex=x.dataset.mode==='ex'; sec.classList.toggle('show-ex',ex); sec.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',(b.dataset.mode==='ex')===ex)); }
+      const a=e.target.closest('[data-ask]'); if(a&&window.ENT142Assistant) ENT142Assistant.open(a.dataset.ask); });
+    deck.addEventListener('input',e=>{ const t=e.target.closest('[data-f]'); if(!t) return; DATA[t.dataset.f]=t.value; save(); if(onInput) onInput(DATA,t); });
+    const m=location.hash.match(/^#s(\d+)$/); if(m) setTimeout(()=>jump(+m[1]),120);
+    if(onInput) onInput(DATA,null);
+    return {go:jump,data:()=>DATA}; }
   function go(i,push){ if(i<0||i>=slides.length) return; cur=i; secs.forEach((s,k)=>s.classList.toggle('on',k===i));
     if(slides[i].after) slides[i].after(secs[i]);
     dots.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));

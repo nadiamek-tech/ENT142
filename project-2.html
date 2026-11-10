@@ -236,14 +236,15 @@ const SL=[
 function progress(el){ const p=el.querySelector('#prog'); if(!p) return;
   const rows=[['Cover',['name','title','sid'].filter(V).length,3,'fields'],['A · Reflection',WC.A[0].reduce((a,k)=>a+words(V(k)),0),600,'words'],['B · SWOT',WC.B[0].filter(V).length,12,'items'],['C · Plan',WC.C[0].filter(V).length,6,'goals'],['D · Evidence',(IMGS.some(m=>m.slot==='review')?1:0)+(V('rev-email')?1:0),2,'items']];
   p.innerHTML=rows.map(([t,n,m,u])=>`<div><span>${t}</span><i><b style="width:${Math.min(100,n/m*100)}%"></b></i><span>${n}/${m} ${u}</span></div>`).join(''); }
-function looks(){ document.querySelectorAll('[data-look]').forEach(x=>{ const p=x.dataset.look; x.innerHTML=p==='A'?partA():p==='B'?partB():partC(); });
+function looks(){ const pv=document.getElementById('pv'); if(pv) pv.innerHTML=docHTML(); document.querySelectorAll('[data-look]').forEach(x=>{ const p=x.dataset.look; x.innerHTML=p==='A'?partA():p==='B'?partB():partC(); });
   document.querySelectorAll('[data-wc]').forEach(w=>{ const [ids,t]=WC[w.dataset.wc]; const n=ids.reduce((a,id)=>a+words(V(id)),0); w.innerHTML=`Your words: <b>${n}</b> · target ≈ ${t}`; }); }
 function drawImgs(){ const box=document.getElementById('imgs'); if(!box) return;
   box.innerHTML=IMGS.map((m,i)=>`<div class="imgc"><img src="${m.src}" alt=""><div><b>Evidence ${i+1} · ${m.slot==='review'?'Peer review email':'Other evidence'}</b><input type="text" data-cap="${m.id}" value="${esc(m.cap||'')}" placeholder="Caption: what it shows, date"></div><button type="button" data-del="${m.id}" aria-label="Remove">✕</button></div>`).join('');
-  const r=document.querySelector('[data-req]'); if(r){ const ok=IMGS.some(m=>m.slot==='review'); r.textContent=ok?'added ✓':'required'; r.classList.toggle('ok',ok); } }
+  const pv=document.getElementById('pv'); if(pv) pv.innerHTML=docHTML(); const r=document.querySelector('[data-req]'); if(r){ const ok=IMGS.some(m=>m.slot==='review'); r.textContent=ok?'added ✓':'required'; r.classList.toggle('ok',ok); } }
 const deckEl=document.getElementById('deck');
-const DK=Deck.mount({slides:SL,key:'ent142-p2',onInput:()=>{ looks(); const s=document.querySelector('.sl-f.on'); if(s&&s.id==='s0') progress(s); }});
+const DK=Deck.mount({slides:SL,key:'ent142-p2',all:true,onInput:()=>{ looks(); progress(document.getElementById('s0')); }});
 looks();
+const _fixNav=()=>{ const h=document.getElementById('hub'), n=document.querySelector('.allnav'); if(h&&n) n.style.top=h.offsetHeight+'px'; }; _fixNav(); addEventListener('resize',_fixNav);
 deckEl.addEventListener('click',e=>{ const b=e.target.closest('[data-fmt]'); if(b){ const p=b.dataset.fmt; const d=Deck.data(); d['fmt'+p]=b.dataset.v; try{ localStorage.setItem('ent142-p2',JSON.stringify(d)); }catch(x){}
     document.querySelectorAll(`[data-fmt="${p}"]`).forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===b.dataset.v)); looks(); }
   const del=e.target.closest('[data-del]'); if(del){ IDB.del(del.dataset.del).then(()=>{ IMGS=IMGS.filter(m=>m.id!==del.dataset.del); drawImgs(); }); } });
@@ -251,7 +252,7 @@ deckEl.addEventListener('change',async e=>{ const f=e.target.closest('input[type
   for(const file of [...f.files]){ try{ const r=await shrink(file); const o={id:'i'+Date.now()+Math.random().toString(36).slice(2,6),slot:f.dataset.slot,src:r.src,w:r.w,h:r.h,cap:'',t:Date.now()}; IMGS.push(o); await IDB.put(o); }catch(x){} }
   f.value=''; drawImgs(); });
 deckEl.addEventListener('input',e=>{ const c=e.target.closest('[data-cap]'); if(!c) return; const m=IMGS.find(x=>x.id===c.dataset.cap); if(m){ m.cap=c.value; IDB.put(m); } });
-IDB.all().then(a=>{ IMGS=a; drawImgs(); const s=document.querySelector('.sl-f.on'); if(s&&s.id==='s0') progress(s); });
+IDB.all().then(a=>{ IMGS=a; drawImgs(); progress(document.getElementById('s0')); });
 </script>
 </body>
 </html>
