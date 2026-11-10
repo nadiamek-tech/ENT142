@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Semester roadmap · ENT 142</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="assets/portal.css">
+<style>
+:root{--wk:#B4521E;--wk-soft:rgba(180,82,30,.09);--wk-d:#F2A06B;--wk-soft-d:rgba(242,160,107,.14)}
+body{font-family:var(--f-display);background:var(--bg);color:var(--ink);margin:0}
+.rw{max-width:1120px;margin:0 auto;padding:0 16px 70px}
+.rw h1{font-size:clamp(1.8rem,4vw,2.6rem);margin:24px 0 4px;letter-spacing:-.015em}
+.lead{color:var(--muted);margin:0 0 18px;font-size:1.05rem}
+.score{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 26px}
+.score div{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface);display:grid;gap:4px}
+.score div.done{border-color:color-mix(in srgb,var(--good) 55%,var(--line))}
+.score div.next{border-color:var(--wk);box-shadow:inset 0 0 0 1px var(--wk)}
+.score b{font-size:1rem;line-height:1.2}
+.score small{font:600 .74rem var(--f-mono);color:var(--muted)}
+.score .w{font:800 1.5rem var(--f-display);color:var(--wk)}
+.score .done .w{color:var(--good)}
+.st{display:inline-block;font:700 .72rem var(--f-mono);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.st.d{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--ink)}
+.st.t{background:var(--wk);color:var(--on-wk,#fff)}
+.st.u{background:var(--sunk,rgba(0,0,0,.05));color:var(--muted)}
+h2{font-size:1.4rem;margin:30px 0 10px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+table.rm{width:100%;border-collapse:collapse;font-size:.95rem;min-width:760px}
+.rm th{font:700 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--bg)}
+.rm td:nth-child(2){white-space:nowrap}
+.rm td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.rm tr:last-child td{border-bottom:0}
+.rm tr.d td{color:var(--muted)}
+.rm tr.d td:first-child,.rm tr.d td b{color:var(--ink)}
+.rm tr.t td{background:var(--wk-soft)}
+.rm tr.ph td{background:var(--bg);font:800 .78rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--wk);padding:8px 12px}
+.rm a{color:var(--ink);font-weight:700}
+.rm .as{font-weight:700;color:var(--ink)}
+.rm .as.big{color:var(--wk)}
+.today{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:20px;border:1.5px solid var(--wk);border-radius:20px;padding:22px;background:var(--surface)}
+.today h2{margin:0 0 6px}
+.bar{display:flex;height:18px;border-radius:9px;overflow:hidden;margin:14px 0 6px}
+.bar i{display:block;height:100%}
+.steps{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.steps li{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--bg)}
+.steps .m{font:800 1.05rem var(--f-display);color:var(--wk);line-height:1.1}
+.steps .m small{display:block;font:600 .68rem var(--f-mono);color:var(--muted)}
+.steps b{display:block;font-size:1.02rem}
+.steps p{margin:3px 0 0;color:var(--muted);font-size:.92rem}
+.steps a.go{font:700 .85rem var(--f-display);text-decoration:none;color:var(--on-wk,#fff);background:var(--wk);border-radius:999px;padding:7px 12px;white-space:nowrap;align-self:center}
+.bring{display:grid;gap:8px;margin-top:14px}
+.bring div{border-left:4px solid var(--wk);padding:6px 10px;background:var(--wk-soft);border-radius:0 8px 8px 0;font-size:.95rem}
+@media (max-width:860px){.score{grid-template-columns:repeat(2,minmax(0,1fr))}.today{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:460px){.steps li{grid-template-columns:44px 1fr}.steps a.go{grid-column:2;justify-self:start}}
+</style>
+</head>
+<body>
+<div id="hub" data-cur="roadmap"></div>
+<main class="rw">
+  <h1>Where we are</h1>
+  <p class="lead">Project 1 is done. Five weeks left: two pieces of work, both individual.</p>
+  <div class="score" id="score"></div>
+
+  <section class="today" aria-labelledby="th">
+    <div>
+      <span class="st t">Today · Week 11 · Tue 10 Nov</span>
+      <h2 id="th">Start Project 2 and your pitch</h2>
+      <p class="lead" style="margin:0">Two hours, four steps. Your notes save in your browser; download them at the end.</p>
+      <div class="bar" id="tbar" aria-hidden="true"></div>
+      <div class="bring"><div><b>Leave today with:</b> Part A drafted, your SWOT ranked, a first pitch script.</div><div><b>Bring:</b> your Project 1 report, slides and feedback.</div></div>
+    </div>
+    <ol class="steps" id="steps"></ol>
+  </section>
+
+  <h2>The whole semester</h2>
+  <div class="tw"><table class="rm"><thead><tr><th>Week</th><th>Date</th><th>Topic</th><th>What you do</th><th>Assessment</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></div>
+</main>
+<footer class="pt-foot">This website is interactive course support. It does not replace classes, attendance or class activities.<br> <b>Eng. Nadia Mek</b></footer>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script>
+Portal.header('roadmap');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const TODAY=11;
+const WEEKS=[
+ ['Ideas',[
+  [1,'1 Sep','Overview of the Course','Formed teams, chose a social problem'],
+  [2,'8 Sep','Idea Selection and Evaluation','Generated and scored ideas'],
+  [3,'15 Sep','Lean Startups','Turned the idea into testable assumptions'],
+  [4,'22 Sep','Sustainable Innovation','Linked the venture to an SDG'],
+  [5,'29 Sep','Prototyping','Built and tested prototype v1']]],
+ ['Venture',[
+  [6,'6 Oct','Industry Barriers','Mapped barriers to entry','Activity 1 · 10%'],
+  [7,'13 Oct','Lean Model Canvas','Filled the lean canvas'],
+  [8,'20 Oct','Pitching Workshop','Built and rehearsed the pitch'],
+  [9,'27 Oct','Presenting the Idea','Submitted the report, presented','Project 1 · 40% + 10%']]],
+ ['Reflect',[
+  [10,'3 Nov','Reflection Workshop','Gibbs cycle on Project 1'],
+  [11,'10 Nov','Reflective Assessment','Draft Part A, rank your SWOT (Part B), first pitch script']]],
+ ['Pitch',[
+  [12,'17 Nov','Elevator Pitch','Finish the script, practise with the timer'],
+  [13,'24 Nov','Elevator Pitch Workshop 1','Record in class, peer review, submit','Activity 2 · 10% · due 23:59',true],
+  [14,'1 Dec','Elevator Pitch Workshop 2','Take 2, live Q&A practice']]],
+ ['Portfolio',[
+  [15,'8 Dec','Course Reflection 1','Three-year plan, SMART goals (Part C)'],
+  [16,'15 Dec','Course Reflection 2','Evidence, peer review, submit','Project 2 · 30% · due 23:59',true]]]];
+const status=w=>w<TODAY?'d':w===TODAY?'t':'u';
+const SL={d:'Done',t:'Today',u:'Upcoming'};
+document.getElementById('rows').innerHTML=WEEKS.map(([ph,rows])=>`<tr class="ph"><td colspan="6">${ph}</td></tr>`+rows.map(([w,d,t,what,as,big])=>{ const s=status(w);
+  return `<tr class="${s}"><td><b>${w}</b></td><td>${d}</td><td><a href="week-${String(w).padStart(2,'0')}.html">${esc(t)}</a></td><td>${esc(what)}</td><td>${as?`<span class="as${big?' big':''}">${esc(as)}</span>`:''}</td><td><span class="st ${s}">${SL[s]}</span></td></tr>`; }).join('')).join('');
+
+const SC=[['Activity 1','10%','Week 6','d'],['Project 1 · Report','40%','27 Oct','d'],['Project 1 · Presentation','10%','27 Oct','d'],['Activity 2 · Video pitch','10%','Tue 24 Nov','n','activity-2.html'],['Project 2 · Portfolio','30%','Tue 15 Dec','n','project-2.html']];
+document.getElementById('score').innerHTML=SC.map(([t,w,d,s,l])=>`<div class="${s==='d'?'done':'next'}"><span class="w">${w}</span><b>${l?`<a href="${l}" style="color:inherit">${t} →</a>`:t}</b><small>${s==='d'?'✓ Done':'Due '+d}</small></div>`).join('');
+
+const STEPS=[
+ [15,'Where we are','This table. What is done, what is left, both due dates.','#score','Overview'],
+ [35,'Part A · Reflect on Project 1','Gibbs six stages, while you still remember it. One short paragraph per stage.','project-2.html#s2','Open Part A'],
+ [40,'Part B · Rank your SWOT','Three per box, ranked, each with proof from this course. Swap with a partner and challenge one item.','project-2.html#s3','Open Part B'],
+ [30,'Pitch · First script','Hook, problem, solution, proof, ask. 75–110 words. Read it once with the timer.','activity-2.html#s1','Open script']];
+const COL=['var(--muted)','var(--wk)','color-mix(in srgb,var(--wk) 70%,var(--bg))','var(--good)'];
+document.getElementById('tbar').innerHTML=STEPS.map((s,i)=>`<i style="width:${s[0]/1.2}%;background:${COL[i]}" title="${s[1]} · ${s[0]} min"></i>`).join('');
+document.getElementById('steps').innerHTML=STEPS.map(([m,t,p,l,b])=>`<li><span class="m">${m}<small>min</small></span><div><b>${esc(t)}</b><p>${esc(p)}</p></div><a class="go" href="${l}">${b} →</a></li>`).join('');
+</script>
+</body>
+</html>
