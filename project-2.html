@@ -3,19 +3,73 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Project 2 · Reflective Portfolio · ENT 142</title>
+<title>Project 2 · Reflective Portfolio Builder · ENT 142</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 <link rel="stylesheet" href="assets/course.css">
 <link rel="stylesheet" href="assets/portal.css">
 <link rel="stylesheet" href="assets/deck.css">
-<style>:root{--wk:#6D3FC0;--wk-soft:rgba(109,63,192,.10);--wk-d:#B79CF2;--wk-soft-d:rgba(183,156,242,.15)}</style>
+<style>
+:root{--wk:#6D3FC0;--wk-soft:rgba(109,63,192,.10);--wk-d:#B79CF2;--wk-soft-d:rgba(183,156,242,.15)}
+.fmt{display:inline-flex;border:1.5px solid var(--line);border-radius:12px;padding:3px;gap:3px;background:var(--bg);margin:2px 0 14px}
+.fmt button{font:700 .88rem var(--f-display);border:0;background:transparent;color:var(--muted);border-radius:9px;padding:8px 12px;cursor:pointer}
+.fmt button[aria-pressed=true]{background:var(--wk);color:var(--on-wk,#fff)}
+.look{border:1px dashed var(--line);border-radius:12px;padding:12px 14px;background:var(--bg);max-height:260px;overflow:auto}
+.look .lt{font:700 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px}
+.doc{font:400 .95rem/1.55 'Source Serif 4',Georgia,serif;color:var(--ink)}
+.doc h3{font:800 1.05rem var(--f-display);margin:14px 0 6px;color:var(--wk)}
+.doc h4{font:700 .95rem var(--f-display);margin:10px 0 2px}
+.doc p{margin:0 0 8px}
+.doc table{border-collapse:collapse;width:100%;margin:6px 0 10px;font-size:.9rem}
+.doc td,.doc th{border:1px solid var(--line);padding:6px 8px;vertical-align:top;text-align:left}
+.doc img{max-width:100%;border:1px solid var(--line);border-radius:6px}
+.doc .cap{font:600 .8rem var(--f-display);color:var(--muted)}
+.empty{color:var(--muted);font-style:italic}
+.cover{display:grid;gap:10px}
+.cover label{font:700 .8rem var(--f-display);color:#4a4f5a}
+.cover input{width:100%;box-sizing:border-box;font:600 1rem var(--f-display);color:#1d2430;background:transparent;border:0;border-bottom:1.5px dashed #c9bfa5;padding:6px 2px}
+.cover input:focus{outline:none;border-bottom-color:var(--wk)}
+.up{display:grid;gap:10px}
+.drop{border:2px dashed #c9bfa5;border-radius:12px;padding:14px;text-align:center;color:#4a4f5a;font-weight:700;cursor:pointer;display:block}
+.drop:hover{border-color:var(--wk)}
+.drop input{display:none}
+.drop small{display:block;font-weight:500;color:#6b6455}
+.imgs{display:grid;gap:10px}
+.imgc{display:grid;grid-template-columns:90px 1fr auto;gap:10px;align-items:start;border:1px solid #e2d9c2;border-radius:10px;padding:8px;background:#fff}
+.imgc img{width:90px;height:64px;object-fit:cover;border-radius:6px;border:1px solid #e2d9c2}
+.imgc b{font-size:.85rem;color:#1d2430}
+.imgc input{width:100%;box-sizing:border-box;font:500 .88rem var(--f-display);border:0;border-bottom:1.5px dashed #c9bfa5;background:transparent;color:#1d2430;padding:4px 2px;margin-top:4px}
+.imgc button{border:1.5px solid #e2d9c2;background:#fff;border-radius:8px;width:30px;height:30px;cursor:pointer;color:#B23A2E;font-weight:800}
+.req{font:700 .7rem var(--f-mono);color:#B4521E;text-transform:uppercase}
+.req.ok{color:#2E7D5B}
+.pvw{background:#fff;color:#1d2430;border-radius:10px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 10px 26px rgba(20,30,50,.12);padding:26px 30px;max-height:560px;overflow:auto}
+.pvw .doc{color:#1d2430}
+.pvw .doc td,.pvw .doc th{border-color:#d8d2c2}
+.prog{display:grid;gap:6px;margin:6px 0 16px}
+.prog div{display:grid;grid-template-columns:120px 1fr 64px;gap:8px;align-items:center;font-weight:700;font-size:.9rem}
+.prog i{display:block;height:10px;border-radius:5px;background:var(--line);overflow:hidden}
+.prog i b{display:block;height:100%;background:var(--wk)}
+.prog span:last-child{font:600 .78rem var(--f-mono);color:var(--muted);text-align:right}
+#print-root{display:none}
+@media print{
+  @page{size:A4;margin:16mm}
+  body>*:not(#print-root){display:none!important}
+  #print-root{display:block!important;color:#000;font:11pt/1.5 Georgia,serif}
+  #print-root h1{font:700 20pt Arial,sans-serif;margin:0 0 6pt}
+  #print-root h3{font:700 13pt Arial,sans-serif;margin:16pt 0 6pt;color:#000;break-after:avoid}
+  #print-root h4{font:700 11pt Arial,sans-serif;margin:8pt 0 2pt}
+  #print-root table{border-collapse:collapse;width:100%}#print-root td,#print-root th{border:1px solid #888;padding:4pt;vertical-align:top}
+  #print-root img{max-width:100%;max-height:120mm;break-inside:avoid}
+  #print-root .cov{min-height:230mm;display:flex;flex-direction:column;justify-content:center;break-after:page}
+}
+</style>
 </head>
 <body>
 <div id="hub" data-cur="project2"></div>
 <main class="deck" id="deck"></main>
-<nav class="dnav" aria-label="Slides"><div class="dnav-in"><button type="button" class="nb prev">← Back</button><div class="dots" id="dots"></div><span class="pos" id="pos"></span><button type="button" class="nb next">Next →</button></div></nav>
+<nav class="dnav" aria-label="Steps"><div class="dnav-in"><button type="button" class="nb prev">← Back</button><div class="dots" id="dots"></div><span class="pos" id="pos"></span><button type="button" class="nb next">Next →</button></div></nav>
+<div id="print-root"></div>
 <script src="assets/supports.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/kb.js"></script>
@@ -30,89 +84,174 @@ Portal.header('project2');
 const {field:F,esc}=Deck;
 const P2=COURSE.assess.find(a=>a.id==='p2')||{};
 const MOODLE=(P2.submit||{}).link||'';
-const MODE=`<div class="mode" role="group" aria-label="Template or example"><button type="button" data-mode="me" aria-pressed="true">My portfolio</button><button type="button" data-mode="ex" aria-pressed="false">Example</button></div>`;
-const vis=(lbl,inner)=>`<div class="vis"><div class="vhead"><span class="lbl">${lbl}</span>${MODE}</div><div class="paper">${inner}</div><span class="wc" data-wc></span></div>`;
+const DUE=(P2.submit||{}).dueText||'';
+const EXMODE=`<div class="mode" role="group" aria-label="Template or example"><button type="button" data-mode="me" aria-pressed="true">Mine</button><button type="button" data-mode="ex" aria-pressed="false">Example</button></div>`;
+const V=k=>(Deck.get(k)||'').trim();
+const words=Deck.words;
 
-/* Gibbs (1988) reflective cycle */
+/* ---------- content ---------- */
 const GIBBS=[
- ['Description','What happened?','In Project 1 our team of five built "Second Plate", an app idea that sells surplus campus meals for 5 AED. I wrote the market section and presented the problem in our 1-minute pitch.'],
- ['Feelings','What did I think and feel?','I was confident about the idea but nervous before the pitch. When a judge asked about our price, I felt I did not have the number ready.'],
- ['Evaluation','What went well and what did not?','Our prototype test went well: 9 of 12 students said they would use it. Our market estimate was weak: we started from a figure we had not verified.'],
- ['Analysis','Why did it happen?','We collected data late, in the last week. Ries (2011) argues that a startup learns by testing assumptions early; we tested the prototype early but not the numbers.'],
- ['Conclusion','What did I learn?','Evidence has to come before the slide, not after it. I also learned that I explain better when I practise with a timer.'],
- ['Action plan','What will I do next time?','Next time I will verify every number on the day I use it and rehearse Q&A answers for price and competition.']];
-const gibbsSVG=()=>{ const R=118,cx=165,cy=150; return `<svg class="gibbs" viewBox="0 0 330 300" role="img" aria-label="Gibbs reflective cycle: description, feelings, evaluation, analysis, conclusion, action plan">
- <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="var(--wk)" stroke-width="3" stroke-dasharray="10 7" opacity=".5"/>
- ${GIBBS.map(([t],i)=>{ const a=-Math.PI/2+i*Math.PI/3, x=cx+R*Math.cos(a), y=cy+R*Math.sin(a); return `<g><circle cx="${x}" cy="${y}" r="34" fill="var(--wk)"/><text x="${x}" y="${y-3}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="15" fill="var(--on-wk,#fff)">${i+1}</text><text x="${x}" y="${y+12}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="9.5" fill="var(--on-wk,#fff)">${t}</text></g>`; }).join('')}
- <text x="${cx}" y="${cy+5}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="14" fill="var(--ink)">Gibbs (1988)</text></svg>`; };
-
-/* ranked SWOT */
+ ['Description','What happened in Project 1, and what was my role?','In Project 1 our team of five built "Second Plate", an app idea that sells surplus campus meals for 5 AED. I wrote the market section and presented the problem in our 1-minute pitch.'],
+ ['Feelings','What did I think and feel at the time?','I was confident about the idea but nervous before the pitch. When a judge asked about our price, I felt I did not have the number ready.'],
+ ['Evaluation','What went well, and what did not?','Our prototype test went well: 9 of 12 students said they would use it. Our market estimate was weak: we started from a figure we had not verified.'],
+ ['Analysis','Why did it happen? Use one idea from the course.','We collected data late, in the last week. Ries (2011) argues that a startup learns by testing assumptions early; we tested the prototype early but not the numbers.'],
+ ['Conclusion','What did I learn about myself and about entrepreneurship?','Evidence has to come before the slide, not after it. I also learned that I explain better when I practise with a timer.'],
+ ['Action plan','What will I do differently next time?','Next time I will verify every number on the day I use it and rehearse Q&A answers for price and competition.']];
 const SW=[
  ['s','Strengths','inside you',['Explaining a problem clearly: my pitch scored well on clarity.','Finding data: I found 4 of our 6 verified sources.','Working to deadlines: my section was ready a week early.']],
  ['w','Weaknesses','inside you',['Answering questions without notes: I froze on the price question.','Finance: I could not build the break-even table alone.','I avoid asking for help until late.']],
- ['o','Opportunities','outside you',['Campus incubator and startup competitions in the UAE.','Free online certificates, e.g. IBM SkillsBuild.','Food-waste reduction is a national priority topic.']],
+ ['o','Opportunities','outside you',['Campus incubator and startup competitions in the UAE.','Free online courses in finance and design thinking.','Food-waste reduction is a national priority topic.']],
  ['t','Threats','outside you',['Busy final year: less time for side projects.','Many similar food apps compete for attention.','Funding is hard to get without traction.']]];
-const swotHTML=()=>`<div class="swot">${SW.map(([k,t,s,ex])=>`<div class="q ${k}"><h5>${t}<small>${s} · ranked</small></h5>${ex.map((e,i)=>`<div class="r"><span>${i+1}</span>${F('sw-'+k+i,{ph:i===0?'Most important, with evidence':'Item '+(i+1)+', with evidence',rows:1,ex:e})}</div>`).join('')}</div>`).join('')}</div>`;
-
-/* three-year plan */
 const YR=[
- ['Year 1','2027',['Complete two free certificates in finance and design thinking by June 2027.','Fixes W2'],['Pitch "Second Plate" at one campus competition by April 2027.','Uses S1 + O1']],
+ ['Year 1','2027',['Complete a free online course in startup finance by June 2027.','Fixes W2'],['Pitch "Second Plate" at one campus competition by April 2027.','Uses S1 + O1']],
  ['Year 2','2028',['Run a 4-week pilot with one campus café, target 200 meals sold.','Uses O3'],['Find a mentor and meet monthly.','Fixes W3']],
  ['Year 3','2029',['Register the venture or join a startup as a product intern by graduation.','Guards T3'],['Build a portfolio of 3 tested projects.','Uses S2']]];
-const planHTML=()=>`<div class="yrs">${YR.map(([y,d,g1,g2],i)=>`<div><small>${y} · ${d}</small><b>Goal 1</b>${F('pl-'+i+'a',{ph:'SMART goal',rows:2,ex:g1[0]})}${F('pl-'+i+'al',{ph:'SWOT link, e.g. fixes W2',rows:1,ex:g1[1]})}<b>Goal 2</b>${F('pl-'+i+'b',{ph:'SMART goal',rows:2,ex:g2[0]})}${F('pl-'+i+'bl',{ph:'SWOT link, e.g. fixes W2',rows:1,ex:g2[1]})}</div>`).join('')}</div>`;
 
-const EVID=['Photos of our prototype and test (Project 1)','Feedback I received (pitch, peer review, instructor)','Any other proof I mention in Parts A–C'];
+/* ---------- format: Q&A or paragraph, always the student's own words ---------- */
+const fmt=p=>Deck.get('fmt'+p)||'qa';
+const lc=s=>s?s.charAt(0).toLowerCase()+s.slice(1):s;
+const nodot=s=>String(s).replace(/[.\s]+$/,'');
+const P=t=>t?`<p>${esc(t).replace(/\n+/g,'</p><p>')}</p>`:'';
+function partA(f=fmt('A')){ const a=GIBBS.map((g,i)=>[g,V('g'+i)]).filter(x=>x[1]);
+  if(!a.length) return '<p class="empty">Not written yet.</p>';
+  return f==='qa'?a.map(([[t,q],x])=>`<h4>${esc(t)}: ${esc(q)}</h4>${P(x)}`).join(''):a.map(([,x])=>P(x)).join(''); }
+function partB(f=fmt('B')){ const has=SW.some(([k])=>[0,1,2].some(i=>V('sw-'+k+i))); if(!has) return '<p class="empty">Not written yet.</p>';
+  if(f==='qa') return `<table><tr>${SW.slice(0,2).map(([,t])=>`<th>${t}</th>`).join('')}</tr><tr>${SW.slice(0,2).map(([k])=>`<td>${[0,1,2].map(i=>V('sw-'+k+i)?`${i+1}. ${esc(V('sw-'+k+i))}`:'').filter(Boolean).join('<br>')}</td>`).join('')}</tr><tr>${SW.slice(2).map(([,t])=>`<th>${t}</th>`).join('')}</tr><tr>${SW.slice(2).map(([k])=>`<td>${[0,1,2].map(i=>V('sw-'+k+i)?`${i+1}. ${esc(V('sw-'+k+i))}`:'').filter(Boolean).join('<br>')}</td>`).join('')}</tr></table>`;
+  const L=['My main','My second','My third'];
+  return SW.map(([k,t])=>{ const it=[0,1,2].map(i=>V('sw-'+k+i)).filter(Boolean); if(!it.length) return ''; const n={Strengths:'strength',Weaknesses:'weakness',Opportunities:'opportunity',Threats:'threat'}[t];
+    return P(it.map((x,i)=>`${L[i]} ${n}: ${nodot(x)}.`).join(' ')); }).join(''); }
+function partC(f=fmt('C')){ const has=YR.some((_,i)=>V('pl-'+i+'a')||V('pl-'+i+'b')); if(!has) return '<p class="empty">Not written yet.</p>';
+  if(f==='qa') return `<table><tr><th>Year</th><th>SMART goal</th><th>Links to</th></tr>${YR.map(([y,d],i)=>['a','b'].map((g,j)=>V('pl-'+i+g)?`<tr><td>${y} · ${d}</td><td>${esc(V('pl-'+i+g))}</td><td>${esc(V('pl-'+i+g+'l'))}</td></tr>`:'').join('')).join('')}</table>`;
+  return YR.map(([y,d],i)=>{ const a=V('pl-'+i+'a'), b=V('pl-'+i+'b'); if(!a&&!b) return '';
+    return P(`In ${y.toLowerCase()} (${d}), `+[a&&`my first goal is to ${lc(nodot(a))}${V('pl-'+i+'al')?` (${nodot(V('pl-'+i+'al'))})`:''}.`,b&&`${a?'My second goal is':'my goal is'} to ${lc(nodot(b))}${V('pl-'+i+'bl')?` (${nodot(V('pl-'+i+'bl'))})`:''}.`].filter(Boolean).join(' ')); }).join(''); }
 
-const allText=()=>{ const D=Deck.data();
-  const A=GIBBS.map(([t],i)=>`${t}: ${D['g'+i]||''}`).join('\n');
-  const B=SW.map(([k,t])=>`${t}:\n`+[0,1,2].map(i=>`${i+1}. ${D['sw-'+k+i]||''}`).join('\n')).join('\n');
-  const C=YR.map(([y,d],i)=>`${y} (${d}):\nGoal 1: ${D['pl-'+i+'a']||''} [${D['pl-'+i+'al']||''}]\nGoal 2: ${D['pl-'+i+'b']||''} [${D['pl-'+i+'bl']||''}]`).join('\n');
-  return [['Part A · Reflection on my Project 1 experience (Gibbs, 1988)',A],['Part B · My ranked personal SWOT',B],['Part C · My three-year entrepreneurship action plan',C],['Part D · Evidence appendix',D.evText||EVID.map(e=>'• '+e).join('\n')],['References','Gibbs, G. (1988). Learning by doing: A guide to teaching and learning methods. Further Education Unit.']]; };
+/* ---------- images (screenshots) in this browser only: IndexedDB ---------- */
+const IDB={db:null,open(){ return this.db?Promise.resolve(this.db):new Promise((res,rej)=>{ try{ const r=indexedDB.open('ent142-p2',1); r.onupgradeneeded=()=>r.result.createObjectStore('img',{keyPath:'id'}); r.onsuccess=()=>{ this.db=r.result; res(r.result); }; r.onerror=()=>rej(r.error); }catch(e){ rej(e); } }); },
+  all(){ return this.open().then(db=>new Promise(res=>{ const q=db.transaction('img').objectStore('img').getAll(); q.onsuccess=()=>res((q.result||[]).sort((a,b)=>a.t-b.t)); q.onerror=()=>res([]); })).catch(()=>[]); },
+  put(o){ return this.open().then(db=>new Promise(res=>{ const tx=db.transaction('img','readwrite'); tx.objectStore('img').put(o); tx.oncomplete=()=>res(); tx.onerror=()=>res(); })); },
+  del(id){ return this.open().then(db=>new Promise(res=>{ const tx=db.transaction('img','readwrite'); tx.objectStore('img').delete(id); tx.oncomplete=()=>res(); })); }};
+let IMGS=[];
+const shrink=file=>new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>{ const im=new Image(); im.onload=()=>{ const m=1400, s=Math.min(1,m/Math.max(im.width,im.height)); const c=document.createElement('canvas'); c.width=Math.round(im.width*s); c.height=Math.round(im.height*s); c.getContext('2d').drawImage(im,0,0,c.width,c.height); res({src:c.toDataURL('image/jpeg',.85),w:c.width,h:c.height}); }; im.onerror=rej; im.src=fr.result; }; fr.onerror=rej; fr.readAsDataURL(file); });
+const SLOTS=[['review','Peer review email (screenshot)',true],['other','Other evidence (prototype photo, report extract, feedback)',false]];
+function partD(){ let n=0; const out=[];
+  const rv=V('rev-name'), re=V('rev-email');
+  out.push(`<h4>Peer review</h4><p>Reviewer: ${esc(rv)||'<span class="empty">name</span>'} · ${esc(re)||'<span class="empty">email</span>'}</p>`);
+  IMGS.forEach(m=>{ n++; out.push(`<figure style="margin:0 0 12px"><img src="${m.src}" alt=""><figcaption class="cap">Evidence ${n} · ${esc(m.cap||(m.slot==='review'?'Peer review email':'Evidence'))}</figcaption></figure>`); });
+  const tk=V('evText'); if(tk) out.push(`<h4>Other evidence</h4>`+P(tk));
+  return out.join(''); }
+function docHTML(){
+  return `<div class="doc"><p><b>${esc(V('name'))||'Your name'}</b> · ID ${esc(V('sid'))||'—'}<br>${esc(V('title'))||'Project 1 group work'}<br>ENT 142 · Reflective Portfolio · Eng. Nadia Mek</p>
+  <h3>Part A · Reflection on Project 1</h3>${partA()}<h3>Part B · My ranked personal SWOT</h3>${partB()}<h3>Part C · My three-year action plan</h3>${partC()}<h3>Part D · Evidence</h3>${partD()}
+  <h3>References</h3><p>Gibbs, G. (1988). <i>Learning by doing: A guide to teaching and learning methods</i>. Further Education Unit.</p><p>Doran, G. T. (1981). There's a S.M.A.R.T. way to write management's goals and objectives. <i>Management Review, 70</i>(11), 35–36.</p></div>`; }
 
+/* ---------- Word (.docx) export ---------- */
+function loadDocx(){ return window.docx?Promise.resolve(window.docx):new Promise((res,rej)=>{ const s=document.createElement('script'); s.src='assets/vendor/docx.umd.js'; s.onload=()=>res(window.docx); s.onerror=rej; document.head.appendChild(s); }); }
+async function makeDocx(){
+  const d=await loadDocx(); const {Document,Packer,Paragraph,TextRun,HeadingLevel,Table,TableRow,TableCell,WidthType,ImageRun,AlignmentType,PageBreak}=d;
+  const para=t=>String(t||'').split(/\n+/).filter(Boolean).map(x=>new Paragraph({children:[new TextRun(x)],spacing:{after:120}}));
+  const H=(t,l=HeadingLevel.HEADING_1)=>new Paragraph({text:t,heading:l,spacing:{before:240,after:120}});
+  const cell=(t,b)=>new TableCell({children:String(t||'').split('\n').map(x=>new Paragraph({children:[new TextRun({text:x,bold:!!b})]})),width:{size:50,type:WidthType.PERCENTAGE}});
+  const kids=[];
+  kids.push(new Paragraph({children:[new TextRun({text:'ENT 142 · Fundamentals of Innovation and Entrepreneurship 2',size:22})],spacing:{before:2400}}));
+  kids.push(new Paragraph({children:[new TextRun({text:'Project 2 · Reflective Portfolio',bold:true,size:48})],spacing:{after:400}}));
+  [['Name',V('name')],['Title',V('title')||'Project 1 group work'],['Student ID',V('sid')],['Instructor','Eng. Nadia Mek'],['Date',new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})]].forEach(([k,v])=>kids.push(new Paragraph({children:[new TextRun({text:k+': ',bold:true}),new TextRun(v||'')],spacing:{after:80}})));
+  kids.push(new Paragraph({children:[new PageBreak()]}));
+  kids.push(H('Part A · Reflection on Project 1'));
+  GIBBS.forEach(([t,q],i)=>{ const x=V('g'+i); if(!x) return; if(fmt('A')==='qa') kids.push(H(`${t}: ${q}`,HeadingLevel.HEADING_3)); kids.push(...para(x)); });
+  kids.push(H('Part B · My ranked personal SWOT'));
+  if(fmt('B')==='qa'){ const li=k=>[0,1,2].map(i=>V('sw-'+k+i)?`${i+1}. ${V('sw-'+k+i)}`:'').filter(Boolean).join('\n');
+    kids.push(new Table({width:{size:100,type:WidthType.PERCENTAGE},rows:[new TableRow({children:[cell('Strengths',1),cell('Weaknesses',1)]}),new TableRow({children:[cell(li('s')),cell(li('w'))]}),new TableRow({children:[cell('Opportunities',1),cell('Threats',1)]}),new TableRow({children:[cell(li('o')),cell(li('t'))]})]})); }
+  else { const tmp=document.createElement('div'); tmp.innerHTML=partB('para'); tmp.querySelectorAll('p').forEach(p=>kids.push(...para(p.textContent))); }
+  kids.push(H('Part C · My three-year action plan'));
+  if(fmt('C')==='qa'){ const rows=[new TableRow({children:[cell('Year',1),cell('SMART goal',1),cell('Links to',1)]})]; YR.forEach(([y,dd],i)=>['a','b'].forEach(g=>{ if(V('pl-'+i+g)) rows.push(new TableRow({children:[cell(`${y} · ${dd}`),cell(V('pl-'+i+g)),cell(V('pl-'+i+g+'l'))]})); })); kids.push(new Table({width:{size:100,type:WidthType.PERCENTAGE},rows})); }
+  else { const tmp=document.createElement('div'); tmp.innerHTML=partC('para'); tmp.querySelectorAll('p').forEach(p=>kids.push(...para(p.textContent))); }
+  kids.push(H('Part D · Evidence'));
+  kids.push(new Paragraph({children:[new TextRun({text:'Peer reviewer: ',bold:true}),new TextRun(`${V('rev-name')} · ${V('rev-email')}`)],spacing:{after:160}}));
+  let n=0; for(const m of IMGS){ n++; const b64=m.src.split(',')[1], bin=atob(b64), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+    const w=Math.min(560,m.w), h=Math.round(m.h*w/m.w);
+    kids.push(new Paragraph({children:[new ImageRun({data:u,type:'jpg',transformation:{width:w,height:h}})]}));
+    kids.push(new Paragraph({children:[new TextRun({text:`Evidence ${n} · ${m.cap||(m.slot==='review'?'Peer review email':'Evidence')}`,italics:true,size:20})],spacing:{after:200}})); }
+  if(V('evText')) kids.push(...para(V('evText')));
+  kids.push(H('References'));
+  kids.push(...para('Gibbs, G. (1988). Learning by doing: A guide to teaching and learning methods. Further Education Unit.'));
+  kids.push(...para("Doran, G. T. (1981). There's a S.M.A.R.T. way to write management's goals and objectives. Management Review, 70(11), 35–36."));
+  const doc=new Document({creator:V('name')||'ENT 142 student',title:'ENT 142 Project 2 Reflective Portfolio',styles:{default:{document:{run:{font:'Calibri',size:24}}}},sections:[{children:kids}]});
+  const blob=await Packer.toBlob(doc); const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`${(V('name')||'Student').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_')}_${V('sid')||'ID'}_ENT142_Project2.docx`; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },800); }
+function printPDF(){ const r=document.getElementById('print-root');
+  r.innerHTML=`<div class="cov"><p>ENT 142 · Fundamentals of Innovation and Entrepreneurship 2</p><h1>Project 2 · Reflective Portfolio</h1><p><b>Name:</b> ${esc(V('name'))}<br><b>Title:</b> ${esc(V('title')||'Project 1 group work')}<br><b>Student ID:</b> ${esc(V('sid'))}<br><b>Instructor:</b> Eng. Nadia Mek</p></div>`+docHTML().replace(/^<div class="doc"><p>[\s\S]*?<\/p>/,'<div class="doc">');
+  setTimeout(()=>window.print(),150); }
+
+/* ---------- slides ---------- */
+const FMT=p=>`<div class="fmt" role="group" aria-label="How this part appears in your file"><button type="button" data-fmt="${p}" data-v="qa" aria-pressed="${fmt(p)==='qa'}">Question &amp; answer</button><button type="button" data-fmt="${p}" data-v="para" aria-pressed="${fmt(p)==='para'}">Paragraphs</button></div>`;
+const LOOK=p=>`<div class="look"><div class="lt">How it looks in your file</div><div class="doc" data-look="${p}"></div></div>`;
+const vis=(lbl,inner,wc)=>`<div class="vis"><div class="vhead"><span class="lbl">${lbl}</span>${EXMODE}</div><div class="paper">${inner}</div>${wc?`<span class="wc" data-wc="${wc}"></span>`:''}</div>`;
+const WC={A:[GIBBS.map((_,i)=>'g'+i),600],B:[SW.flatMap(([k])=>[0,1,2].map(i=>'sw-'+k+i)),400],C:[YR.flatMap((_,i)=>['pl-'+i+'a','pl-'+i+'b']),400]};
 const SL=[
- {nav:'What',html:()=>`<div><div class="kick">Project 2 · after Project 1</div><h2>Your Reflective Portfolio</h2>
-  <p class="what">Look back at what you did this semester, see where you stand, and plan your next three years as an entrepreneur.</p>
-  <div class="chips"><span>Individual</span><span><b>30%</b></span><span>≈ <b>1500</b> words + evidence</span><span>Due <b>Tue 15 Dec</b></span><span>CLO <b>4</b></span></div>
-  <div class="acts"><button type="button" class="b" data-go="1">See the four parts →</button></div></div>
-  <div class="vis"><span class="lbl">Your portfolio in four parts</span><div class="paper" style="grid-template-columns:1fr 1fr">${[['A','Reflection','Gibbs cycle on Project 1','≈ 600'],['B','Ranked SWOT','you, with evidence','≈ 400'],['C','3-year plan','SMART goals','≈ 400'],['D','Evidence','photos, feedback','appendix']].map(([n,t,s,w])=>`<div style="border:1.5px solid #e2d9c2;border-radius:10px;padding:12px"><b style="color:var(--wk);font-size:1.6rem">${n}</b><div style="font-weight:800">${t}</div><div style="color:#6b6455;font-size:.85rem">${s}</div><div class="wc">${w==='appendix'?'appendix':w+' words'}</div></div>`).join('')}</div></div>`},
- {nav:'Map',one:true,html:()=>`<div><div class="kick">Project 2 · the portfolio</div><h2>Four parts, in this order</h2>
-  <p class="what">Click a part. Write on the template online, or switch to Example to see a finished one.</p>
-  <div class="road">${[['A','Reflection','Gibbs (1988) · ≈ 600 words',2],['B','Ranked SWOT','top 3 per box · ≈ 400',3],['C','3-year plan','SMART · ≈ 400',4],['D','Evidence','appendix',5]].map(([n,t,s,g])=>`<button type="button" data-go="${g}"><span class="n">${n}</span><b>${t}</b><small>${s}</small></button>`).join('')}</div>
-  <div class="acts" style="margin-top:18px"><a class="b" href="toolkit.html">Portfolio Toolkit →</a><a class="b g" href="week-10.html">Week 10 · Reflection Workshop</a><a class="b g" href="week-11.html">Week 11 · Reflective assessment</a><a class="b g" href="week-15.html">Week 15 · Action plan</a></div></div>`},
+ {nav:'Start',html:()=>`<div><div class="kick">Project 2 · Reflective Portfolio <span class="mk">Individual · 30%</span></div><h2>Build your portfolio here</h2>
+  <p class="what">Answer the questions part by part. Choose how each part appears. At the end, save it as Word or PDF and submit it on Moodle.</p>
+  <div class="chips"><span>Due <b>${esc(DUE)}</b></span><span>≈ <b>1500</b> words + evidence</span><span>CLO <b>4</b></span></div>
+  <div class="prog" id="prog"></div>
+  <div class="acts"><button type="button" class="b" data-go="1">Start Part A →</button><a class="b g" href="toolkit.html">Portfolio Toolkit</a></div></div>
+  <div class="vis"><span class="lbl">Cover page · fill in</span><div class="paper cover">
+   <label for="cv-name">Full name</label><input id="cv-name" data-f="name" value="${esc(Deck.get('name'))}" autocomplete="name">
+   <label for="cv-title">Title (or "Project 1 group work")</label><input id="cv-title" data-f="title" value="${esc(Deck.get('title'))}" placeholder="e.g. Second Plate: reducing campus food waste">
+   <label for="cv-id">Student ID</label><input id="cv-id" data-f="sid" value="${esc(Deck.get('sid'))}" inputmode="numeric">
+   <p class="wc" style="margin:6px 0 0">Saved in this browser only. Nothing is sent anywhere until you upload your file on Moodle.</p></div></div>`,
+  after:el=>progress(el)},
  {nav:'A',part:'A',html:()=>`<div><div class="kick">Part A <span class="mk">≈ 600 words</span></div><h2>Reflect on Project 1</h2>
-  <p class="what">Use Gibbs' six stages. Describe briefly; spend most words on analysis and what you will change.</p>
-  <p class="how-t">How to write it</p><ol class="how"><li>One short paragraph per stage, in the first person.</li><li>Analysis: explain why, using one idea from the course (cite it).</li><li>End with an action you will really take.</li></ol>
-  ${gibbsSVG()}</div>
-  ${vis('Part A · write on it',`<div class="gx">${GIBBS.map(([t,q,ex],i)=>`<div class="r"><span>${i+1}</span><div><label>${t} · ${q}</label>${F('g'+i,{ph:q,rows:2,ex})}</div></div>`).join('')}</div>`)}`,
-  after:el=>count(el,GIBBS.map((_,i)=>'g'+i),600)},
+  <p class="what">Answer six questions (Gibbs, 1988). Short on what happened; longer on why and what you will change.</p>
+  ${FMT('A')}${LOOK('A')}
+  <div class="acts" style="margin-top:12px"><a class="b g" href="toolkit.html#reflect">Check my depth →</a></div></div>
+  ${vis('Part A · your answers',`<div class="gx">${GIBBS.map(([t,q,ex],i)=>`<div class="r"><span>${i+1}</span><div><label>${t} · ${q}</label>${F('g'+i,{ph:q,rows:3,ex})}</div></div>`).join('')}</div>`,'A')}`},
  {nav:'B',part:'B',html:()=>`<div><div class="kick">Part B <span class="mk">≈ 400 words</span></div><h2>Your ranked SWOT</h2>
-  <p class="what">Strengths and weaknesses are inside you. Opportunities and threats are outside you. Rank three in each box.</p>
-  <p class="how-t">How to write it</p><ol class="how"><li>Each item needs proof from this course: a mark, feedback, a result.</li><li>Rank 1 = the one that matters most for your plan.</li><li>Under the grid, explain your top item in each box in 2–3 sentences.</li></ol>
-  <div class="acts"><a class="b g" href="week-11.html">Help: Week 11 →</a></div></div>
-  ${vis('Part B · write on it',swotHTML())}`,
-  after:el=>count(el,SW.flatMap(([k])=>[0,1,2].map(i=>'sw-'+k+i)),400)},
+  <p class="what">Three per box, most important first. Each with proof from this course.</p>
+  ${FMT('B')}${LOOK('B')}
+  <div class="acts" style="margin-top:12px"><a class="b g" href="toolkit.html#swot">Rank and check proof →</a></div></div>
+  ${vis('Part B · your SWOT',`<div class="swot">${SW.map(([k,t,s,ex])=>`<div class="q ${k}"><h5>${t}<small>${s} · ranked</small></h5>${ex.map((e,i)=>`<div class="r"><span>${i+1}</span>${F('sw-'+k+i,{ph:i===0?'Most important, with proof':'Item '+(i+1)+', with proof',rows:1,ex:e})}</div>`).join('')}</div>`).join('')}</div>`,'B')}`},
  {nav:'C',part:'C',html:()=>`<div><div class="kick">Part C <span class="mk">≈ 400 words</span></div><h2>Your three-year plan</h2>
-  <p class="what">Two goals per year. Each goal uses a strength or opportunity, or fixes a weakness or threat from Part B.</p>
-  <div class="smart" style="margin-bottom:16px">${[['S','pecific'],['M','easurable'],['A','chievable'],['R','elevant'],['T','ime-bound']].map(([a,b])=>`<span><b>${a}</b>${b}</span>`).join('')}</div>
-  <p class="how-t">How to write it</p><ol class="how"><li>Write each goal so someone else could check it (Doran, 1981).</li><li>Name the SWOT item it links to (e.g. "fixes W2").</li><li>Add one sentence: the first step you take this month.</li></ol>
-  <div class="acts"><a class="b g" href="week-15.html">Help: Week 15 →</a></div></div>
-  ${vis('Part C · write on it',planHTML())}`,
-  after:el=>count(el,YR.flatMap((_,i)=>['pl-'+i+'a','pl-'+i+'b']),400)},
- {nav:'D',part:'D',html:()=>`<div><div class="kick">Part D <span class="mk">appendix · not counted</span></div><h2>Evidence appendix</h2>
-  <p class="what">Proof for what you wrote in Parts A–C. Label each item and refer to it in your text (e.g. "see Evidence 2").</p>
-  <p class="how-t">Tick what you have</p><ul class="ck">${EVID.map((e,i)=>`<li><label><input type="checkbox" data-ck="${i}"> ${e}</label></li>`).join('')}</ul></div>
-  <div class="vis"><span class="lbl">Example label</span><div class="paper"><b>Evidence 2 · Project 1 report, market section</b><div style="color:#6b6455">Pages 4–5 · written by me · used in Part B, S2</div><b>Evidence 3 · Feedback on our Project 1 presentation</b><div style="color:#6b6455">"Clear problem; the price was not explained." · used in Part A, stage 3</div></div></div>`,
-  after:el=>{ el.querySelectorAll('[data-ck]').forEach(c=>{ const k='ent142-p2-ck'+c.dataset.ck; try{ c.checked=localStorage.getItem(k)==='1'; }catch(e){} c.onchange=()=>{ try{ localStorage.setItem(k,c.checked?'1':'0'); }catch(e){} }; }); }},
- {nav:'Submit',html:()=>`<div><div class="kick">Tue 15 Dec <span class="mk">Project 2 · 30%</span></div><h2>Download, finish in Word, submit</h2>
-  <ol class="how"><li>Download your portfolio as a Word file. It has all four parts and the heading structure.</li><li>Turn the notes into paragraphs, add references (APA) and your evidence.</li><li>Upload one Word file on Moodle.</li></ol>
-  <div class="acts"><button type="button" class="b" id="dl">Download my portfolio (.doc)</button>${MOODLE?`<a class="b g" href="${esc(MOODLE)}" target="_blank" rel="noopener">Submit on Moodle ↗</a>`:`<span class="b" aria-disabled="true">Moodle link coming soon</span>`}</div>
-  <p class="wc" style="margin-top:12px">Your text is saved in this browser only. Download it before you change device.</p></div>
-  <div class="vis"><span class="lbl">Marks · 100, adjusted to 30%</span><div class="mbar">${[['Reflection (A)',30],['SWOT (B)',25],['Plan (C)',25],['Evidence & writing',20]].map(([t,m])=>`<div><span>${t}</span><span><i style="width:${m*3.3}%"></i></span><span>${m}</span></div>`).join('')}</div>
-  <details class="rb" open><summary>Full rubric · 100 marks</summary><div class="rub"><details open><summary>Part A · Reflection (Gibbs) · 30</summary><dl><dt>Exemplary (27–30)</dt><dd>All six stages; analysis explains why, using a cited course idea; a realistic action plan.</dd><dt>Proficient (21–26)</dt><dd>All six stages; some analysis; action is general.</dd><dt>Developing (15–20)</dt><dd>Mostly description; feelings and analysis thin.</dd><dt>Poor (0–14)</dt><dd>Describes events only, or stages missing.</dd></dl></details><details><summary>Part B · Ranked SWOT · 25</summary><dl><dt>Exemplary (22–25)</dt><dd>3 items per box, ranked, each with clear proof from the course; ranking explained.</dd><dt>Proficient (18–21)</dt><dd>Items ranked with proof for most.</dd><dt>Developing (12–17)</dt><dd>Items listed, little proof or ranking.</dd><dt>Poor (0–11)</dt><dd>Incomplete or generic (no link to the course).</dd></dl></details><details><summary>Part C · Three-year plan · 25</summary><dl><dt>Exemplary (22–25)</dt><dd>Two SMART goals per year, each linked to a SWOT item, first step stated.</dd><dt>Proficient (18–21)</dt><dd>Goals mostly SMART and linked.</dd><dt>Developing (12–17)</dt><dd>Goals vague or not linked to the SWOT.</dd><dt>Poor (0–11)</dt><dd>No clear goals.</dd></dl></details><details><summary>Evidence and writing · 20</summary><dl><dt>Exemplary (18–20)</dt><dd>Evidence labelled and cited in the text; clear structure; correct APA; about 1500 words.</dd><dt>Proficient (14–17)</dt><dd>Evidence present, mostly referred to; minor errors.</dd><dt>Developing (10–13)</dt><dd>Little evidence; structure or referencing weak.</dd><dt>Poor (0–9)</dt><dd>No evidence; hard to follow.</dd></dl></details></div></details></div>`,
-  after:el=>{ el.querySelector('#dl').onclick=()=>Deck.doc('ENT 142 Project 2 Reflective Portfolio',allText()); }}
+  <p class="what">Two SMART goals per year. Each one uses a strength or opportunity, or fixes a weakness or threat.</p>
+  ${FMT('C')}${LOOK('C')}
+  <div class="acts" style="margin-top:12px"><a class="b g" href="toolkit.html#smart">Check a goal is SMART →</a></div></div>
+  ${vis('Part C · your plan',`<div class="yrs">${YR.map(([y,d,g1,g2],i)=>`<div><small>${y} · ${d}</small><b>Goal 1</b>${F('pl-'+i+'a',{ph:'SMART goal',rows:2,ex:g1[0]})}${F('pl-'+i+'al',{ph:'SWOT link, e.g. fixes W2',rows:1,ex:g1[1]})}<b>Goal 2</b>${F('pl-'+i+'b',{ph:'SMART goal',rows:2,ex:g2[0]})}${F('pl-'+i+'bl',{ph:'SWOT link',rows:1,ex:g2[1]})}</div>`).join('')}</div>`,'C')}`},
+ {nav:'D',part:'D',html:()=>`<div><div class="kick">Part D <span class="mk">evidence</span></div><h2>Evidence</h2>
+  <p class="what">Add the screenshot of the peer review email you received, and your reviewer's name and email. Add any other proof you mention in Parts A–C.</p>
+  <ol class="how"><li>Take a screenshot of the review email.</li><li>Upload it here and write a caption.</li><li>Refer to it in your text: "see Evidence 1".</li></ol></div>
+  <div class="vis"><span class="lbl">Part D · your evidence</span><div class="paper up">
+   <div class="cover"><label for="rv-n">Reviewer's name</label><input id="rv-n" data-f="rev-name" value="${esc(Deck.get('rev-name'))}">
+   <label for="rv-e">Reviewer's email</label><input id="rv-e" data-f="rev-email" type="email" value="${esc(Deck.get('rev-email'))}" placeholder="name@cud.ac.ae"></div>
+   ${SLOTS.map(([k,t,req])=>`<label class="drop">${t} ${req?'<span class="req" data-req>required</span>':''}<small>Tap to choose an image (PNG or JPG)</small><input type="file" accept="image/*" data-slot="${k}" ${k==='other'?'multiple':''}></label>`).join('')}
+   <div class="imgs" id="imgs"></div></div></div>`,
+  after:el=>drawImgs()},
+ {nav:'Save',html:()=>`<div><div class="kick">Save and submit <span class="mk">Due ${esc(DUE)}</span></div><h2>Save your file, then submit</h2>
+  <ol class="how"><li>Check the preview on the right.</li><li>Save as Word (.docx) or PDF.</li><li>Upload it on Moodle.</li></ol>
+  <div class="acts"><button type="button" class="b" id="dx">Save as Word (.docx)</button><button type="button" class="b g" id="pdf">Save as PDF</button>
+   <a class="b g" href="https://www.office.com/launch/word" target="_blank" rel="noopener">Open Word online ↗</a></div>
+  <p class="wc" id="dxm" style="margin-top:8px">PDF: choose "Save as PDF" in the print window. Word online: upload your .docx there to edit it.</p>
+  <div class="acts" style="margin-top:14px">${MOODLE?`<a class="b" href="${esc(MOODLE)}" target="_blank" rel="noopener">Submit on Moodle ↗</a>`:`<span class="b" aria-disabled="true">Moodle link coming soon</span>`}</div>
+  <details class="rb"><summary>How it is marked · 100 marks → 30%</summary><div class="rub">${[['Part A · Reflection',30,'All six stages; analysis explains why with a cited course idea; a realistic action.'],['Part B · Ranked SWOT',25,'Three per box, ranked, each with proof from the course.'],['Part C · Three-year plan',25,'Two SMART goals per year, each linked to a SWOT item.'],['Evidence and writing',20,'Peer review screenshot and reviewer details; evidence referred to in the text; clear structure; APA.']].map(([t,m,d])=>`<details><summary>${t} · ${m}</summary><p style="margin:8px 0 0">${d}</p></details>`).join('')}</div></details></div>
+  <div class="vis"><span class="lbl">Preview of your file</span><div class="pvw" id="pv"></div></div>`,
+  after:el=>{ el.querySelector('#pv').innerHTML=docHTML(); el.querySelector('#dx').onclick=async()=>{ const m=el.querySelector('#dxm'); m.textContent='Preparing your Word file…'; try{ await makeDocx(); m.textContent='Saved. Check your Downloads folder.'; }catch(e){ m.textContent='Word export did not work in this browser. Use Save as PDF.'; } }; el.querySelector('#pdf').onclick=printPDF; }}
 ];
-function count(el,ids,target){ const w=el.querySelector('[data-wc]'); if(!w) return; const n=ids.reduce((a,id)=>a+Deck.words(Deck.get(id)),0); w.innerHTML=`Your notes: <b>${n}</b> words · target in the final text ≈ ${target}`; }
-const D=Deck.mount({slides:SL,key:'ent142-p2',onInput:(data,t)=>{ if(!t) return; const sec=t.closest('.sl-f'); const i=+sec.id.slice(1); if(SL[i].after&&i>=2&&i<=4) SL[i].after(sec); }});
+function progress(el){ const p=el.querySelector('#prog'); if(!p) return;
+  const rows=[['Cover',['name','title','sid'].filter(V).length,3,'fields'],['A · Reflection',WC.A[0].reduce((a,k)=>a+words(V(k)),0),600,'words'],['B · SWOT',WC.B[0].filter(V).length,12,'items'],['C · Plan',WC.C[0].filter(V).length,6,'goals'],['D · Evidence',(IMGS.some(m=>m.slot==='review')?1:0)+(V('rev-email')?1:0),2,'items']];
+  p.innerHTML=rows.map(([t,n,m,u])=>`<div><span>${t}</span><i><b style="width:${Math.min(100,n/m*100)}%"></b></i><span>${n}/${m} ${u}</span></div>`).join(''); }
+function looks(){ document.querySelectorAll('[data-look]').forEach(x=>{ const p=x.dataset.look; x.innerHTML=p==='A'?partA():p==='B'?partB():partC(); });
+  document.querySelectorAll('[data-wc]').forEach(w=>{ const [ids,t]=WC[w.dataset.wc]; const n=ids.reduce((a,id)=>a+words(V(id)),0); w.innerHTML=`Your words: <b>${n}</b> · target ≈ ${t}`; }); }
+function drawImgs(){ const box=document.getElementById('imgs'); if(!box) return;
+  box.innerHTML=IMGS.map((m,i)=>`<div class="imgc"><img src="${m.src}" alt=""><div><b>Evidence ${i+1} · ${m.slot==='review'?'Peer review email':'Other evidence'}</b><input type="text" data-cap="${m.id}" value="${esc(m.cap||'')}" placeholder="Caption: what it shows, date"></div><button type="button" data-del="${m.id}" aria-label="Remove">✕</button></div>`).join('');
+  const r=document.querySelector('[data-req]'); if(r){ const ok=IMGS.some(m=>m.slot==='review'); r.textContent=ok?'added ✓':'required'; r.classList.toggle('ok',ok); } }
+const deckEl=document.getElementById('deck');
+const DK=Deck.mount({slides:SL,key:'ent142-p2',onInput:()=>{ looks(); const s=document.querySelector('.sl-f.on'); if(s&&s.id==='s0') progress(s); }});
+looks();
+deckEl.addEventListener('click',e=>{ const b=e.target.closest('[data-fmt]'); if(b){ const p=b.dataset.fmt; const d=Deck.data(); d['fmt'+p]=b.dataset.v; try{ localStorage.setItem('ent142-p2',JSON.stringify(d)); }catch(x){}
+    document.querySelectorAll(`[data-fmt="${p}"]`).forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===b.dataset.v)); looks(); }
+  const del=e.target.closest('[data-del]'); if(del){ IDB.del(del.dataset.del).then(()=>{ IMGS=IMGS.filter(m=>m.id!==del.dataset.del); drawImgs(); }); } });
+deckEl.addEventListener('change',async e=>{ const f=e.target.closest('input[type=file]'); if(!f) return;
+  for(const file of [...f.files]){ try{ const r=await shrink(file); const o={id:'i'+Date.now()+Math.random().toString(36).slice(2,6),slot:f.dataset.slot,src:r.src,w:r.w,h:r.h,cap:'',t:Date.now()}; IMGS.push(o); await IDB.put(o); }catch(x){} }
+  f.value=''; drawImgs(); });
+deckEl.addEventListener('input',e=>{ const c=e.target.closest('[data-cap]'); if(!c) return; const m=IMGS.find(x=>x.id===c.dataset.cap); if(m){ m.cap=c.value; IDB.put(m); } });
+IDB.all().then(a=>{ IMGS=a; drawImgs(); const s=document.querySelector('.sl-f.on'); if(s&&s.id==='s0') progress(s); });
 </script>
 </body>
 </html>

@@ -47,7 +47,7 @@ const PHASES=[
  ['Venture',[[6,'Industry Barriers','Activity 1'],[7,'Lean Model Canvas'],[8,'Pitching Workshop'],[9,'Presenting the Idea','Project 1 · 27 Oct']]],
  ['Reflect',[[10,'Reflection Workshop'],[11,'Reflection and Reflective Assessment']]],
  ['Pitch',[[12,'Elevator Pitch'],[13,'Elevator Pitch Workshop (Part 1)','Activity 2 · 24 Nov'],[14,'Elevator Pitch Workshop (Part 2)']]],
- ['Portfolio',[[15,'Course Reflection (Part 1)'],[16,'Course Reflection (Part 2)','Project 2 · 15 Dec']]]];
+ ['Portfolio',[[15,'Course Reflection (Part 1)'],[16,'Course Reflection (Part 2)','Project 2 · 16 Nov']]]];
 const JMAP=`<div class="jmap">${PHASES.map(([p,ws])=>`<div class="ph"><b>${p}</b><div class="wks">${ws.map(([n,t,m])=>`<div class="wk${m?' ms':''}"><span>Week ${n}</span>${t}${m?`<i>${m}</i>`:''}</div>`).join('')}</div></div>`).join('')}</div>`;
 
 /* ---------- Scene 3: CLO self-rating ---------- */

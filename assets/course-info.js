@@ -5,10 +5,12 @@ window.COURSE={
   instructor:'Eng. Nadia Mek',
   nav:[
     {key:'lectures',label:'Lectures',href:'lectures.html',icon:'lectures',blurb:'Each week: the lab topic, real examples, your project work.'},
-    {key:'project2',label:'Project 2',href:'project-2.html',icon:'project',blurb:'Your reflective portfolio: four parts, a template to write on, an example.'},
+    {key:'project',label:'Project 1',href:'project-1.html',icon:'project',blurb:'Team report: done 27 Oct.'},
+    {key:'present',label:'P1 Presentation',href:'presentation.html',icon:'present',blurb:'Individual presentation: done 27 Oct.'},
+    {key:'project2',label:'Project 2',href:'project-2.html',icon:'project',blurb:'Reflective Portfolio builder: write, save as Word or PDF, submit.'},
     {key:'pitch',label:'Video pitch',href:'activity-2.html',icon:'present',blurb:'Activity 2: script, timer, recording tips, marks.'}
   ],
-  navExtra:[['roadmap.html','Roadmap','roadmap'],['toolkit.html','Toolkit','toolkit'],['project-1.html','Project 1','project']],
+  navExtra:[['roadmap.html','Roadmap','roadmap'],['toolkit.html','Toolkit','toolkit']],
   assessPage:'project-2.html', assessLabel:'Project 2',
   onlineAnswer:'No. Classes are on campus, in the lab, with your team. This site supports your classes: lab notes, the project guide and dates.',
 
@@ -33,8 +35,8 @@ window.COURSE={
       revise:[['Presentation tips','presentation.html']]},
     {id:'a2',name:'Activity 2 · Video pitch',short:'Activity 2',type:'Activity',weight:'10%',date:'2026-11-24T09:00:00+04:00',time:false,covers:['30–45 second phone video, face on camera','Hook, problem, solution, proof, ask'],format:'Individual',clos:'2',
       submit:{link:'',due:'2026-11-24T23:59:00+04:00',dueText:'Tue 24 Nov'},revise:[['Video pitch guide','activity-2.html'],['Week 12 · Elevator Pitch','week-12.html']]},
-    {id:'p2',name:'Project 2 · Reflective Portfolio',short:'Project 2',type:'Project',weight:'30%',date:'2026-12-15T09:00:00+04:00',time:false,covers:['A · Reflection on Project 1 (Gibbs cycle)','B · Ranked personal SWOT with evidence','C · Three-year action plan, SMART goals','D · Evidence appendix · about 1500 words, one Word file'],format:'Individual',clos:'4',
-      submit:{link:'',due:'2026-12-15T23:59:00+04:00',dueText:'Tue 15 Dec'},revise:[['Project 2 guide','project-2.html'],['Week 10 · Reflection','week-10.html'],['Week 15 · Action plan','week-15.html']]}
+    {id:'p2',name:'Project 2 · Reflective Portfolio',short:'Project 2',type:'Project',weight:'30%',date:'2026-11-16T09:00:00+04:00',time:false,covers:['A · Reflection on Project 1 (Gibbs cycle)','B · Ranked personal SWOT with evidence','C · Three-year action plan, SMART goals','D · Evidence appendix · about 1500 words, one Word file'],format:'Individual',clos:'4',
+      submit:{link:'https://my.cud.ac.ae/mod/assign/view.php?id=22821',due:'2026-11-16T23:59:00+04:00',dueText:'Mon 16 Nov'},revise:[['Project 2 guide','project-2.html'],['Week 10 · Reflection','week-10.html'],['Week 15 · Action plan','week-15.html']]}
   ],
 
   /* semester calendar: lec = [title, link] (no link = in preparation) */
@@ -65,7 +67,7 @@ window.COURSE={
   ],
 
   faqExtra:[
-    ['What is Project 2?','An individual reflective portfolio (30%): a Gibbs reflection on Project 1, a ranked personal SWOT, a three-year action plan and an evidence appendix. Due Tue 15 Dec. <a href="project-2.html">See the guide →</a>'],
+    ['What is Project 2?','An individual reflective portfolio (30%): a Gibbs reflection on Project 1, a ranked personal SWOT, a three-year action plan and an evidence appendix. Due Mon 16 Nov on Moodle. <a href="project-2.html">Open the builder →</a>'],
     ['What is Activity 2?','A 30–45 second video pitch, recorded with your phone (10%). Due Tue 24 Nov. <a href="activity-2.html">See the guide →</a>'],
     ['What is Project 1?','A team report (4000 words) that turns your idea into a social enterprise and proves it with real data and a tested prototype. <a href="project-1.html">See the project guide, one section per page →</a>'],
     ['How do we register our team?','One person registers the whole team with the <a href="project-1.html#s2">Microsoft Form</a>, using a CUD account.'],

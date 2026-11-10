@@ -29,7 +29,7 @@ const {W,B} = Lecture;
 const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your project</b>${html}</div>`;
 
 /* assessment weights, drawn to scale (syllabus section 8) */
-const ASSESS=[['Project 1 · Report',40,'27 Oct'],['Project 1 · Presentation',10,'27 Oct'],['Project 2 · Reflective Portfolio',30,'Week 16'],['Activity 1',10,'Week 6'],['Activity 2',10,'Week 13']];
+const ASSESS=[['Project 1 · Report',40,'27 Oct'],['Project 1 · Presentation',10,'27 Oct'],['Project 2 · Reflective Portfolio',30,'16 Nov'],['Activity 1',10,'Week 6'],['Activity 2',10,'Week 13']];
 function weights(el){
   let x=0; const cols=['var(--wk)','color-mix(in srgb,var(--wk) 60%,var(--bg))','color-mix(in srgb,var(--wk) 35%,var(--bg))','var(--muted)','color-mix(in srgb,var(--muted) 55%,var(--bg))'];
   el.innerHTML=`<svg viewBox="0 0 600 70" style="width:100%;height:auto" role="img" aria-label="Assessment weights">${ASSESS.map(([t,w],i)=>{ const r=`<rect x="${x*6}" y="10" width="${w*6-2}" height="40" rx="4" fill="${cols[i]}"/><text x="${x*6+w*3}" y="36" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="14" fill="${i<1?'var(--on-wk)':'var(--ink)'}">${w}%</text>`; x+=w; return r; }).join('')}</svg>

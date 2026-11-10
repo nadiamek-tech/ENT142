@@ -62,7 +62,7 @@ function checklist(el){
   const box=document.createElement('div'); box.className='chk';
   box.innerHTML=CHECK.map((c,i)=>`<label><input type="checkbox" data-i="${i}" ${st[i]?'checked':''}><span>${c}</span></label>`).join('')+`<div class="feedback" id="chk-o"></div>`;
   el.appendChild(box);
-  const upd=()=>{ const n=st.filter(Boolean).length; box.querySelector('#chk-o').innerHTML=n===CHECK.length?'<b>Ready.</b> Submit on Moodle by Tuesday 15 December, 23:59.':`${n} of ${CHECK.length} done.`; store.set(key,JSON.stringify(st)); };
+  const upd=()=>{ const n=st.filter(Boolean).length; box.querySelector('#chk-o').innerHTML=n===CHECK.length?'<b>Ready.</b> Submit on Moodle by Monday 16 November, 23:59.':`${n} of ${CHECK.length} done.`; store.set(key,JSON.stringify(st)); };
   box.querySelectorAll('input').forEach(c=>c.addEventListener('change',()=>{ st[+c.dataset.i]=c.checked; upd(); }));
   upd();
 }
@@ -149,7 +149,7 @@ Lecture.mount({
 
   { nav:'Takeaways', title:'Takeaways', minutes:2,
     narration:[`<ul><li>Four parts, about 1500 words in A–C, evidence in D.</li><li>Every claim has evidence; every appendix item is cited in the text.</li><li>Choose a path for Part C: founder, intrapreneur, social entrepreneur, freelancer or startup team.</li></ul>`,
-      `<b>Project 2 due:</b> Tuesday 15 December, 23:59, on Moodle, as one Word file.`,
+      `<b>Project 2 due:</b> Monday 16 November, 23:59, on Moodle, as one Word file.`,
       `<a class="btn" href="project-2.html">Project 2 guide →</a>`] },
 
   ]

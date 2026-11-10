@@ -62,16 +62,16 @@ table.rm{width:100%;border-collapse:collapse;font-size:.95rem;min-width:760px}
 <div id="hub" data-cur="roadmap"></div>
 <main class="rw">
   <h1>Where we are</h1>
-  <p class="lead">Project 1 is done. Five weeks left: two pieces of work, both individual.</p>
+  <p class="lead">Project 1 is done. Two pieces left, both individual: Project 2 (Mon 16 Nov) and the video pitch (Tue 24 Nov).</p>
   <div class="score" id="score"></div>
 
   <section class="today" aria-labelledby="th">
     <div>
       <span class="st t">Today · Week 11 · Tue 10 Nov</span>
-      <h2 id="th">Start Project 2 and your pitch</h2>
-      <p class="lead" style="margin:0">Two hours, four steps. Your notes save in your browser; download them at the end.</p>
+      <h2 id="th">Build Project 2</h2>
+      <p class="lead" style="margin:0">Two hours, five steps. Your notes save in your browser; download them at the end.</p>
       <div class="bar" id="tbar" aria-hidden="true"></div>
-      <div class="bring"><div><b>Leave today with:</b> Part A drafted, your SWOT ranked, a first pitch script.</div><div><b>Bring:</b> your Project 1 report, slides and feedback.</div></div>
+      <div class="bring"><div><b>Leave today with:</b> Parts A–C drafted in the builder. Finish and submit by Monday 16 Nov, 23:59.</div><div><b>Bring:</b> your Project 1 report, slides and feedback.</div></div>
     </div>
     <ol class="steps" id="steps"></ol>
   </section>
@@ -106,28 +106,30 @@ const WEEKS=[
   [9,'27 Oct','Presenting the Idea','Submitted the report, presented','Project 1 · 40% + 10%']]],
  ['Reflect',[
   [10,'3 Nov','Reflection Workshop','Gibbs cycle on Project 1'],
-  [11,'10 Nov','Reflective Assessment','Draft Part A, rank your SWOT (Part B), first pitch script']]],
+  [11,'10 Nov','Reflective Assessment','Build Project 2: Parts A–D in the builder'],
+  [11.5,'16 Nov','—','Submit Project 2 on Moodle','Project 2 · 30% · due Mon 23:59',true]]],
  ['Pitch',[
   [12,'17 Nov','Elevator Pitch','Finish the script, practise with the timer'],
   [13,'24 Nov','Elevator Pitch Workshop 1','Record in class, peer review, submit','Activity 2 · 10% · due 23:59',true],
   [14,'1 Dec','Elevator Pitch Workshop 2','Take 2, live Q&A practice']]],
  ['Portfolio',[
-  [15,'8 Dec','Course Reflection 1','Three-year plan, SMART goals (Part C)'],
-  [16,'15 Dec','Course Reflection 2','Evidence, peer review, submit','Project 2 · 30% · due 23:59',true]]]];
+  [15,'8 Dec','Course Reflection 1','Career paths and next steps'],
+  [16,'15 Dec','Course Reflection 2','Look back on the semester']]]];
 const status=w=>w<TODAY?'d':w===TODAY?'t':'u';
 const SL={d:'Done',t:'Today',u:'Upcoming'};
-document.getElementById('rows').innerHTML=WEEKS.map(([ph,rows])=>`<tr class="ph"><td colspan="6">${ph}</td></tr>`+rows.map(([w,d,t,what,as,big])=>{ const s=status(w);
-  return `<tr class="${s}"><td><b>${w}</b></td><td>${d}</td><td><a href="week-${String(w).padStart(2,'0')}.html">${esc(t)}</a></td><td>${esc(what)}</td><td>${as?`<span class="as${big?' big':''}">${esc(as)}</span>`:''}</td><td><span class="st ${s}">${SL[s]}</span></td></tr>`; }).join('')).join('');
+document.getElementById('rows').innerHTML=WEEKS.map(([ph,rows])=>`<tr class="ph"><td colspan="6">${ph}</td></tr>`+rows.map(([w,d,t,what,as,big])=>{ const s=status(w), dl=t==='—';
+  return `<tr class="${s}"><td><b>${dl?'':w}</b></td><td>${d}</td><td>${dl?'<b>Deadline</b>':`<a href="week-${String(w).padStart(2,'0')}.html">${esc(t)}</a>`}</td><td>${esc(what)}</td><td>${as?`<span class="as${big?' big':''}">${esc(as)}</span>`:''}</td><td><span class="st ${s}">${SL[s]}</span></td></tr>`; }).join('')).join('');
 
-const SC=[['Activity 1','10%','Week 6','d'],['Project 1 · Report','40%','27 Oct','d'],['Project 1 · Presentation','10%','27 Oct','d'],['Activity 2 · Video pitch','10%','Tue 24 Nov','n','activity-2.html'],['Project 2 · Portfolio','30%','Tue 15 Dec','n','project-2.html']];
+const SC=[['Activity 1','10%','Week 6','d'],['Project 1 · Report','40%','27 Oct','d'],['Project 1 · Presentation','10%','27 Oct','d'],['Activity 2 · Video pitch','10%','Tue 24 Nov','n','activity-2.html'],['Project 2 · Portfolio','30%','Mon 16 Nov','n','project-2.html']];
 document.getElementById('score').innerHTML=SC.map(([t,w,d,s,l])=>`<div class="${s==='d'?'done':'next'}"><span class="w">${w}</span><b>${l?`<a href="${l}" style="color:inherit">${t} →</a>`:t}</b><small>${s==='d'?'✓ Done':'Due '+d}</small></div>`).join('');
 
 const STEPS=[
- [15,'Where we are','This table. What is done, what is left, both due dates.','#score','Overview'],
- [35,'Part A · Reflect on Project 1','Gibbs six stages, while you still remember it. One short paragraph per stage.','project-2.html#s2','Open Part A'],
- [40,'Part B · Rank your SWOT','Three per box, ranked, each with proof from this course. Swap with a partner and challenge one item.','project-2.html#s3','Open Part B'],
- [30,'Pitch · First script','Hook, problem, solution, proof, ask. 75–110 words. Read it once with the timer.','activity-2.html#s1','Open script']];
-const COL=['var(--muted)','var(--wk)','color-mix(in srgb,var(--wk) 70%,var(--bg))','var(--good)'];
+ [10,'Where we are','This table. Project 2 is due Monday 16 Nov.','#score','Overview'],
+ [35,'Part A · Reflect on Project 1','Answer the six Gibbs questions in the builder.','project-2.html#s1','Open Part A'],
+ [30,'Part B · Rank your SWOT','Three per box, ranked, each with proof. Swap with a partner and challenge one item.','project-2.html#s2','Open Part B'],
+ [30,'Part C · Three-year plan','Two SMART goals per year, each linked to your SWOT.','project-2.html#s3','Open Part C'],
+ [15,'Part D · Peer review and save','Add the review email screenshot and your reviewer\'s details. Save as Word.','project-2.html#s4','Open Part D']];
+const COL=['var(--muted)','var(--wk)','color-mix(in srgb,var(--wk) 70%,var(--bg))','color-mix(in srgb,var(--wk) 45%,var(--bg))','var(--good)'];
 document.getElementById('tbar').innerHTML=STEPS.map((s,i)=>`<i style="width:${s[0]/1.2}%;background:${COL[i]}" title="${s[1]} · ${s[0]} min"></i>`).join('');
 document.getElementById('steps').innerHTML=STEPS.map(([m,t,p,l,b])=>`<li><span class="m">${m}<small>min</small></span><div><b>${esc(t)}</b><p>${esc(p)}</p></div><a class="go" href="${l}">${b} →</a></li>`).join('');
 </script>
