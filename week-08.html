@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 8 · Pitching Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#B0236B;--wk-soft:rgba(176,35,107,.10);--wk-d:#F57AB5;--wk-soft-d:rgba(245,122,181,.14)}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tiles div{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--bg)}
+.tiles .n{font-family:var(--f-display);font-weight:800;font-size:1.9rem;color:var(--wk);line-height:1}
+.tiles .t{font-family:var(--f-display);font-size:.86rem;margin-top:6px}
+.slides{width:100%;height:auto;display:block}
+.timer{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:var(--f-display);margin-bottom:14px}
+.timer .clock{font-family:var(--f-mono);font-size:2rem;font-weight:600;color:var(--wk);min-width:90px}
+.timer .clock.over{color:var(--bad)}
+.grid{width:100%;border-collapse:collapse;font-family:var(--f-display);font-size:.88rem;margin-bottom:14px}
+.grid th,.grid td{border-bottom:1px solid var(--line);padding:6px;text-align:left}
+.grid td.r{white-space:nowrap}
+.grid button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:4px 9px;cursor:pointer;font-family:var(--f-display);font-size:.8rem;margin:2px}
+.grid button[aria-pressed="true"]{background:var(--wk);border-color:var(--wk);color:var(--on-wk)}
+.sub{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+@media (max-width:560px){.tiles{grid-template-columns:minmax(0,1fr)}.grid td.r{white-space:normal}}
+</style>
+</head>
+<body>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W,B} = Lecture;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* ---------- Scene 5: before / after slide ---------- */
+const SLIDES=`<svg class="slides" viewBox="0 0 640 230" role="img" aria-label="Two slides compared. Left: a crowded slide with a title and eight small bullet lines. Right: one headline, one large number and one short label.">
+<rect x="10" y="20" width="295" height="170" rx="8" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="24" y="44" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="12" font-weight="700" fill="var(--ink)">Our Project</text>
+${[0,1,2,3,4,5,6,7].map(i=>`<rect x="24" y="${58+i*15}" width="${200+((i*37)%60)}" height="5" rx="2" fill="var(--muted)" opacity=".55"/>`).join('')}
+<text x="157" y="212" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="var(--muted)">before · read, not seen</text>
+<rect x="335" y="20" width="295" height="170" rx="8" fill="var(--surface)" stroke="var(--wk)" stroke-width="2"/>
+<text x="350" y="48" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="15" font-weight="700" fill="var(--ink)">Cafés bin good food every night</text>
+<text x="482" y="125" text-anchor="middle" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="54" font-weight="800" fill="var(--wk)">40</text>
+<text x="482" y="152" text-anchor="middle" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="13" fill="var(--muted)">meals counted in one week (example)</text>
+<text x="482" y="212" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="var(--muted)">after · one idea, seen at once</text>
+</svg>`;
+
+/* ---------- Scene 8: 60-second timer + peer feedback grid ---------- */
+function timer(el){
+  el.innerHTML=`<div class="timer"><span class="clock" aria-live="polite">0:00</span><button type="button" class="btn t-go">▶ Start 60 s</button><button type="button" class="btn ghost t-reset">Reset</button><span class="mono t-msg" style="color:var(--muted)">Time each rehearsal aloud.</span></div>`;
+  const c=el.querySelector('.clock'), m=el.querySelector('.t-msg'); let t=0, id=null;
+  const show=()=>{ c.textContent=`${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}`; c.classList.toggle('over',t>60); m.textContent=t>60?`Over by ${t-60} s: cut the weakest part.`:'Time each rehearsal aloud.'; };
+  el.querySelector('.t-go').onclick=e=>{ if(id){ clearInterval(id); id=null; e.target.textContent='▶ Start 60 s'; return; } id=setInterval(()=>{ t++; show(); },1000); e.target.textContent='❚❚ Stop'; };
+  el.querySelector('.t-reset').onclick=()=>{ clearInterval(id); id=null; t=0; show(); el.querySelector('.t-go').textContent='▶ Start 60 s'; };
+}
+const CRIT=['Problem is clear in the first 10 seconds','Evidence comes from real users','Model: how it earns is clear','Ask is specific','Voice, eye contact, within 60 s'];
+function grid(el){
+  const key='ent142-w08-grid'; let st={}; try{st=JSON.parse(store.get(key)||'{}')}catch(e){}
+  const L=['Not yet','Getting there','Strong'];
+  el.innerHTML=`<table class="grid"><thead><tr><th>Peer feedback grid</th><th>Rating</th></tr></thead><tbody>${CRIT.map((c,i)=>`<tr><td>${c}</td><td class="r">${L.map((l,j)=>`<button type="button" data-i="${i}" data-j="${j}" aria-pressed="${st[i]===j}">${l}</button>`).join('')}</td></tr>`).join('')}</tbody></table>`;
+  el.querySelectorAll('.grid button').forEach(b=>b.addEventListener('click',()=>{ const i=+b.dataset.i, j=+b.dataset.j; st[i]=j; store.set(key,JSON.stringify(st)); el.querySelectorAll(`.grid button[data-i="${i}"]`).forEach(x=>x.setAttribute('aria-pressed',+x.dataset.j===j)); }));
+}
+function workshop(el){
+  const a=document.createElement('div'), b=document.createElement('div'), c=document.createElement('div');
+  el.append(Object.assign(document.createElement('div'),{className:'sub',textContent:'1 · Timer'}),a,
+            Object.assign(document.createElement('div'),{className:'sub',textContent:'2 · Your 1-minute script'}),b,
+            Object.assign(document.createElement('div'),{className:'sub',textContent:'3 · Peer feedback (your partner fills this)'}),c);
+  timer(a);
+  W.worksheet(b,{id:'ent142-w08-pitch',title:'ENT 142 · Week 8 · 1-minute pitch',fields:[
+    {l:'01 · Problem: open with a number or a user story',rows:2},
+    {l:'02 · Solution: what it is, in one sentence',rows:1},
+    {l:'03 · Evidence: what your prototype test showed',rows:2},
+    {l:'04 · Model: how it earns and keeps going',rows:1},
+    {l:'05 · Team and ask: why you, and what you need from whom',rows:2},
+    {l:'06 · Peer feedback: one star (strength) and one wish (change)',rows:2}]});
+  grid(c);
+}
+
+Lecture.mount({
+  id:'ent142-w08', week:8, clo:2, course:'ENT 142', short:'Week 8 · Pitching Workshop',
+  title:'Pitching Workshop',
+  meta:'Kawasaki (2005) · Byers et al. (2019) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'How do you make one minute count?', minutes:5,
+    narration:[`A pitch is a short argument for your venture. Today you build and rehearse your 1-minute Project 1 pitch. <span class="mono">Topics: Pitch structure · 10/20/30 rule · Slide design · Rehearsal and peer feedback. CLO 2.</span>`],
+    src:`Reading: Kawasaki, G. (2005). <em>The 10/20/30 rule of PowerPoint</em>. guykawasaki.com · Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Think first`,5,'l'],[`Pitch structure`,10,'l'],[`10/20/30 rule`,10,'l'],[`Slide design`,10,'l'],[`Rehearsal`,10,'l'],[`Mistake → fix`,10,'l'],[`Build and rehearse`,45,'a'],[`Check`,10,'c'],[`Takeaways`,5,'l']])} },
+
+  { nav:'Think first', title:'The talk you forgot', minutes:5,
+    narration:[`Recall a presentation you forgot within an hour.`],
+    think:`What made it forgettable: the start, the slides, the length, or no clear point?` },
+
+  { nav:'Pitch structure', title:'Six parts of a pitch', minutes:10,
+    narration:[`A strong pitch answers six questions in order: problem, solution, evidence, model, team, ask. Each part earns the attention for the next. Press play to follow the surplus-meal example.`],
+    src:`Byers et al. (2019) · Kawasaki (2005).`,
+    fig:{label:`Problem → ask · campus surplus-meal app`, flow:[
+      {t:'Problem',s:'hook',d:'“Every night, campus cafés bin meals that students would buy.”'},
+      {t:'Solution',s:'one sentence',d:'“An app that sells those meals at half price before closing.”'},
+      {t:'Evidence',s:'from your test',d:'What real users did with your prototype: counts, not opinions.'},
+      {t:'Model',s:'how it earns',d:'“The café pays a small fee per meal sold.”'},
+      {t:'Team',s:'why you',d:'One line on the skills that fit this venture.'},
+      {t:'Ask',s:'specific',d:'“We need two cafés for a two-week pilot.”'}]} },
+
+  { nav:'10/20/30 rule', title:'Kawasaki\'s 10/20/30 rule', minutes:10,
+    narration:[`Kawasaki (2005): ten slides, twenty minutes, no font smaller than thirty points. The point is discipline. For a one-minute pitch, scale down: few slides, one idea each, large text.`],
+    src:`Kawasaki, G. (2005). The 10/20/30 rule of PowerPoint. guykawasaki.com`,
+    fig:{label:`The rule`, html:`<div class="tiles"><div><div class="n">10</div><div class="t">slides at most</div></div><div><div class="n">20</div><div class="t">minutes at most</div></div><div><div class="n">30</div><div class="t">point font at least</div></div></div>`} },
+
+  { nav:'Slide design', title:'One idea per slide', minutes:10,
+    narration:[`The headline states the message; one image, number or chart supports it. Mayer (2009): cut extra words and decoration (coherence) and highlight what matters (signalling).`],
+    src:`Mayer, R. E. (2009). <em>Multimedia learning</em> (2nd ed.). Cambridge University Press.`,
+    fig:{label:`Before and after`, html:SLIDES, caption:`The number on the right is an illustration; use your own test data.`} },
+
+  { nav:'Rehearsal', title:'Rehearse with peer feedback', minutes:10,
+    narration:[`Rehearse aloud, with a timer, in front of a peer. Feedback should be specific: one strength to keep, one change to make. Repeat until the pitch fits sixty seconds.`],
+    fig:{label:`Rehearsal loop`, flow:[
+      {t:'Write',s:'six parts',d:'One or two sentences per part.'},
+      {t:'Time it',s:'aloud',d:'Read it aloud with the timer. Silent reading is faster than speaking.'},
+      {t:'Cut',s:'to 60 s',d:'Remove the weakest sentence, never the evidence or the ask.'},
+      {t:'Pitch to a peer',s:'standing',d:'No reading from the screen. Keywords only.'},
+      {t:'Feedback',s:'star + wish',d:'Peer rates the grid and gives one star and one wish.'},
+      {t:'Again',s:'improved',d:'Rehearse once more with the change.'}]} },
+
+  { nav:'Mistake → fix', title:'Common mistakes and the fix', kind:'review', minutes:10,
+    narration:[`Check your pitch against these three mistakes.`],
+    fig:{label:`Mistake → fix`, html:`<table class="tbl"><thead><tr><th>Mistake</th><th>Fix</th></tr></thead><tbody>
+      <tr><td>Opening with “Our project is about…”</td><td>Open with the problem: a number or a user story.</td></tr>
+      <tr><td>Reading the slides aloud</td><td>Slides show; you tell. Keywords only on screen.</td></tr>
+      <tr><td>No ask, or a vague one</td><td>Name what you need, from whom, for how long.</td></tr></tbody></table>`} },
+
+  { nav:'Build and rehearse', title:'Activity · Build and rehearse your 1-minute pitch', kind:'activity', minutes:45, wide:true,
+    narration:[`Write your script, time it, then pitch to a partner. Your partner fills the grid and one star, one wish. Swap.`],
+    fig:{label:`Pitch workshop · saves in your browser`, build:workshop} },
+
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
+    narration:[`Five scenario questions. Your first click is final.`],
+    fig:{label:`Quiz · 5 questions`, build:el=>W.quiz(el,[
+      {q:'A student opens: “Good morning, today I will present our project.” What should change?',
+       o:['Nothing; politeness comes first','Open with the problem: a number or a user story','Open with the team slide','Open with the ask'],a:1,
+       why:'The first seconds decide attention, so lead with the problem. A greeting uses time without a message. The team matters only once the problem matters. An ask before the problem has no reason behind it.'},
+      {q:'Which slide best follows the 10/20/30 rule and good design?',
+       o:['Twelve bullet points in 18-point font','One headline and one chart, text at 32 points','A paragraph from the report in 30-point font','Four photos with no headline'],a:1,
+       why:'One message, large text, one visual. Twelve bullets break the font rule and overload the slide. A paragraph keeps the font size but forces reading. Photos without a headline leave the message unclear.'},
+      {q:'Which is the strongest evidence in a pitch?',
+       o:['“Everyone we asked liked the idea.”','“12 of 15 testers used the prototype; 9 asked when it launches.”','“The market is huge.”','“We worked very hard.”'],a:1,
+       why:'It reports what real users did, with counts. Liking an idea costs nothing and says little. Market size is a claim, not evidence from your test. Effort is not evidence of demand.'},
+      {q:'Which peer feedback is most useful?',
+       o:['“Good job!”','“Your problem was clear; your ask was missing. Say what you need and from whom.”','“I didn\'t like it.”','“Speak better.”'],a:1,
+       why:'It is specific: one strength and one change the speaker can act on. “Good job” and “I didn\'t like it” give no direction. “Speak better” names no behaviour to change.'},
+      {q:'Your pitch runs 85 seconds; the limit is 60. Best move?',
+       o:['Speak faster','Cut the weakest sentence; keep problem, evidence and ask','Remove the ask','Drop the evidence and keep the team'],a:1,
+       why:'Cutting keeps the argument whole. Speaking faster hurts clarity and delivery marks. The ask and the evidence are the parts that convince; they stay.'}])} },
+
+  { nav:'Takeaways', title:'Takeaways', minutes:5,
+    narration:[`<ul><li>Pitch in six parts: problem, solution, evidence, model, team, ask.</li><li>One idea per slide, large text (Kawasaki, 2005).</li><li>Rehearse aloud with a timer; use one star and one wish from a peer.</li></ul>`,
+      `<b>Next week:</b> Project 1 presentations, Tuesday 27 October. Bring your final slides and rehearse at home.`,
+      `<a class="btn" href="week-09.html">Next lecture · Week 9 · Presenting the Idea →</a>`] },
+  ]
+});
+</script>
+</body>
+</html>

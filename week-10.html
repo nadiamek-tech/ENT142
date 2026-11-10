@@ -36,9 +36,9 @@ const ISNOT=`<div class="isnot">
  <div><h4>Reflection is not</h4><ul><li>Retelling the story</li><li>Listing feelings only</li><li>Blaming teammates</li><li>A summary of the lecture</li></ul></div></div>`;
 
 /* ---------- Scene 3: Kolb cycle (SVG) ---------- */
-const KOLB=(()=>{const cx=320,cy=150,r=100;const st=[['Concrete experience','do it',-90],['Reflective observation','look back',0],['Abstract conceptualisation','make sense',90],['Active experimentation','try again',180]];
+const KOLB=(()=>{const cx=320,cy=165,r=100;const st=[['Concrete experience','do it',-90],['Reflective observation','look back',0],['Abstract conceptualisation','make sense',90],['Active experimentation','try again',180]];
  const pt=(a,R)=>[cx+Math.cos(a*Math.PI/180)*R,cy+Math.sin(a*Math.PI/180)*R];
- let s=`<svg class="svgfig" viewBox="0 0 640 300" role="img" aria-label="Kolb's cycle: concrete experience, reflective observation, abstract conceptualisation, active experimentation, then back to experience.">
+ let s=`<svg class="svgfig" viewBox="0 0 640 340" role="img" aria-label="Kolb's cycle: concrete experience, reflective observation, abstract conceptualisation, active experimentation, then back to experience.">
  <defs><marker id="kar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--wk)"/></marker></defs>
  <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--line)" stroke-width="2"/>`;
  [-50,40,130,220].forEach(a=>{const [x1,y1]=pt(a-22,r),[x2,y2]=pt(a+22,r);s+=`<path d="M${x1} ${y1} A${r} ${r} 0 0 1 ${x2} ${y2}" fill="none" stroke="var(--wk)" stroke-width="3" marker-end="url(#kar)"/>`;});

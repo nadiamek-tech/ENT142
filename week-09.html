@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 9 · Presenting the Idea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#C2410C;--wk-soft:rgba(194,65,12,.10);--wk-d:#FB9A5B;--wk-soft-d:rgba(251,154,91,.14)}
+.fb3{width:100%;height:auto;display:block}
+.sub{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+</style>
+</head>
+<body>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W,B} = Lecture;
+
+/* ---------- Scene 6: feed up / feed back / feed forward ---------- */
+const FB3=`<svg class="fb3" viewBox="0 0 640 170" role="img" aria-label="Three feedback questions in sequence: Where was the speaker going? How did it go? Where to next?">
+<defs><marker id="a9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+${[['Feed up','Where was the','speaker going?'],['Feed back','How did it go?','one specific strength'],['Feed forward','Where to next?','one change to make']].map(([t,a,b],i)=>{const x=14+i*214;return `<rect x="${x}" y="24" width="184" height="110" rx="12" fill="${i===2?'var(--wk)':'var(--surface)'}" stroke="var(--wk)" stroke-width="1.5"/><text x="${x+92}" y="62" text-anchor="middle" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="17" font-weight="800" fill="${i===2?'var(--on-wk)':'var(--wk)'}">${t}</text><text x="${x+92}" y="90" text-anchor="middle" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="13" fill="${i===2?'var(--on-wk)':'var(--ink)'}">${a}</text><text x="${x+92}" y="110" text-anchor="middle" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="13" fill="${i===2?'var(--on-wk)':'var(--ink)'}">${b}</text>${i<2?`<line x1="${x+188}" y1="79" x2="${x+210}" y2="79" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#a9)"/>`:''}`}).join('')}
+<text x="320" y="160" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="var(--muted)">Hattie &amp; Timperley (2007)</text>
+</svg>`;
+
+function forms(el){
+  const a=document.createElement('div'), b=document.createElement('div');
+  el.append(Object.assign(document.createElement('div'),{className:'sub',textContent:'A · Peer feedback form · during the presentations'}),a,
+            Object.assign(document.createElement('div'),{className:'sub',textContent:'B · My post-presentation note · today, for Project 2'}),b);
+  W.worksheet(a,{id:'ent142-w09-peer',title:'ENT 142 · Week 9 · Peer feedback',fields:[
+    {l:'01 · Team venture presented (no student names)',rows:1},
+    {l:'02 · Feed up: what were they trying to show?',rows:2},
+    {l:'03 · Feed back: one specific strength',rows:2},
+    {l:'04 · Feed forward: one change for next time',rows:2},
+    {l:'05 · Best answer in the Q&A, and why it worked',rows:2}]});
+  W.worksheet(b,{id:'ent142-w09-note',title:'ENT 142 · Week 9 · Post-presentation note',fields:[
+    {l:'01 · What happened: my minute and our Q&A',hint:'Facts: time used, questions asked.',rows:2},
+    {l:'02 · What I felt: before, during, after',rows:2},
+    {l:'03 · What went well, what went badly, and why',rows:3},
+    {l:'04 · What I will do differently next time',rows:2}]});
+}
+
+Lecture.mount({
+  id:'ent142-w09', week:9, clo:2, course:'ENT 142', short:'Week 9 · Presenting the Idea',
+  title:'Presenting the Idea',
+  meta:'Project 1 presentation day · Byers et al. (2019) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'Ready to present your venture?', minutes:5,
+    narration:[`Today each of you presents for one minute; your team then answers questions for two minutes. You also give feedback to other teams and note what you learned. <span class="mono">Topics: Running order · Delivery · Handling Q&amp;A · Peer feedback. CLO 2.</span>`],
+    src:`Reading: your Week 8 pitch script and Project 1 report. · Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Think first`,5,'l'],[`Running order`,5,'l'],[`Delivery`,5,'l'],[`Handling Q&A`,5,'l'],[`Peer feedback`,5,'l'],[`Mistake → fix`,5,'l'],[`Presentations`,70,'a'],[`Check`,10,'c'],[`Takeaways`,5,'l']])} },
+
+  { nav:'Think first', title:'The question you fear', minutes:5,
+    narration:[`A judge will ask your team a question you did not plan for.`],
+    think:`Which question about your venture do you least want to hear? Write a one-sentence answer now.` },
+
+  { nav:'Running order', title:'Running order for Project 1', minutes:5,
+    narration:[`Project 1 presentations: <b>Tuesday 27 October</b>. Each member presents for one minute; the team then answers questions for two minutes. While other teams present, you fill a peer feedback form.`],
+    fig:{label:`Presentation day`, flow:[
+      {t:'Before',s:'set up',d:'Slides open, speaking order agreed, timer ready.'},
+      {t:'Present',s:'1 minute each',d:'Individual pitch: problem, solution, evidence, model, team, ask.'},
+      {t:'Q&A',s:'2 minutes · team',d:'The team answers together. Share questions; one speaker per answer.'},
+      {t:'Feedback',s:'audience',d:'Other students fill the peer feedback form.'},
+      {t:'After',s:'today',d:'Write your post-presentation note while it is fresh.'}]} },
+
+  { nav:'Delivery', title:'Delivery', minutes:5,
+    narration:[`Delivery is how the audience receives your message. At Macworld 2007, Steve Jobs introduced the iPhone by repeating three ideas: an iPod, a phone, an internet communicator. Simple, repeated messages are remembered.`],
+    src:`Apple (2007, January 9). Apple reinvents the phone with iPhone [press release].`,
+    fig:{label:`Five delivery points · click a branch`, mindmap:{center:'Delivery',branches:[
+      {t:'Voice',items:['Loud enough for the back row','Pause after the key number']},
+      {t:'Eyes',items:['Look at people, not the screen','Move between three parts of the room']},
+      {t:'Body',items:['Stand still, feet apart','Open hands; no pockets']},
+      {t:'Slides',items:['Advance on your point','Never read them aloud']},
+      {t:'Time',items:['Finish inside 60 seconds','End on the ask, then stop']}]}} },
+
+  { nav:'Handling Q&A', title:'A simple frame for answering questions', minutes:5,
+    narration:[`Answer short and stop. If you do not know, say what you know and how you would find out. Never invent a number.`],
+    fig:{label:`Answer frame · press play`, flow:[
+      {t:'Listen',s:'to the end',d:'Let the judge finish. Do not start answering in your head.'},
+      {t:'Pause',s:'rephrase',d:'“So the question is how cafés will pay.” This also buys you time.'},
+      {t:'Point',s:'one sentence',d:'Answer directly first.'},
+      {t:'Proof',s:'one fact',d:'One result from your test or report.'},
+      {t:'Stop',s:'check',d:'“Does that answer your question?”'}]} },
+
+  { nav:'Peer feedback', title:'Feedback that helps', minutes:5,
+    narration:[`Hattie and Timperley (2007) show useful feedback answers three questions: where was the person going, how did it go, and where to next. Feed forward, one change to make, helps most.`],
+    src:`Hattie, J., &amp; Timperley, H. (2007). The power of feedback. <em>Review of Educational Research, 77</em>(1), 81–112.`,
+    fig:{label:`Three feedback questions`, html:FB3} },
+
+  { nav:'Mistake → fix', title:'Common mistakes and the fix', kind:'review', minutes:5,
+    narration:[`Avoid these three on presentation day.`],
+    fig:{label:`Mistake → fix`, html:`<table class="tbl"><thead><tr><th>Mistake</th><th>Fix</th></tr></thead><tbody>
+      <tr><td>Long answers that drift</td><td>Point, proof, stop.</td></tr>
+      <tr><td>“Words are only 7% of a message.”</td><td>Mehrabian (1971) studied feelings in single words, not presentations. Content matters.</td></tr>
+      <tr><td>Feedback like “good job”</td><td>Name one strength and one change.</td></tr></tbody></table>`,
+      caption:`Mehrabian, A. (1971). <em>Silent messages</em>. Wadsworth.`} },
+
+  { nav:'Presentations', title:'Activity · Presentations, peer feedback and your note', kind:'activity', minutes:70, wide:true,
+    narration:[`During other teams' presentations, fill form A for one team. After your own presentation, write note B. Keep note B: you will use it in Project 2.`],
+    fig:{label:`Forms · save in your browser`, build:forms} },
+
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
+    narration:[`Five scenario questions. Your first click is final.`],
+    fig:{label:`Quiz · 5 questions`, build:el=>W.quiz(el,[
+      {q:'A judge asks how much revenue you expect in year one. Your team has not tested pricing. Best answer?',
+       o:['Give a confident estimate to look prepared','State the revenue stream, say pricing is not tested yet, and name the test you will run','Say “Good question” and move on','Let the teammate who spoke least answer'],a:1,
+       why:'It is honest and shows a plan. An invented number collapses under a follow-up question. “Good question” without an answer avoids the judge. Choosing a speaker at random does not fix the missing data.'},
+      {q:'A judge asks a long, critical question. What is your first step?',
+       o:['Defend the idea immediately','Pause and rephrase the question in one line','Answer an easier question instead','Repeat your full pitch'],a:1,
+       why:'Rephrasing checks you understood and gives you time. Defending at once often misses the point. Swapping questions is noticed by judges. Repeating the pitch wastes the two minutes.'},
+      {q:'Which comment is feed forward?',
+       o:['“You wanted to show demand from students.”','“Your evidence slide was clear.”','“Next time, end with a specific ask: two cafés for a two-week pilot.”','“Great energy!”'],a:2,
+       why:'It names the next step. The first states the goal (feed up). The second judges what happened (feed back). The last is praise with no task information.'},
+      {q:'A teammate says: “Words are only 7% of communication, so content doesn\'t matter.” Best reply?',
+       o:['Agree and focus only on body language','Mehrabian\'s finding was about feelings in single words, not presentations','The real figure is 55% words','Only slides matter'],a:1,
+       why:'Mehrabian (1971) studied how people read feelings when words and tone disagree. The claim does not apply to a pitch. 55% was the figure for facial cues, not words. Slides alone do not carry an argument.'},
+      {q:'Which post-presentation note will help most in Project 2 (Gibbs\' cycle)?',
+       o:['“It went fine.”','“I spoke for 75 seconds and cut my evidence; I felt rushed; next time I will rehearse three times with a timer.”','“Our team was the best.”','“The judges were unfair.”'],a:1,
+       why:'It has a fact, a feeling and an action: three stages of Gibbs\' cycle. “It went fine” has no detail to reflect on. The last two are judgements with no evidence or action.'}])} },
+
+  { nav:'Takeaways', title:'Takeaways', minutes:5,
+    narration:[`<ul><li>Deliver one clear message: voice, eyes, body, slides, time.</li><li>Answer questions with point, proof, stop. Never invent a number.</li><li>Give feedback that feeds forward; write your own note today.</li></ul>`,
+      `<b>Next week:</b> read Gibbs (1988), <em>Learning by doing</em>, on the reflective cycle. Bring your post-presentation note.`,
+      `<a class="btn" href="week-10.html">Next lecture · Week 10 · Reflection Workshop →</a>`] },
+  ]
+});
+</script>
+</body>
+</html>

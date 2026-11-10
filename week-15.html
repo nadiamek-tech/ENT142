@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 15 · Course Reflection (Part 1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#0E7490;--wk-soft:rgba(14,116,144,.10);--wk-d:#5BC8E0;--wk-soft-d:rgba(91,200,224,.14)}
+.svgfig{width:100%;height:auto;display:block}
+.jmap{display:grid;gap:10px;font-family:var(--f-display)}
+.jmap .ph{display:grid;grid-template-columns:110px minmax(0,1fr);gap:10px;align-items:start}
+.jmap .ph > b{font-size:.8rem;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--wk);padding-top:8px}
+.jmap .wks{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px}
+.jmap .wk{border:1px solid var(--line);border-left:4px solid var(--wk);border-radius:8px;padding:6px 9px;background:var(--bg);font-size:.82rem;line-height:1.25}
+.jmap .wk span{display:block;font-family:var(--f-mono);font-size:.68rem;color:var(--muted)}
+.jmap .wk.ms{background:var(--wk-soft)}
+.jmap .wk i{display:block;font-style:normal;font-weight:700;color:var(--wk);font-size:.74rem;margin-top:3px}
+@media (max-width:560px){.jmap .ph{grid-template-columns:minmax(0,1fr)}.jmap .ph > b{padding-top:0}}
+.clo{display:grid;gap:12px;font-family:var(--f-display);font-size:.9rem}
+.clo .r{display:grid;grid-template-columns:minmax(0,1fr) 120px 26px;gap:10px;align-items:center}
+.clo input[type=range]{width:120px;accent-color:var(--wk)}
+.clo .bar{height:8px;background:var(--sunk);border-radius:4px;grid-column:1/-1;margin-top:-6px}
+.clo .bar i{display:block;height:100%;background:var(--wk);border-radius:4px}
+@media (max-width:560px){.clo .r{grid-template-columns:minmax(0,1fr) 26px}.clo .r input{grid-column:1/-1;width:100%}}
+</style>
+</head>
+<body>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W,B} = Lecture;
+const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your project</b>${html}</div>`;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const F1='Schibsted Grotesk,Arial,sans-serif', FM='JetBrains Mono,monospace';
+
+/* ---------- Scene 2: 16-week journey ---------- */
+const PHASES=[
+ ['Ideas',[[1,'Overview of the Course'],[2,'Idea Selection and Evaluation'],[3,'Lean Startups'],[4,'Sustainable Innovation and Entrepreneurship'],[5,'Prototyping']]],
+ ['Venture',[[6,'Industry Barriers','Activity 1'],[7,'Lean Model Canvas'],[8,'Pitching Workshop'],[9,'Presenting the Idea','Project 1 · 27 Oct']]],
+ ['Reflect',[[10,'Reflection Workshop'],[11,'Reflection and Reflective Assessment']]],
+ ['Pitch',[[12,'Elevator Pitch'],[13,'Elevator Pitch Workshop (Part 1)','Activity 2 · 24 Nov'],[14,'Elevator Pitch Workshop (Part 2)']]],
+ ['Portfolio',[[15,'Course Reflection (Part 1)'],[16,'Course Reflection (Part 2)','Project 2 · 15 Dec']]]];
+const JMAP=`<div class="jmap">${PHASES.map(([p,ws])=>`<div class="ph"><b>${p}</b><div class="wks">${ws.map(([n,t,m])=>`<div class="wk${m?' ms':''}"><span>Week ${n}</span>${t}${m?`<i>${m}</i>`:''}</div>`).join('')}</div></div>`).join('')}</div>`;
+
+/* ---------- Scene 3: CLO self-rating ---------- */
+const CLOS=['CLO 1 · Explain the innovation, entrepreneurship and sustainability process','CLO 2 · Work in a team and present ideas on social issues','CLO 3 · Analyse impact on society and the economy','CLO 4 · Articulate the value for my career and continuous learning'];
+function cloRate(el){
+  const key='ent142-w15-clo'; let st=[3,3,3,3]; try{st=JSON.parse(store.get(key)||'null')||st}catch(e){}
+  el.innerHTML=`<div class="clo">${CLOS.map((c,i)=>`<div class="r"><label for="clo${i}">${c}</label><input type="range" id="clo${i}" min="1" max="5" value="${st[i]}"><span class="mono" id="clov${i}">${st[i]}</span></div><div class="bar"><i id="clob${i}"></i></div>`).join('')}<div class="feedback" id="clo-o"></div></div>`;
+  const draw=()=>{ st.forEach((v,i)=>{ el.querySelector('#clov'+i).textContent=v; el.querySelector('#clob'+i).style.width=(v*20)+'%'; });
+    const hi=st.indexOf(Math.max(...st)), lo=st.indexOf(Math.min(...st));
+    el.querySelector('#clo-o').innerHTML= hi===lo?'Move the sliders: 1 = not yet, 5 = I can show strong evidence.':`Highest: <b>CLO ${hi+1}</b> → a Strength candidate. Lowest: <b>CLO ${lo+1}</b> → a Weakness candidate. Each needs evidence for Part B.`;
+    store.set(key,JSON.stringify(st)); };
+  st.forEach((_,i)=>el.querySelector('#clo'+i).addEventListener('input',e=>{ st[i]=+e.target.value; draw(); }));
+  draw();
+}
+
+/* ---------- Scene 4: SWOT to goals ---------- */
+const TOWS=`<svg class="svgfig" viewBox="0 0 640 300" role="img" aria-label="Personal TOWS grid: strengths with opportunities = use; weaknesses with opportunities = build; strengths with threats = protect; weaknesses with threats = avoid.">
+<text x="250" y="22" text-anchor="middle" font-family="${FM}" font-size="11" fill="var(--muted)">OPPORTUNITIES</text><text x="510" y="22" text-anchor="middle" font-family="${FM}" font-size="11" fill="var(--muted)">THREATS</text>
+<text x="56" y="100" text-anchor="middle" font-family="${FM}" font-size="11" fill="var(--muted)">STRENGTHS</text><text x="56" y="230" text-anchor="middle" font-family="${FM}" font-size="11" fill="var(--muted)">WEAKNESSES</text>
+${[[120,34,'Use','S + O','Use a strength to seize an opportunity',1],[380,34,'Protect','S + T','Use a strength to reduce a threat',.75],[120,164,'Build','W + O','Use an opportunity to fix a weakness',.75],[380,164,'Avoid','W + T','Reduce a weakness before a threat hits',.5]].map(([x,y,t,s,d,o])=>`<rect x="${x}" y="${y}" width="250" height="122" rx="10" fill="var(--wk)" opacity="${o*.28}" stroke="var(--wk)"/><text x="${x+16}" y="${y+36}" font-family="${F1}" font-size="20" font-weight="800" fill="var(--ink)">${t}</text><text x="${x+234}" y="${y+34}" text-anchor="end" font-family="${FM}" font-size="12" fill="var(--wk)">${s}</text><text x="${x+16}" y="${y+66}" font-family="${F1}" font-size="12.5" fill="var(--ink)">${d}</text>`).join('')}
+</svg>`;
+
+/* ---------- Scene 7: activity table ---------- */
+const PLAN=`<table class="tbl"><thead><tr><th>Year</th><th>Example SMART goal</th><th>SWOT link</th></tr></thead><tbody>
+<tr><td>1 · 2027</td><td>By 30 June 2027, pitch our venture at three events and collect 10 written feedback forms.</td><td>W: nervous in Q&amp;A + O: campus competitions (Build)</td></tr>
+<tr><td>2 · 2028</td><td>By 31 December 2028, run a paid pilot with 50 users and measure repeat use.</td><td>S: prototype testing skills + O: incubator programmes (Use)</td></tr>
+<tr><td>3 · 2029</td><td>By 30 September 2029, register the venture or join a startup in a product role.</td><td>S: Project 1 report + T: competition for graduate jobs (Protect)</td></tr></tbody></table>`;
+
+/* ---------- Scene 6: mistakes ---------- */
+const MIST=`<table class="tbl"><thead><tr><th>Mistake</th><th>Fix</th></tr></thead><tbody>
+<tr><td>Goals not linked to the SWOT</td><td>Write the SWOT item next to every goal</td></tr>
+<tr><td>"Improve my skills"</td><td>Name the skill, the number and the date</td></tr>
+<tr><td>Year 3 dream, no year 1 step</td><td>Work backwards: each year prepares the next</td></tr></tbody></table>`;
+
+Lecture.mount({
+  id:'ent142-w15', week:15, clo:4, course:'ENT 142', short:'Week 15 · Course Reflection (Part 1)',
+  title:'Course Reflection (Part 1)',
+  meta:'Doran (1981), Gibbs (1988) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'What did this course change in you, and where next?', minutes:5,
+    narration:[`Map the semester, rate your learning, and turn your SWOT into a three-year plan. <span class="mono">Topics: 16-week journey · Skills and CLO self-rating · From SWOT to goals · SMART goals · Three-year action plan. CLO 4.</span>`],
+    src:`Reading: Doran, G. T. (1981). There's a S.M.A.R.T. way to write management's goals and objectives. <em>Management Review, 70</em>(11), 35–36. · Gibbs, G. (1988). <em>Learning by doing: A guide to teaching and learning methods</em>. Further Education Unit. · <a href="project-2.html">Project 2 guide</a>`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Think first`,5,'l'],[`Journey map`,8,'l'],[`CLO self-rating`,10,'a'],[`SWOT to goals`,10,'l'],[`SMART goals`,12,'l'],[`Mistakes → fixes`,5,'l'],[`Draft Part C`,53,'a'],[`Check`,10,'c'],[`Takeaways`,2,'l']])} },
+
+  { nav:'Think first', title:'One moment you would do differently', minutes:5,
+    narration:[`Reflection starts with a real moment, not a summary.`],
+    think:`Pick one moment from Project 1 or your video pitch. What happened? What would you do differently now, and what does that say about you as a future entrepreneur?`,
+    fig:{label:`From moment to plan`, flow:[
+      {t:'Moment',s:'what happened',d:'One concrete event, not the whole semester.'},
+      {t:'Meaning',s:'what it shows',d:'A strength or a weakness, with evidence.'},
+      {t:'Goal',s:'what next',d:'A SMART goal in your three-year plan.'}]} },
+
+  { nav:'Journey map', title:'The 16-week journey', minutes:8, wide:true,
+    narration:[`Five phases: ideas, venture, reflect, pitch, portfolio. Find two weeks that changed how you think. Their evidence goes in your Part D appendix.`],
+    fig:{label:`ENT 142 · Fall 2026`, html:JMAP, caption:`Highlighted weeks have an assessment.`} },
+
+  { nav:'CLO self-rating', title:'Skills and CLO self-rating', kind:'activity', minutes:10,
+    narration:[`A <b>self-rating</b> is a score you can defend. Rate each CLO from 1 to 5. Then name one piece of evidence for it: a mark, a file or feedback.`],
+    fig:{label:`Rate yourself · saves in your browser`, build:cloRate} },
+
+  { nav:'SWOT to goals', title:'From SWOT to goals', minutes:10,
+    narration:[`A SWOT lists; a goal acts. Pair one internal item (strength or weakness) with one external item (opportunity or threat). Each pair suggests one goal type (Weihrich, 1982).`],
+    src:`Weihrich, H. (1982). The TOWS matrix: A tool for situational analysis. <em>Long Range Planning, 15</em>(2), 54–66.`,
+    fig:{label:`Personal TOWS · four goal types`, html:TOWS, caption:`Example: W "nervous in Q&A" + O "campus pitch competition" → a Build goal.`} },
+
+  { nav:'SMART goals', title:'SMART goals, step by step', minutes:12,
+    narration:[`Doran (1981): a goal should be <b>S</b>pecific, <b>M</b>easurable, <b>A</b>ssignable, <b>R</b>ealistic and <b>T</b>ime-related. Later versions often read A as "achievable". Press Play to turn "get better at pitching" into a SMART goal.`],
+    src:`Doran, G. T. (1981). There's a S.M.A.R.T. way to write management's goals and objectives. <em>Management Review, 70</em>(11), 35–36.`,
+    fig:{label:`"Get better at pitching" → SMART · press Play`, flow:[
+      {t:'Specific',s:'what exactly',d:'Pitch our surplus-meal venture.'},
+      {t:'Measurable',s:'a number',d:'At three events, with 10 written feedback forms.'},
+      {t:'Assignable',s:'who',d:'Me; a teammate runs the prototype demo.'},
+      {t:'Realistic',s:'within reach',d:'Two campus events and one external event.'},
+      {t:'Time-related',s:'by when',d:'By 30 June 2027.'}],
+      html:`<div class="feedback"><b>SMART goal:</b> By 30 June 2027, I will pitch our surplus-meal venture at three events (two on campus, one external) and collect at least 10 written feedback forms.</div>`} },
+
+  { nav:'Mistakes → fixes', title:'Three common mistakes', kind:'review', minutes:5,
+    narration:[`Check your plan against this table.`],
+    fig:{label:`Mistake → fix`, html:MIST} },
+
+  { nav:'Draft Part C', title:'Activity · Draft your three-year action plan', kind:'activity', minutes:53, wide:true,
+    narration:[`This is Project 2, Part C (about 400 words). One SMART goal per year, each linked to a SWOT item. Then swap with a partner and test each goal against S-M-A-R-T.`],
+    fig:{label:`Three-year plan · example`, html:PLAN,
+      build:el=>W.worksheet(el,{id:'ent142-w15-plan',title:'ENT 142 · Week 15 · Three-year action plan (Part C draft)',fields:[
+      {l:'Year 1 (2027): SMART goal + SWOT link',hint:'Name the SWOT item and the goal type: Use, Build, Protect or Avoid.',rows:3},
+      {l:'Year 2 (2028): SMART goal + SWOT link',rows:3},
+      {l:'Year 3 (2029): SMART goal + SWOT link',rows:3},
+      {l:'First step this month',hint:'Small and dated.',rows:2},
+      {l:'Partner check: which letter of SMART is weakest, and how to fix it?',rows:2}]})} },
+
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
+    narration:[`Five scenarios. One click per question.`],
+    fig:{label:`5 questions`, build:el=>W.quiz(el,[
+      {q:'Which goal is SMART?',
+       o:['Become a successful entrepreneur','Improve my networking a lot this year','By 31 March 2027, interview 15 café owners in Dubai about food waste','Read more about startups'],a:2,
+       why:'It names the task, a number (15), who is involved and a date. "Successful entrepreneur" has no measure or date. "A lot this year" is vague. "Read more" has no target or deadline.'},
+      {q:'"Someone in the team will collect 30 survey responses by 15 March." Which of Doran\'s elements is weakest?',
+       o:['Specific','Measurable','Assignable','Time-related'],a:2,
+       why:'"Someone" means nobody owns it: Assignable fails. The task is specific (survey responses), measurable (30) and time-related (15 March).'},
+      {q:'Weakness: "nervous in live Q&A". Opportunity: "a campus pitch competition in spring". Which goal type fits?',
+       o:['Use (S + O)','Build (W + O)','Protect (S + T)','Avoid (W + T)'],a:1,
+       why:'A weakness meets an opportunity: use the competition to build the weak skill. Use needs a strength. Protect and Avoid need a threat, and none is given.'},
+      {q:'Maya rates CLO 2 (teamwork and presentations) as 5/5. What is the strongest evidence?',
+       o:['"I always enjoy teamwork."','Her Activity 2 mark and her partner\'s written feedback','"My friends say I present well."','The number of hours she spent on Project 1'],a:1,
+       why:'A mark and written feedback are documented and can go in the appendix. Enjoyment is a feeling, not evidence. Friends\' opinions are not documented. Hours show effort, not ability.'},
+      {q:'Omar\'s year 3 goal: "Launch my venture with 500 paying users." Which year 1 goal supports it best?',
+       o:['Buy a domain name','By June 2027, test a prototype with 30 target users and record what they would pay','Wait until graduation','Post daily on social media'],a:1,
+       why:'Paying users need proof of demand and price, which a dated user test gives. A domain name is a task, not a validated step. Waiting gives no evidence. Daily posts have no link to demand or price.'}])} },
+
+  { nav:'Takeaways', title:'Takeaways', minutes:2,
+    narration:[`<ul><li>Rate each CLO and back the rating with evidence.</li><li>Pair SWOT items to choose a goal type: Use, Build, Protect, Avoid.</li><li>Doran (1981): Specific, Measurable, Assignable, Realistic, Time-related.</li></ul>`,
+      `<b>Next week:</b> bring a full draft of Project 2 (Parts A–D) as one Word file, plus your evidence files.`,
+      `<a class="btn" href="week-16.html">Next lecture · Week 16 · Course Reflection (Part 2) →</a>`]} },
+
+  ]
+});
+</script>
+</body>
+</html>

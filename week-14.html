@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 14 · Elevator Pitch Workshop (Part 2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#6D28D9;--wk-soft:rgba(109,40,217,.10);--wk-d:#B79CFF;--wk-soft-d:rgba(183,156,255,.14)}
+.svgfig{width:100%;height:auto;display:block}
+.wpm{display:grid;gap:10px;font-family:var(--f-display);font-size:.92rem}
+.wpm .r{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:8px;align-items:center}
+.wpm input[type=range]{width:100%;accent-color:var(--wk)}
+.wpm .big{font-size:1.6rem;font-weight:800;color:var(--wk);line-height:1}
+</style>
+</head>
+<body>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W,B} = Lecture;
+const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your project</b>${html}</div>`;
+const F1='Schibsted Grotesk,Arial,sans-serif', FM='JetBrains Mono,monospace';
+
+/* ---------- Scene 2: pace and pauses ---------- */
+const PAUSE=`<svg class="svgfig" viewBox="0 0 640 110" role="img" aria-label="A pitch line with pauses marked after the hook, after the problem and before the ask.">
+<line x1="20" y1="50" x2="620" y2="50" stroke="var(--line)" stroke-width="10" stroke-linecap="round"/>
+${[['Hook',20,90],['Problem',110,215],['Solution',235,365],['Proof',385,505],['Ask',545,620]].map(([t,a,b])=>`<line x1="${a}" y1="50" x2="${b}" y2="50" stroke="var(--wk)" stroke-width="10" stroke-linecap="round" opacity=".7"/><text x="${(a+b)/2}" y="34" text-anchor="middle" font-family="${F1}" font-size="13" font-weight="700" fill="var(--ink)">${t}</text>`).join('')}
+${[100,225,375,525].map(x=>`<text x="${x}" y="80" text-anchor="middle" font-family="${FM}" font-size="13" font-weight="600" fill="var(--wk)">/</text>`).join('')}
+<text x="20" y="102" font-family="${FM}" font-size="10" fill="var(--muted)">/ = one-second pause · the longest pause comes before the ask</text>
+</svg>`;
+function wpm(el){
+  el.innerHTML=`<div class="wpm"><div class="r"><label for="w14s">Pitch length (seconds)</label><span class="mono" id="w14sv">45</span></div><input type="range" id="w14s" min="30" max="60" step="5" value="45">
+  <div class="r"><label for="w14p">Pace (words per minute)</label><span class="mono" id="w14pv">150</span></div><input type="range" id="w14p" min="110" max="200" step="10" value="150">
+  <div><span class="big" id="w14o"></span> <span id="w14t"></span></div></div>`;
+  const s=el.querySelector('#w14s'), p=el.querySelector('#w14p');
+  const draw=()=>{ const n=Math.round(s.value*p.value/60); el.querySelector('#w14sv').textContent=s.value; el.querySelector('#w14pv').textContent=p.value; el.querySelector('#w14o').textContent=n+' words';
+    el.querySelector('#w14t').textContent= s.value>45?'Over the 45-second limit.': p.value>170?'Too fast to follow. Cut words, not pauses.': p.value<130?'Slow; check the energy.':'A clear conversational pace.'; };
+  s.addEventListener('input',draw); p.addEventListener('input',draw); draw();
+}
+
+/* ---------- Scene 6: mistakes ---------- */
+const MIST=`<table class="tbl"><thead><tr><th>Mistake</th><th>Fix</th></tr></thead><tbody>
+<tr><td>Speeding up when nervous</td><td>Mark / pauses on the card; breathe at each one</td></tr>
+<tr><td>Filling silence with "um"</td><td>Close your mouth and pause instead</td></tr>
+<tr><td>Changing everything in take 2</td><td>Change at most two things, each linked to a criterion</td></tr>
+<tr><td>A long story in Q&amp;A</td><td>One-sentence answer, one piece of evidence, back to the ask</td></tr></tbody></table>`;
+
+/* ---------- Scene 7: activity ---------- */
+const FTC=`<table class="tbl"><thead><tr><th>Feedback</th><th>Criterion</th><th>Change</th><th>Check</th></tr></thead><tbody>
+<tr><td>"I got lost in the middle"</td><td>Problem + solution</td><td>One sentence each; name the user</td><td>Partner repeats both back</td></tr>
+<tr><td>"You looked down a lot"</td><td>Delivery</td><td>Card behind the phone, sticker by the lens</td><td>Count look-aways in take 2</td></tr>
+<tr><td>"What do you want from me?"</td><td>Clear ask</td><td>End with one specific request</td><td>Partner can say the ask</td></tr></tbody></table>`;
+
+Lecture.mount({
+  id:'ent142-w14', week:14, clo:2, course:'ENT 142', short:'Week 14 · Elevator Pitch Workshop (Part 2)',
+  title:'Elevator Pitch Workshop (Part 2)',
+  meta:'Byers et al (2019), Brooks (2014) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'How does a good pitch become a confident one?', minutes:5,
+    narration:[`Improve delivery, turn feedback into a second take, and prepare for live questions. <span class="mono">Topics: Pace · Pauses · Voice · Body language · Nerves · Feedback to take 2 · Live pitch Q&amp;A. CLO 2.</span>`],
+    src:`Reading: Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education. · Brooks, A. W. (2014). Get excited: Reappraising pre-performance anxiety as excitement. <em>Journal of Experimental Psychology: General, 143</em>(3), 1144–1158.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Think first`,5,'l'],[`Pace and pauses`,10,'l'],[`Voice and body`,10,'l'],[`Nerves`,8,'l'],[`Live Q&A`,10,'l'],[`Mistakes → fixes`,5,'l'],[`Take 2 plan`,55,'a'],[`Check`,10,'c'],[`Takeaways`,2,'l']])} },
+
+  { nav:'Think first', title:'Watch take 1 twice', minutes:5,
+    narration:[`First with the sound off, then with your eyes closed.`],
+    think:`Sound off: what does your body say? Eyes closed: where do you rush, and where do you say "um"? Which one sentence would a stranger remember?` ,
+    fig:{label:`Two ways to watch`, flow:[
+      {t:'Sound off',s:'body',d:'Eye line, posture, hands, face.'},
+      {t:'Eyes closed',s:'voice',d:'Pace, pauses, fillers, energy.'},
+      {t:'Normal',s:'message',d:'Is the ask clear?'}]} },
+
+  { nav:'Pace and pauses', title:'Pace and pauses', minutes:10,
+    narration:[`<b>Pace</b> is words per minute; about 150 is a clear conversational pace. In 45 seconds that is roughly 110 words. A <b>pause</b> gives the listener time to understand. Pause after the hook and before the ask.`],
+    fig:{label:`Your word budget · drag the sliders`, html:PAUSE, build:el=>{const d=document.createElement('div'); d.style.marginTop='16px'; el.appendChild(d); wpm(d);}} },
+
+  { nav:'Voice and body', title:'Voice and body language', minutes:10,
+    narration:[`Delivery is everything the listener hears and sees besides your words. Vary pitch, stress key words, end sentences down. Keep shoulders open, hands visible, head still. Smile on the hook.`],
+    fig:{label:`Delivery map`, mindmap:{center:'Delivery',branches:[
+      {t:'Voice',items:['Volume for the back row','Stress one key word per sentence','End statements down, not up']},
+      {t:'Face',items:['Look at the lens or the judges','Smile on the hook','Serious on the problem']},
+      {t:'Hands',items:['Visible, relaxed','One gesture per key point','No pen or phone to play with']},
+      {t:'Posture',items:['Feet planted, shoulders open','Head still','No swaying']}]}} },
+
+  { nav:'Nerves', title:'Nerves', minutes:8,
+    narration:[`Nerves feel like a racing heart. Brooks (2014) found that people who said "I am excited" before speaking were rated as more persuasive and confident than those who said "I am calm". Use the energy; do not fight it.`],
+    src:`Brooks, A. W. (2014). Get excited: Reappraising pre-performance anxiety as excitement. <em>Journal of Experimental Psychology: General, 143</em>(3), 1144–1158.`,
+    fig:{label:`A 60-second routine before you speak`, flow:[
+      {t:'Reframe',s:'"I am excited"',d:'Say it to yourself, quietly or aloud (Brooks, 2014).'},
+      {t:'Breathe',s:'slow out-breath',d:'Breathe out longer than you breathe in, three times.'},
+      {t:'First line',s:'memorised',d:'Know your hook word for word. The rest follows the keywords.'},
+      {t:'Anchor',s:'one face',d:'Start with one friendly face or the lens.'},
+      {t:'Pause',s:'at each /',d:'If you lose your place, pause and look at your card. Nobody minds.'}]} },
+
+  { nav:'Live Q&A', title:'From video pitch to live pitch Q&A', minutes:10,
+    narration:[`A video pitch is one-way; a live pitch adds <b>Q&amp;A</b>. Listen, pause, answer in one sentence, add evidence, return to the ask. Ring's founder received no deal on <em>Shark Tank</em> (2013); Amazon bought Ring in 2018.`],
+    src:`Ring founder Jamie Siminoff on <em>Shark Tank</em>, season 5 (ABC, 2013). · Amazon's acquisition of Ring announced 27 February 2018 (Reuters).`,
+    fig:{label:`Answer any question in five steps · press Play`, flow:[
+      {t:'Listen',s:'to the end',d:'Do not start answering while they are still asking.'},
+      {t:'Pause',s:'one second',d:'Shows you are thinking, not defending.'},
+      {t:'Answer',s:'one sentence',d:'The direct answer first.'},
+      {t:'Evidence',s:'one fact',d:'From your prototype test, data or interviews.'},
+      {t:'Bridge',s:'back to the ask',d:'"That is why we are asking for…"'}],
+      html:`<table class="tbl"><thead><tr><th>Video pitch</th><th>Live pitch</th></tr></thead><tbody><tr><td>Eye contact with the lens</td><td>Eye contact with each judge, one sentence each</td></tr><tr><td>One clean take</td><td>No restart; pause and continue</td></tr><tr><td>No questions</td><td>Q&amp;A tests your evidence</td></tr><tr><td>"I don't know" is never heard</td><td>"I don't know yet; I will find out by…" is acceptable</td></tr></tbody></table>`} },
+
+  { nav:'Mistakes → fixes', title:'Four common mistakes', kind:'review', minutes:5,
+    narration:[`Check your take 2 plan against this table.`],
+    fig:{label:`Mistake → fix`, html:MIST} },
+
+  { nav:'Take 2 plan', title:'Activity · Feedback-to-change table and take 2 plan', kind:'activity', minutes:55, wide:true,
+    narration:[`Use your partner's Week 13 marks. Turn each comment into one change you can test. Rehearse take 2 with a new partner and run a 2-minute Q&amp;A. Take 2 is evidence for Project 2, Part D.`],
+    fig:{label:`Feedback → criterion → change → check`, html:FTC,
+      build:el=>W.worksheet(el,{id:'ent142-w14-take2',title:'ENT 142 · Week 14 · Take 2 plan',fields:[
+      {l:'Feedback 1 → criterion → change',hint:'Quote the feedback, then the rubric criterion, then the change.',rows:2},
+      {l:'Feedback 2 → criterion → change',rows:2},
+      {l:'Take 2 keywords (Hook · Problem · Solution · Proof · Ask) with / pauses',rows:3},
+      {l:'Two questions a judge could ask, and my one-sentence answers',rows:3},
+      {l:'After rehearsal: what improved, and what still needs work?',rows:2}]})} },
+
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
+    narration:[`Five scenarios. One click per question.`],
+    fig:{label:`5 questions`, build:el=>W.quiz(el,[
+      {q:'Your pitch must last at most 45 seconds and you speak at about 150 words per minute. What is the best word budget?',
+       o:['About 60 words','About 110 words','About 150 words','About 225 words'],a:1,
+       why:'45 s × 150 ÷ 60 ≈ 112 words. 60 words fits 24 seconds at that pace and wastes time. 150 words needs a full minute. 225 words needs 90 seconds or very fast speech.'},
+      {q:'Your partner says: "The middle was confusing." Which change best answers this feedback?',
+       o:['Speak louder throughout','Say the problem in one sentence and the solution in one sentence, naming the user','Add more statistics to the proof','Record in a quieter room'],a:1,
+       why:'"Middle" points to problem and solution clarity, so make each one sentence about a named user. Volume and room noise affect delivery, not structure. More statistics in the proof adds load and does not clarify the middle.'},
+      {q:'Yousef\'s heart is racing before a live pitch. Based on Brooks (2014), what should he tell himself?',
+       o:['"I am excited."','"Calm down."','"Don\'t be nervous."','Nothing; start fast and finish early'],a:0,
+       why:'Brooks found that reappraising anxiety as excitement improved performance compared with trying to calm down. "Calm down" and "Don\'t be nervous" fight the arousal instead of using it. Rushing increases pace and lowers clarity.'},
+      {q:'A judge asks: "Who are your competitors?" You know only one. What is the strongest answer?',
+       o:['"We have no competitors."','Name the one you know, say what makes you different, and say how you will map the rest','A long history of the industry','Change the subject to your prototype'],a:1,
+       why:'An honest, specific answer with a next step builds trust. "No competitors" signals you have not looked (Week 6, industry barriers). A long history avoids the question. Changing the subject looks like you are hiding something.'},
+      {q:'You move from the video pitch to a live pitch in front of three judges. What should change in your eye contact?',
+       o:['Look at the slide behind you','Hold eye contact with one judge only','Move eye contact between judges, about one sentence each','Look just above their heads'],a:2,
+       why:'In a live room, each judge should feel addressed, so share one sentence per person. Looking at the slide turns your back. One judge excludes the others. Above the heads looks like avoiding contact.'}])} },
+
+  { nav:'Takeaways', title:'Takeaways', minutes:2,
+    narration:[`<ul><li>About 150 words per minute; pause after the hook and before the ask.</li><li>Change at most two things in take 2, each linked to a rubric criterion.</li><li>Q&amp;A: listen, pause, one sentence, evidence, back to the ask.</li></ul>`,
+      `<b>Next week:</b> bring your Project 1 report, your take 1 and take 2 notes, and any feedback you received this semester.`,
+      `<a class="btn" href="week-15.html">Next lecture · Week 15 · Course Reflection (Part 1) →</a>`]} },
+
+  ]
+});
+</script>
+</body>
+</html>

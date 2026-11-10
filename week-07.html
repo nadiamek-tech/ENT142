@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 7 · Lean Model Canvas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#8A6400;--wk-soft:rgba(138,100,0,.10);--wk-d:#E8C25A;--wk-soft-d:rgba(232,194,90,.14)}
+.lc{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));grid-auto-rows:minmax(70px,auto);gap:6px}
+.lc button{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:8px;text-align:left;cursor:pointer;font-family:var(--f-display);font-size:.84rem;font-weight:600;color:var(--ink);display:flex;flex-direction:column;gap:4px;min-width:0}
+.lc button .n{font-family:var(--f-mono);font-size:.72rem;color:var(--wk)}
+.lc button[aria-pressed="true"]{border-color:var(--wk);background:var(--wk-soft)}
+.lc .p{grid-column:1/3;grid-row:1/3}.lc .so{grid-column:3/5;grid-row:1}.lc .km{grid-column:3/5;grid-row:2}
+.lc .uvp{grid-column:5/7;grid-row:1/3}.lc .ua{grid-column:7/9;grid-row:1}.lc .ch{grid-column:7/9;grid-row:2}
+.lc .cs{grid-column:9/11;grid-row:1/3}.lc .co{grid-column:1/6;grid-row:3}.lc .rv{grid-column:6/11;grid-row:3}
+.lc-out{margin-top:10px;border-left:4px solid var(--wk);padding:10px 14px;background:var(--surface);border-radius:0 8px 8px 0;font-family:var(--f-display);font-size:.93rem}
+.lc-out b.t{display:block;color:var(--wk);font-size:1.05rem;margin-bottom:2px}
+@media (max-width:640px){.lc{grid-template-columns:minmax(0,1fr);grid-auto-rows:auto}.lc button{grid-column:auto!important;grid-row:auto!important}}
+</style>
+</head>
+<body>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W,B} = Lecture;
+
+/* ---------- Scene 3: the nine boxes (running example: campus surplus-meal app) ---------- */
+const BOXES=[
+ ['p',1,'Problem','Top 1–3 problems of the customer, plus how they solve them today (existing alternatives).','Cafés throw away unsold food at closing. Students want cheap hot meals. Today: food is binned.'],
+ ['cs',2,'Customer segments','Who has the problem. Name the early adopters: the first people who will try it.','Students on campus; campus cafés. Early adopters: students in evening classes.'],
+ ['uvp',3,'Unique value proposition','One clear message: why you are different and worth attention.','“Hot café meals at half price, 30 minutes before closing.”'],
+ ['so',4,'Solution','The top 3 features that solve the top 3 problems.','App lists surplus meals; pay in the app; collect at the counter.'],
+ ['ch',5,'Channels','The paths to reach customers.','Student clubs, class WhatsApp groups, posters at the café counter.'],
+ ['rv',6,'Revenue streams','How the venture earns money.','A small fee per meal sold, paid by the café.'],
+ ['co',7,'Cost structure','What it costs to run the venture.','App hosting, design, printing, team time.'],
+ ['km',8,'Key metrics','The few numbers that show the venture works.','Meals collected per week; students who return.'],
+ ['ua',9,'Unfair advantage','Something that cannot easily be copied or bought.','Not yet. To build: a signed partnership with the campus cafés.']];
+function canvas(el){
+  el.innerHTML=`<div class="lc">${BOXES.map((b,i)=>`<button type="button" class="${b[0]}" data-i="${i}" aria-pressed="false"><span class="n">${b[1]}</span>${b[2]}</button>`).join('')}</div><div class="lc-out"></div>`;
+  const bs=el.querySelectorAll('.lc button'), out=el.querySelector('.lc-out');
+  bs.forEach(b=>b.addEventListener('click',()=>{ bs.forEach(x=>x.setAttribute('aria-pressed',x===b)); const x=BOXES[+b.dataset.i]; out.innerHTML=`<b class="t">${x[1]} · ${x[2]}</b>${x[3]}<br><span class="mono" style="color:var(--muted)">Example: ${x[4]}</span>`; }));
+  bs[0].click();
+}
+
+Lecture.mount({
+  id:'ent142-w07', week:7, clo:1, course:'ENT 142', short:'Week 7 · Lean Model Canvas',
+  title:'Lean Model Canvas',
+  meta:'Maurya (2012) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'Can your whole venture fit on one page?', minutes:5,
+    narration:[`The Lean Canvas puts a business model on one page. Today your team fills one and finds its riskiest assumption. <span class="mono">Topics: Nine boxes · Filling order · Riskiest assumptions · Unfair advantage. CLO 1.</span>`],
+    src:`Reading: Maurya, A. (2012). <em>Running lean</em> (2nd ed.). O'Reilly. · Osterwalder, A., &amp; Pigneur, Y. (2010). <em>Business model generation</em>. Wiley.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Think first`,5,'l'],[`Nine boxes`,10,'l'],[`Filling order`,10,'l'],[`Riskiest assumptions`,10,'l'],[`Unfair advantage`,5,'l'],[`Mistake → fix`,10,'l'],[`Fill your canvas`,50,'a'],[`Check`,10,'c'],[`Takeaways`,5,'l']])} },
+
+  { nav:'Think first', title:'One page or forty?', minutes:5,
+    narration:[`An investor gives your team five minutes. Your Project 1 report has 4000 words.`],
+    think:`Which five facts about your venture would you keep? Which would you drop?` },
+
+  { nav:'Nine boxes', title:'The Lean Canvas: nine boxes', minutes:10, wide:true,
+    narration:[`Maurya (2012) adapted the Business Model Canvas (Osterwalder &amp; Pigneur, 2010) for start-ups. He replaced key partners, activities, resources and customer relationships with <b>problem</b>, <b>solution</b>, <b>key metrics</b> and <b>unfair advantage</b>.`],
+    src:`Maurya, A. (2012). <em>Running lean</em> (2nd ed.). O'Reilly. · Osterwalder &amp; Pigneur (2010).`,
+    fig:{label:`Click a box · example: campus surplus-meal app`, build:canvas, caption:`Numbers show the filling order.`} },
+
+  { nav:'Filling order', title:'Fill the canvas in order', minutes:10,
+    narration:[`Start with the customer and the problem, not the product. Each box builds on the one before. Press play to follow the example.`],
+    src:`Maurya (2012).`,
+    fig:{label:`Filling order · campus surplus-meal app`, flow:[
+      {t:'Problem + customer',s:'1–2 · together',d:'Cafés bin unsold food; students want cheap hot meals. Early adopters: evening-class students.'},
+      {t:'UVP',s:'3',d:'“Hot café meals at half price, 30 minutes before closing.”'},
+      {t:'Solution',s:'4',d:'List, pay, collect. Three features only.'},
+      {t:'Channels',s:'5',d:'Clubs, class groups, counter posters.'},
+      {t:'Revenue + cost',s:'6–7',d:'Fee per meal from the café; hosting, design, printing.'},
+      {t:'Key metrics',s:'8',d:'Meals collected per week; returning students.'},
+      {t:'Unfair advantage',s:'9',d:'Leave it honest: “not yet”, plus what you will build.'}]} },
+
+  { nav:'Riskiest assumptions', title:'Find the riskiest assumption', minutes:10,
+    narration:[`Every box holds a guess. Maurya (2012) groups the risks in three types. Test first the assumption that, if wrong, ends the venture.`],
+    src:`Maurya (2012).`,
+    fig:{label:`Three risk types · click a branch`, mindmap:{center:'Risk',branches:[
+      {t:'Product risk',items:['Is the problem real? Does the solution fix it?','Boxes: problem, solution, UVP','Example: cafés really have surplus meals every day']},
+      {t:'Customer risk',items:['Can we reach enough customers?','Boxes: customer segments, channels','Example: students will see the 6 pm alert in time']},
+      {t:'Market risk',items:['Can it be a viable business?','Boxes: revenue, cost, unfair advantage','Example: cafés will pay a fee per meal']}]}} },
+
+  { nav:'Unfair advantage', title:'Unfair advantage', minutes:5,
+    narration:[`Maurya (2012), citing Jason Cohen: a real unfair advantage <b>cannot easily be copied or bought</b>. Most new teams have none yet. Sort each claim.`],
+    src:`Maurya (2012).`,
+    fig:{label:`Sort each claim`, build:el=>W.sort(el,{buckets:['Unfair advantage','Easily copied'],items:[
+      {t:'“We are the first in the UAE.”',a:1,why:'A rival can launch next month.'},
+      {t:'“Our price is lower.”',a:1,why:'Any competitor can cut prices.'},
+      {t:'A signed exclusive agreement with the campus cafés',a:0,why:'A rival cannot get the same cafés.'},
+      {t:'An active community of student users who recommend the app',a:0,why:'Takes time to build; cannot be bought.'},
+      {t:'“Our team is passionate.”',a:1,why:'Every team says this.'}]})} },
+
+  { nav:'Mistake → fix', title:'Common mistakes and the fix', kind:'review', minutes:10,
+    narration:[`Check your canvas against these three mistakes.`],
+    fig:{label:`Mistake → fix`, html:`<table class="tbl"><thead><tr><th>Mistake</th><th>Fix</th></tr></thead><tbody>
+      <tr><td>Writing the solution first</td><td>Start with customer and problem; the solution comes fourth.</td></tr>
+      <tr><td>UVP as a list of features (“smart AI app”)</td><td>Write the outcome for a specific customer.</td></tr>
+      <tr><td>Unfair advantage = “first mover” or “cheaper”</td><td>Write “not yet” and what you will build.</td></tr></tbody></table>`} },
+
+  { nav:'Fill your canvas', title:'Activity · Fill a Lean Canvas for your team venture', kind:'activity', minutes:50, wide:true,
+    narration:[`Work as a team, in the filling order. Short phrases, not sentences. End with your riskiest assumption and a cheap test.`],
+    fig:{label:`Lean Canvas · saves in your browser`, build:el=>W.worksheet(el,{id:'ent142-w07-canvas',title:'ENT 142 · Week 7 · Lean Canvas',fields:[
+      {l:'01 · Problem (top 3) and customer segments (early adopters)',hint:'Include the existing alternative.',rows:3},
+      {l:'02 · Unique value proposition (one sentence)',rows:1},
+      {l:'03 · Solution (top 3 features) and channels',rows:2},
+      {l:'04 · Revenue streams and cost structure',rows:2},
+      {l:'05 · Key metrics and unfair advantage',rows:2},
+      {l:'06 · Riskiest assumption, its risk type, and the cheapest test',rows:2}]})} },
+
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
+    narration:[`Five scenario questions. Your first click is final.`],
+    fig:{label:`Quiz · 5 questions`, build:el=>W.quiz(el,[
+      {q:'A team writes “Mobile app with AI recommendations” under UVP. What is the best fix?',
+       o:['Keep it; it sounds innovative','Move it to Solution and write the customer outcome as the UVP','Move it to Unfair advantage','Move it to Channels'],a:1,
+       why:'Features belong in Solution; the UVP states what the customer gains. It is not an unfair advantage, because any team can build an app. Channels are paths to customers, not features.'},
+      {q:'Which is the strongest unfair advantage for a campus surplus-meal app?',
+       o:['“We are the first in the UAE.”','“Our app is cheaper.”','A signed exclusive agreement with the campus cafés','“Our team is very passionate.”'],a:2,
+       why:'An exclusive agreement cannot easily be copied or bought. Being first lasts until a rival launches. Prices can be matched. Passion is claimed by every team.'},
+      {q:'A team has finished Problem and Customer segments. Which box comes next?',
+       o:['Revenue streams','Unfair advantage','Key metrics','Unique value proposition'],a:3,
+       why:'The UVP turns the problem into one message for that customer (box 3). Revenue (6), key metrics (8) and unfair advantage (9) come later, once the offer is clear.'},
+      {q:'Which key metric best shows that the surplus-meal app works?',
+       o:['App downloads','Meals collected per week','Instagram followers','Number of team meetings'],a:1,
+       why:'Meals collected measures the value delivered to both sides. Downloads and followers can grow while nobody uses the app. Team meetings measure effort, not results.'},
+      {q:'An investor asks why your canvas has no Key Partners box. Best answer?',
+       o:['Partners do not matter for start-ups','The Lean Canvas replaces it with Problem, because early risk is whether the problem is real','We forgot it','Partners are listed under Channels'],a:1,
+       why:'Maurya (2012) swapped Key Partners for Problem to focus on the biggest early risk. Partners can matter later, so “do not matter” is wrong. Channels are paths to customers, not partners.'}])} },
+
+  { nav:'Takeaways', title:'Takeaways', minutes:5,
+    narration:[`<ul><li>The Lean Canvas fits a business model on one page in nine boxes (Maurya, 2012).</li><li>Fill it in order: customer and problem first, unfair advantage last.</li><li>Every box is an assumption; test the riskiest one first.</li></ul>`,
+      `<b>Next week:</b> read Kawasaki (2005), <em>The 10/20/30 rule of PowerPoint</em>. Bring your Lean Canvas and Project 1 draft.`,
+      `<a class="btn" href="week-08.html">Next lecture · Week 8 · Pitching Workshop →</a>`] },
+  ]
+});
+</script>
+</body>
+</html>
