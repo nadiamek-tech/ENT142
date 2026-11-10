@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Project 2 · Reflective Portfolio · ENT 142</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="assets/portal.css">
+<link rel="stylesheet" href="assets/deck.css">
+<style>:root{--wk:#6D3FC0;--wk-soft:rgba(109,63,192,.10);--wk-d:#B79CF2;--wk-soft-d:rgba(183,156,242,.15)}</style>
+</head>
+<body>
+<div id="hub" data-cur="project2"></div>
+<main class="deck" id="deck"></main>
+<nav class="dnav" aria-label="Slides"><div class="dnav-in"><button type="button" class="nb prev">← Back</button><div class="dots" id="dots"></div><span class="pos" id="pos"></span><button type="button" class="nb next">Next →</button></div></nav>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script src="assets/deck.js"></script>
+<script>
+Portal.header('project2');
+const {field:F,esc}=Deck;
+const P2=COURSE.assess.find(a=>a.id==='p2')||{};
+const MOODLE=(P2.submit||{}).link||'';
+const MODE=`<div class="mode" role="group" aria-label="Template or example"><button type="button" data-mode="me" aria-pressed="true">My portfolio</button><button type="button" data-mode="ex" aria-pressed="false">Example</button></div>`;
+const vis=(lbl,inner)=>`<div class="vis"><div class="vhead"><span class="lbl">${lbl}</span>${MODE}</div><div class="paper">${inner}</div><span class="wc" data-wc></span></div>`;
+
+/* Gibbs (1988) reflective cycle */
+const GIBBS=[
+ ['Description','What happened?','In Project 1 our team of five built "Second Plate", an app idea that sells surplus campus meals for 5 AED. I wrote the market section and presented the problem in our 1-minute pitch.'],
+ ['Feelings','What did I think and feel?','I was confident about the idea but nervous before the pitch. When a judge asked about our price, I felt I did not have the number ready.'],
+ ['Evaluation','What went well and what did not?','Our prototype test went well: 9 of 12 students said they would use it. Our market estimate was weak: we started from a figure we had not verified.'],
+ ['Analysis','Why did it happen?','We collected data late, in the last week. Ries (2011) argues that a startup learns by testing assumptions early; we tested the prototype early but not the numbers.'],
+ ['Conclusion','What did I learn?','Evidence has to come before the slide, not after it. I also learned that I explain better when I practise with a timer.'],
+ ['Action plan','What will I do next time?','Next time I will verify every number on the day I use it and rehearse Q&A answers for price and competition.']];
+const gibbsSVG=()=>{ const R=118,cx=165,cy=150; return `<svg class="gibbs" viewBox="0 0 330 300" role="img" aria-label="Gibbs reflective cycle: description, feelings, evaluation, analysis, conclusion, action plan">
+ <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="var(--wk)" stroke-width="3" stroke-dasharray="10 7" opacity=".5"/>
+ ${GIBBS.map(([t],i)=>{ const a=-Math.PI/2+i*Math.PI/3, x=cx+R*Math.cos(a), y=cy+R*Math.sin(a); return `<g><circle cx="${x}" cy="${y}" r="34" fill="var(--wk)"/><text x="${x}" y="${y-3}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="15" fill="var(--on-wk,#fff)">${i+1}</text><text x="${x}" y="${y+12}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="9.5" fill="var(--on-wk,#fff)">${t}</text></g>`; }).join('')}
+ <text x="${cx}" y="${cy+5}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="14" fill="var(--ink)">Gibbs (1988)</text></svg>`; };
+
+/* ranked SWOT */
+const SW=[
+ ['s','Strengths','inside you',['Explaining a problem clearly: my pitch scored well on clarity.','Finding data: I found 4 of our 6 verified sources.','Working to deadlines: my section was ready a week early.']],
+ ['w','Weaknesses','inside you',['Answering questions without notes: I froze on the price question.','Finance: I could not build the break-even table alone.','I avoid asking for help until late.']],
+ ['o','Opportunities','outside you',['Campus incubator and startup competitions in the UAE.','Free online certificates, e.g. IBM SkillsBuild.','Food-waste reduction is a national priority topic.']],
+ ['t','Threats','outside you',['Busy final year: less time for side projects.','Many similar food apps compete for attention.','Funding is hard to get without traction.']]];
+const swotHTML=()=>`<div class="swot">${SW.map(([k,t,s,ex])=>`<div class="q ${k}"><h5>${t}<small>${s} · ranked</small></h5>${ex.map((e,i)=>`<div class="r"><span>${i+1}</span>${F('sw-'+k+i,{ph:i===0?'Most important, with evidence':'Item '+(i+1)+', with evidence',rows:1,ex:e})}</div>`).join('')}</div>`).join('')}</div>`;
+
+/* three-year plan */
+const YR=[
+ ['Year 1','2027',['Complete two free certificates in finance and design thinking by June 2027.','Fixes W2'],['Pitch "Second Plate" at one campus competition by April 2027.','Uses S1 + O1']],
+ ['Year 2','2028',['Run a 4-week pilot with one campus café, target 200 meals sold.','Uses O3'],['Find a mentor and meet monthly.','Fixes W3']],
+ ['Year 3','2029',['Register the venture or join a startup as a product intern by graduation.','Guards T3'],['Build a portfolio of 3 tested projects.','Uses S2']]];
+const planHTML=()=>`<div class="yrs">${YR.map(([y,d,g1,g2],i)=>`<div><small>${y} · ${d}</small><b>Goal 1</b>${F('pl-'+i+'a',{ph:'SMART goal',rows:2,ex:g1[0]})}${F('pl-'+i+'al',{ph:'SWOT link, e.g. fixes W2',rows:1,ex:g1[1]})}<b>Goal 2</b>${F('pl-'+i+'b',{ph:'SMART goal',rows:2,ex:g2[0]})}${F('pl-'+i+'bl',{ph:'SWOT link, e.g. fixes W2',rows:1,ex:g2[1]})}</div>`).join('')}</div>`;
+
+const EVID=['Photos of our prototype and test (Project 1)','Link to my Activity 2 video pitch','Feedback I received (pitch, peer review, instructor)','Certificates or badges completed this semester','Any other proof I mention in Parts A–C'];
+
+const allText=()=>{ const D=Deck.data();
+  const A=GIBBS.map(([t],i)=>`${t}: ${D['g'+i]||''}`).join('\n');
+  const B=SW.map(([k,t])=>`${t}:\n`+[0,1,2].map(i=>`${i+1}. ${D['sw-'+k+i]||''}`).join('\n')).join('\n');
+  const C=YR.map(([y,d],i)=>`${y} (${d}):\nGoal 1: ${D['pl-'+i+'a']||''} [${D['pl-'+i+'al']||''}]\nGoal 2: ${D['pl-'+i+'b']||''} [${D['pl-'+i+'bl']||''}]`).join('\n');
+  return [['Part A · Reflection on my Project 1 experience (Gibbs, 1988)',A],['Part B · My ranked personal SWOT',B],['Part C · My three-year entrepreneurship action plan',C],['Part D · Evidence appendix',EVID.map(e=>'• '+e).join('\n')],['References','Gibbs, G. (1988). Learning by doing: A guide to teaching and learning methods. Further Education Unit.']]; };
+
+const SL=[
+ {nav:'What',html:()=>`<div><div class="kick">Project 2 · after Project 1</div><h2>Your Reflective Portfolio</h2>
+  <p class="what">Look back at what you did this semester, see where you stand, and plan your next three years as an entrepreneur.</p>
+  <div class="chips"><span>Individual</span><span><b>30%</b></span><span>≈ <b>1500</b> words + evidence</span><span>Due <b>Tue 15 Dec</b></span><span>CLO <b>4</b></span></div>
+  <div class="acts"><button type="button" class="b" data-go="1">See the four parts →</button></div></div>
+  <div class="vis"><span class="lbl">Your portfolio in four parts</span><div class="paper" style="grid-template-columns:1fr 1fr">${[['A','Reflection','Gibbs cycle on Project 1','≈ 600'],['B','Ranked SWOT','you, with evidence','≈ 400'],['C','3-year plan','SMART goals','≈ 400'],['D','Evidence','photos, links, feedback','appendix']].map(([n,t,s,w])=>`<div style="border:1.5px solid #e2d9c2;border-radius:10px;padding:12px"><b style="color:var(--wk);font-size:1.6rem">${n}</b><div style="font-weight:800">${t}</div><div style="color:#6b6455;font-size:.85rem">${s}</div><div class="wc">${w==='appendix'?'appendix':w+' words'}</div></div>`).join('')}</div></div>`},
+ {nav:'Map',one:true,html:()=>`<div><div class="kick">Project 2 · the portfolio</div><h2>Four parts, in this order</h2>
+  <p class="what">Click a part. Write on the template online, or switch to Example to see a finished one.</p>
+  <div class="road">${[['A','Reflection','Gibbs (1988) · ≈ 600 words',2],['B','Ranked SWOT','top 3 per box · ≈ 400',3],['C','3-year plan','SMART · ≈ 400',4],['D','Evidence','appendix',5]].map(([n,t,s,g])=>`<button type="button" data-go="${g}"><span class="n">${n}</span><b>${t}</b><small>${s}</small></button>`).join('')}</div>
+  <div class="acts" style="margin-top:18px"><a class="b g" href="week-10.html">Week 10 · Reflection Workshop</a><a class="b g" href="week-11.html">Week 11 · Reflective assessment</a><a class="b g" href="week-15.html">Week 15 · Action plan</a></div></div>`},
+ {nav:'A',part:'A',html:()=>`<div><div class="kick">Part A <span class="mk">≈ 600 words</span></div><h2>Reflect on Project 1</h2>
+  <p class="what">Use Gibbs' six stages. Describe briefly; spend most words on analysis and what you will change.</p>
+  <p class="how-t">How to write it</p><ol class="how"><li>One short paragraph per stage, in the first person.</li><li>Analysis: explain why, using one idea from the course (cite it).</li><li>End with an action you will really take.</li></ol>
+  ${gibbsSVG()}</div>
+  ${vis('Part A · write on it',`<div class="gx">${GIBBS.map(([t,q,ex],i)=>`<div class="r"><span>${i+1}</span><div><label>${t} · ${q}</label>${F('g'+i,{ph:q,rows:2,ex})}</div></div>`).join('')}</div>`)}`,
+  after:el=>count(el,GIBBS.map((_,i)=>'g'+i),600)},
+ {nav:'B',part:'B',html:()=>`<div><div class="kick">Part B <span class="mk">≈ 400 words</span></div><h2>Your ranked SWOT</h2>
+  <p class="what">Strengths and weaknesses are inside you. Opportunities and threats are outside you. Rank three in each box.</p>
+  <p class="how-t">How to write it</p><ol class="how"><li>Each item needs proof from this course: a mark, feedback, a result.</li><li>Rank 1 = the one that matters most for your plan.</li><li>Under the grid, explain your top item in each box in 2–3 sentences.</li></ol>
+  <div class="acts"><a class="b g" href="week-11.html">Help: Week 11 →</a></div></div>
+  ${vis('Part B · write on it',swotHTML())}`,
+  after:el=>count(el,SW.flatMap(([k])=>[0,1,2].map(i=>'sw-'+k+i)),400)},
+ {nav:'C',part:'C',html:()=>`<div><div class="kick">Part C <span class="mk">≈ 400 words</span></div><h2>Your three-year plan</h2>
+  <p class="what">Two goals per year. Each goal uses a strength or opportunity, or fixes a weakness or threat from Part B.</p>
+  <div class="smart" style="margin-bottom:16px">${[['S','pecific'],['M','easurable'],['A','chievable'],['R','elevant'],['T','ime-bound']].map(([a,b])=>`<span><b>${a}</b>${b}</span>`).join('')}</div>
+  <p class="how-t">How to write it</p><ol class="how"><li>Write each goal so someone else could check it (Doran, 1981).</li><li>Name the SWOT item it links to (e.g. "fixes W2").</li><li>Add one sentence: the first step you take this month.</li></ol>
+  <div class="acts"><a class="b g" href="week-15.html">Help: Week 15 →</a></div></div>
+  ${vis('Part C · write on it',planHTML())}`,
+  after:el=>count(el,YR.flatMap((_,i)=>['pl-'+i+'a','pl-'+i+'b']),400)},
+ {nav:'D',part:'D',html:()=>`<div><div class="kick">Part D <span class="mk">appendix · not counted</span></div><h2>Evidence appendix</h2>
+  <p class="what">Proof for what you wrote in Parts A–C. Label each item and refer to it in your text (e.g. "see Evidence 2").</p>
+  <p class="how-t">Tick what you have</p><ul class="ck">${EVID.map((e,i)=>`<li><label><input type="checkbox" data-ck="${i}"> ${e}</label></li>`).join('')}</ul></div>
+  <div class="vis"><span class="lbl">Example label</span><div class="paper"><b>Evidence 2 · Activity 2 video pitch</b><div style="color:#6b6455">Link: (your Moodle or OneDrive link) · recorded 24 Nov 2026 · 41 seconds</div><b>Evidence 3 · Peer feedback, Week 13</b><div style="color:#6b6455">"Strong hook; the price was not clear." · used in Part A, stage 3</div></div></div>`,
+  after:el=>{ el.querySelectorAll('[data-ck]').forEach(c=>{ const k='ent142-p2-ck'+c.dataset.ck; try{ c.checked=localStorage.getItem(k)==='1'; }catch(e){} c.onchange=()=>{ try{ localStorage.setItem(k,c.checked?'1':'0'); }catch(e){} }; }); }},
+ {nav:'Submit',html:()=>`<div><div class="kick">Tue 15 Dec <span class="mk">Project 2 · 30%</span></div><h2>Download, finish in Word, submit</h2>
+  <ol class="how"><li>Download your portfolio as a Word file. It has all four parts and the heading structure.</li><li>Turn the notes into paragraphs, add references (APA) and your evidence.</li><li>Upload one Word file on Moodle.</li></ol>
+  <div class="acts"><button type="button" class="b" id="dl">Download my portfolio (.doc)</button>${MOODLE?`<a class="b g" href="${esc(MOODLE)}" target="_blank" rel="noopener">Submit on Moodle ↗</a>`:`<span class="b" aria-disabled="true">Moodle link coming soon</span>`}</div>
+  <p class="wc" style="margin-top:12px">Your text is saved in this browser only. Download it before you change device.</p></div>
+  <div class="vis"><span class="lbl">Marks · 100, adjusted to 30%</span><div class="mbar">${[['Reflection (A)',30],['SWOT (B)',25],['Plan (C)',25],['Evidence & writing',20]].map(([t,m])=>`<div><span>${t}</span><span><i style="width:${m*3.3}%"></i></span><span>${m}</span></div>`).join('')}</div>
+  <details class="rb"><summary>What a top portfolio does</summary><ul><li><b>A:</b> analyses why things happened, cites one course idea, ends with a real action.</li><li><b>B:</b> every item has proof; ranking is explained.</li><li><b>C:</b> goals are SMART and each one links to a SWOT item.</li><li><b>Evidence &amp; writing:</b> evidence is labelled and referred to; clear structure; APA references.</li></ul></details></div>`,
+  after:el=>{ el.querySelector('#dl').onclick=()=>Deck.doc('ENT 142 Project 2 Reflective Portfolio',allText()); }}
+];
+function count(el,ids,target){ const w=el.querySelector('[data-wc]'); if(!w) return; const n=ids.reduce((a,id)=>a+Deck.words(Deck.get(id)),0); w.innerHTML=`Your notes: <b>${n}</b> words · target in the final text ≈ ${target}`; }
+const D=Deck.mount({slides:SL,key:'ent142-p2',onInput:(data,t)=>{ if(!t) return; const sec=t.closest('.sl-f'); const i=+sec.id.slice(1); if(SL[i].after&&i>=2&&i<=4) SL[i].after(sec); }});
+</script>
+</body>
+</html>

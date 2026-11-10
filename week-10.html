@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 10 · Reflection Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#6D3FD1;--wk-soft:rgba(109,63,209,.10);--wk-d:#B59CFF;--wk-soft-d:rgba(181,156,255,.14)}
+.svgfig{width:100%;height:auto;display:block}
+.isnot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.isnot div{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg);font-family:var(--f-display);font-size:.9rem}
+.isnot div.yes{border-color:var(--wk);background:var(--wk-soft)}
+.isnot h4{margin:0 0 6px;font-size:.78rem;font-family:var(--f-mono);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.isnot ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+@media (max-width:560px){.isnot{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script src="assets/proto-bot.js"></script>
+<script>
+const {W,B} = Lecture;
+
+/* ---------- Scene 2: is / is not ---------- */
+const ISNOT=`<div class="isnot">
+ <div class="yes"><h4>Reflection is</h4><ul><li>Looking back on a real experience</li><li>Asking <b>why</b> it happened</li><li>Linking it to a model or theory</li><li>Deciding what to do differently</li></ul></div>
+ <div><h4>Reflection is not</h4><ul><li>Retelling the story</li><li>Listing feelings only</li><li>Blaming teammates</li><li>A summary of the lecture</li></ul></div></div>`;
+
+/* ---------- Scene 3: Kolb cycle (SVG) ---------- */
+const KOLB=(()=>{const cx=320,cy=150,r=100;const st=[['Concrete experience','do it',-90],['Reflective observation','look back',0],['Abstract conceptualisation','make sense',90],['Active experimentation','try again',180]];
+ const pt=(a,R)=>[cx+Math.cos(a*Math.PI/180)*R,cy+Math.sin(a*Math.PI/180)*R];
+ let s=`<svg class="svgfig" viewBox="0 0 640 300" role="img" aria-label="Kolb's cycle: concrete experience, reflective observation, abstract conceptualisation, active experimentation, then back to experience.">
+ <defs><marker id="kar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--wk)"/></marker></defs>
+ <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--line)" stroke-width="2"/>`;
+ [-50,40,130,220].forEach(a=>{const [x1,y1]=pt(a-22,r),[x2,y2]=pt(a+22,r);s+=`<path d="M${x1} ${y1} A${r} ${r} 0 0 1 ${x2} ${y2}" fill="none" stroke="var(--wk)" stroke-width="3" marker-end="url(#kar)"/>`;});
+ st.forEach(([t,sub,a],i)=>{const [x,y]=pt(a,r);s+=`<circle cx="${x}" cy="${y}" r="16" fill="var(--wk)"/><text x="${x}" y="${y+5}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="14" fill="var(--surface)">${i+1}</text>`;
+  const [lx,ly]=pt(a,r+34);const anc=a===0?'start':a===180?'end':'middle';const dy=a===-90?-14:a===90?12:-4;
+  s+=`<text x="${a===0?lx-8:a===180?lx+8:lx}" y="${ly+dy}" text-anchor="${anc}" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="14" fill="var(--ink)">${t}</text><text x="${a===0?lx-8:a===180?lx+8:lx}" y="${ly+dy+16}" text-anchor="${anc}" font-family="JetBrains Mono,monospace" font-size="11" fill="var(--muted)">${sub}</text>`;});
+ s+=`<text x="${cx}" y="${cy+5}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="15" fill="var(--wk)">Learning</text></svg>`;return s;})();
+
+/* ---------- Scene 4: Gibbs cycle (SVG) ---------- */
+const GIBBS=(()=>{const cx=320,cy=160,r=112;const st=['Description','Feelings','Evaluation','Analysis','Conclusion','Action plan'];
+ const pt=(a,R)=>[cx+Math.cos(a*Math.PI/180)*R,cy+Math.sin(a*Math.PI/180)*R];
+ let s=`<svg class="svgfig" viewBox="0 0 640 320" role="img" aria-label="Gibbs' reflective cycle: description, feelings, evaluation, analysis, conclusion, action plan.">
+ <defs><marker id="gar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--wk)"/></marker></defs>
+ <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--line)" stroke-width="2"/>`;
+ st.forEach((t,i)=>{const a=-90+i*60;const [x1,y1]=pt(a+12,r),[x2,y2]=pt(a+48,r);s+=`<path d="M${x1} ${y1} A${r} ${r} 0 0 1 ${x2} ${y2}" fill="none" stroke="var(--wk)" stroke-width="2.5" marker-end="url(#gar)"/>`;});
+ st.forEach((t,i)=>{const a=-90+i*60;const [x,y]=pt(a,r);const [lx,ly]=pt(a,r+30);const anc=Math.abs(Math.cos(a*Math.PI/180))<.2?'middle':(Math.cos(a*Math.PI/180)>0?'start':'end');
+  s+=`<circle cx="${x}" cy="${y}" r="15" fill="var(--wk)"/><text x="${x}" y="${y+5}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="13" fill="var(--surface)">${i+1}</text><text x="${lx}" y="${ly+(a===-90?-4:a===90?14:5)}" text-anchor="${anc}" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="14" fill="var(--ink)">${t}</text>`;});
+ s+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="15" fill="var(--wk)">Gibbs (1988)</text><text x="${cx}" y="${cy+16}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="var(--muted)">six stages · one loop</text></svg>`;return s;})();
+
+/* ---------- Scene 5: Gibbs applied to the running example ---------- */
+const APPLIED={'Team Second Plate · one member writes':[
+ ['1 · Description','<i>What happened?</i><br><br>“Our team tested a paper prototype of Second Plate, an app for surplus café meals, with 12 students. On 27 October a panel member asked how we keep the food safe. I could not answer.”'],
+ ['2 · Feelings','<i>What did I think and feel?</i><br><br>“I felt confident before the presentation and embarrassed in the Q&amp;A. The embarrassment made me rush my next answer.”'],
+ ['3 · Evaluation','<i>What was good and bad?</i><br><br>“Good: the test gave us real data and we changed the prototype twice. Bad: nobody on the team had checked food-safety rules.”'],
+ ['4 · Analysis','<i>Why did it happen?</i><br><br>“We tested the app screens but never listed our riskiest assumption: that cafés can legally resell leftovers. In Kolb’s terms, we kept experimenting without stopping to conceptualise.”'],
+ ['5 · Conclusion','<i>What else could I have done?</i><br><br>“I could have listed the three hardest questions before the presentation. I learned that I prepare only for the questions I expect.”'],
+ ['6 · Action plan','<i>What will I do next time?</i><br><br>“Before my Week 13 video pitch, I will write the three hardest questions a judge could ask and answer each in one sentence.”']]};
+
+/* ---------- Scene 6: mistakes ---------- */
+const FIX=`<table class="tbl"><thead><tr><th>Mistake</th><th>Fix</th></tr></thead><tbody>
+<tr><td>The whole text retells the story</td><td>Keep Description short; spend most words on Analysis and Action plan.</td></tr>
+<tr><td>“I felt stressed.” Nothing more.</td><td>Say how the feeling changed what you did.</td></tr>
+<tr><td>“Next time I will communicate better.”</td><td>Name the action, when, and how you will know it worked.</td></tr></tbody></table>`;
+
+Lecture.mount({
+  id:'ent142-w10', week:10, clo:4, course:'ENT 142', short:'Week 10 · Reflection Workshop',
+  title:'Reflection Workshop',
+  meta:'Gibbs (1988), Kolb (1984), Schön (1983) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'What did Project 1 actually teach you?', minutes:5,
+    narration:[`Turn your Project 1 experience into learning you can explain. <span class="mono">Topics: What reflection is · Kolb’s cycle · Gibbs’ reflective cycle · Reflecting on Project 1. CLO 4.</span>`],
+    src:`Reading: Gibbs, G. (1988). <em>Learning by doing: A guide to teaching and learning methods</em>. Further Education Unit. · Kolb, D. A. (1984). <em>Experiential learning</em>. Prentice Hall. · Schön, D. A. (1983). <em>The reflective practitioner</em>. Basic Books.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Two sentences`,5,'l'],[`What reflection is`,10,'l'],[`Kolb’s cycle`,10,'l'],[`Gibbs’ cycle`,15,'l'],[`Gibbs applied`,15,'l'],[`Mistakes → fixes`,5,'l'],[`Reflect on Project 1`,40,'a'],[`Check`,10,'c'],[`Takeaways`,5,'l']])} },
+
+  { nav:'Two sentences', title:'Two students, one failed test', minutes:5,
+    narration:[`Both students were in the same team. Their user test went badly.`,
+      `<b>A:</b> “The test failed because the testers did not understand our app.”<br><b>B:</b> “7 of 12 testers missed the pickup time. I placed it in small grey text. Next version, it goes at the top.”`],
+    think:`Which student will do better next time? What exactly did B do that A did not?` },
+
+  { nav:'What reflection is', title:'Reflection turns experience into learning', minutes:10,
+    narration:[`<b>Reflection</b> is deliberate thinking about an experience to understand it and change what you do next. Schön (1983) separates <b>reflection-in-action</b> (during the event) from <b>reflection-on-action</b> (after it). Project 2 asks for reflection-on-action.`],
+    src:`Schön, D. A. (1983). <em>The reflective practitioner: How professionals think in action</em>. Basic Books.`,
+    fig:{label:`Is · is not`, html:ISNOT} },
+
+  { nav:'Kolb’s cycle', title:'Kolb’s experiential learning cycle', minutes:10,
+    narration:[`Kolb (1984): we learn in a loop of four stages. Experience alone is not enough; you must observe, make sense of it, then try again. Ries (2011) applies the same loop to startups: build, measure, learn.`],
+    src:`Kolb, D. A. (1984). <em>Experiential learning: Experience as the source of learning and development</em>. Prentice Hall. · Ries, E. (2011). <em>The lean startup</em>. Crown Business.`,
+    fig:{label:`Kolb (1984) · four stages`, html:KOLB, caption:`Project 1: the user test (1), noticing testers missed the pickup time (2), linking it to design rules (3), moving it to the top in version 2 (4).`} },
+
+  { nav:'Gibbs’ cycle', title:'Gibbs’ reflective cycle: six stages', minutes:15,
+    narration:[`Gibbs (1988) breaks reflection into six questions, in order. It is the required model for Part A of Project 2. Press Play to see each stage.`],
+    src:`Gibbs, G. (1988). <em>Learning by doing: A guide to teaching and learning methods</em>. Further Education Unit, Oxford Polytechnic.`,
+    fig:{label:`Gibbs (1988) · press Play`, flow:[
+      {t:'Description',s:'what happened?',d:'Facts only: when, where, who, what. Keep it short.'},
+      {t:'Feelings',s:'what did I feel?',d:'Your thoughts and feelings at the time, and how they affected you.'},
+      {t:'Evaluation',s:'good and bad?',d:'What went well and what did not. Be balanced.'},
+      {t:'Analysis',s:'why?',d:'Explain the causes. Link to a course model or reading.'},
+      {t:'Conclusion',s:'what else?',d:'What you could have done differently, and what you learned about yourself.'},
+      {t:'Action plan',s:'next time?',d:'A specific action: what, when, how you will check it.'}],
+      html:GIBBS} },
+
+  { nav:'Gibbs applied', title:'Gibbs applied, step by step', minutes:15, wide:true,
+    narration:[`Running example: Team Second Plate (fictional), from Project 1. One member reflects on the Q&amp;A. Click each stage in order.`],
+    fig:{label:`Six stages · one experience`, build:el=>W.picker(el,APPLIED,'Select a stage.')} },
+
+  { nav:'Mistakes → fixes', title:'Three common mistakes', kind:'review', minutes:5,
+    narration:[`Most weak reflections stop at stage 2. The marks are in stages 4 to 6.`],
+    fig:{label:`Mistake → fix`, html:FIX} },
+
+  { nav:'Reflect on Project 1', title:'Activity · Gibbs on your own Project 1', kind:'activity', minutes:40, wide:true,
+    narration:[`Choose <b>one moment</b> from Project 1: a test, a team decision, the presentation or the Q&amp;A. Write 2–4 sentences per stage.`,
+      `This draft becomes <b>Part A</b> of Project 2 (about 600 words). See the <a href="project-2.html">Project 2 guide</a>.`],
+    fig:{label:`Gibbs draft · saves in your browser`, build:el=>W.worksheet(el,{id:'ent142-w10-gibbs',title:'ENT 142 · Week 10 · Gibbs reflection on Project 1',fields:[
+      {l:'1 · Description: what happened?',hint:'One moment. Facts only.',rows:3},
+      {l:'2 · Feelings: what did I think and feel?',rows:2},
+      {l:'3 · Evaluation: what went well, what did not?',rows:3},
+      {l:'4 · Analysis: why did it happen?',hint:'Link to Kolb, lean startup or another course model.',rows:4},
+      {l:'5 · Conclusion: what else could I have done?',rows:2},
+      {l:'6 · Action plan: what will I do, and when?',hint:'Specific and checkable.',rows:2}]})} },
+
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
+    narration:[`Five questions. One attempt each.`],
+    fig:{label:`Quiz · 5 questions`, build:el=>W.quiz(el,[
+      {q:`A student writes: “We presented on Tuesday, then the panel asked questions, then we answered and sat down.” What is the main problem?`,
+       o:[`It describes only; there is no evaluation, analysis or action plan`,`It is too short for the Description stage`,`It should start with feelings`,`It needs a reference to Gibbs`],a:0,
+       why:`It is pure description. Length is not the issue: Description should be short. Gibbs starts with Description, not Feelings. A reference would not fix the missing stages.`},
+      {q:`Which action plan is strongest?`,
+       o:[`I will communicate better with my team.`,`I will try harder in Project 2.`,`Before each team meeting, I will send a three-line agenda by 8 pm the night before.`,`I learned that teamwork is important.`],a:2,
+       why:`Only the third is specific and checkable (what, when). The first two are vague intentions. The last is a conclusion, not an action.`},
+      {q:`After a weak pitch, a team reads Moore’s positioning statement and redesigns its opening line. Which Kolb stage is the reading?`,
+       o:[`Concrete experience`,`Reflective observation`,`Abstract conceptualisation`,`Active experimentation`],a:2,
+       why:`Using a theory to make sense of what happened is abstract conceptualisation. The pitch itself was the experience. Noticing it was weak is reflective observation. Trying the new line would be active experimentation.`},
+      {q:`Which sentence belongs in the Analysis stage?`,
+       o:[`I felt nervous when the panel looked at our slides.`,`Testers missed the pickup time because it was in small grey text, which hid the most important information.`,`The presentation took place in room B204.`,`Next time I will rehearse twice.`],a:1,
+       why:`Analysis explains why something happened. The first is Feelings. The third is Description. The fourth is Action plan.`},
+      {q:`During the Q&A, a presenter sees the panel looks confused and switches to showing the prototype photo. This is…`,
+       o:[`reflection-on-action`,`reflection-in-action`,`an action plan`,`descriptive writing`],a:1,
+       why:`Adjusting during the event is reflection-in-action (Schön, 1983). Reflection-on-action happens after. An action plan is written for the future. Descriptive writing is a type of text, not an in-the-moment adjustment.`}])} },
+
+  { nav:'Takeaways', title:'Takeaways', minutes:5,
+    narration:[`<ul><li>Reflection explains <b>why</b> and changes what you do next.</li><li>Kolb: experience → observe → make sense → try again.</li><li>Gibbs: six stages; the marks are in Analysis, Conclusion and Action plan.</li></ul>`,
+      `<b>Next week:</b> read Hatton &amp; Smith (1995); bring your Gibbs draft.`,
+      `<a class="btn" href="week-11.html">Next lecture · Week 11 · Reflection and Reflective Assessment →</a>`] },
+  ]
+});
+</script>
+</body>
+</html>

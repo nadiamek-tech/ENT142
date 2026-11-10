@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Activity 2 · Video Pitch · ENT 142</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="assets/portal.css">
+<link rel="stylesheet" href="assets/deck.css">
+<style>:root{--wk:#C2185B;--wk-soft:rgba(194,24,91,.09);--wk-d:#F48FB1;--wk-soft-d:rgba(244,143,177,.15)}
+.phone{width:min(240px,70%);aspect-ratio:9/16;margin:0 auto;border-radius:28px;border:8px solid #1d2430;background:linear-gradient(#cfd8e6,#eef2f7);position:relative;overflow:hidden}
+.phone .face{position:absolute;left:50%;top:22%;width:42%;aspect-ratio:1;border-radius:50%;background:#c9a27e;transform:translateX(-50%)}
+.phone .body{position:absolute;left:50%;top:52%;width:80%;height:60%;border-radius:40% 40% 0 0;background:#5a6c8a;transform:translateX(-50%)}
+.phone .third{position:absolute;left:0;right:0;border-top:1px dashed rgba(29,36,48,.35)}
+.phone .rec{position:absolute;top:10px;left:10px;font:700 .7rem var(--f-mono);color:#c2185b}
+</style>
+</head>
+<body>
+<div id="hub" data-cur="pitch"></div>
+<main class="deck" id="deck"></main>
+<nav class="dnav" aria-label="Slides"><div class="dnav-in"><button type="button" class="nb prev">← Back</button><div class="dots" id="dots"></div><span class="pos" id="pos"></span><button type="button" class="nb next">Next →</button></div></nav>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script src="assets/deck.js"></script>
+<script>
+Portal.header('pitch');
+const {field:F,esc}=Deck;
+const A2=COURSE.assess.find(a=>a.id==='a2')||{};
+const MOODLE=(A2.submit||{}).link||'';
+const MODE=`<div class="mode" role="group" aria-label="Template or example"><button type="button" data-mode="me" aria-pressed="true">My script</button><button type="button" data-mode="ex" aria-pressed="false">Example</button></div>`;
+const PARTS=[
+ ['Hook','≈ 5 s','One surprising fact or question.','Every evening, our campus cafés throw away good food.'],
+ ['Problem','≈ 8 s','Who suffers, and how much.','Students want cheap meals, and cafés lose money on food they cannot sell after 6 pm.'],
+ ['Solution','≈ 10 s','What you offer, in one clear sentence.','Second Plate is an app that lists surplus meals at 6 pm for 5 AED, collected in ten minutes.'],
+ ['Proof','≈ 10 s','One number from your test or data.','We tested a paper version with 12 students: 9 said they would use it every week.'],
+ ['Ask','≈ 5 s','What you want from the listener.','We are looking for one campus café to run a four-week pilot with us. Will you be the first?']];
+const ids=PARTS.map((_,i)=>'p'+i);
+const script=ex=>PARTS.map((p,i)=>ex?p[3]:(Deck.get('p'+i)||'')).filter(Boolean).join('\n');
+const SL=[
+ {nav:'What',html:()=>`<div><div class="kick">Activity 2 · Week 13</div><h2>A 30–45 second video pitch</h2>
+  <p class="what">Pitch your team venture, or your own idea, to camera. One person, one phone, one clear message.</p>
+  <div class="chips"><span>Individual</span><span><b>10%</b></span><span><b>30–45</b> seconds</span><span>Due <b>Tue 24 Nov</b></span><span>CLO <b>2</b></span></div>
+  <div class="acts"><button type="button" class="b" data-go="1">Write my script →</button><a class="b g" href="week-12.html">Week 12 · Elevator Pitch</a></div></div>
+  <div class="vis"><span class="lbl">What you hand in</span><div class="paper" style="justify-items:center"><div class="phone" aria-hidden="true"><span class="rec">● REC 0:41</span><div class="third" style="top:33%"></div><div class="third" style="top:66%"></div><div class="face"></div><div class="body"></div></div><div class="wc">One video file (MP4 or MOV), face on camera, 30–45 seconds</div></div></div>`},
+ {nav:'Script',part:'1',html:()=>`<div><div class="kick">Step 1 <span class="mk">75–110 words</span></div><h2>Write the script</h2>
+  <p class="what">Five parts, one or two sentences each. Speak at about 150 words a minute, so 75–110 words fits 30–45 seconds.</p>
+  <ol class="how"><li>Write it as you speak: short sentences, no slides.</li><li>Keep only one number, the strongest.</li><li>End with a clear ask.</li></ol>
+  <div class="acts"><button type="button" class="b" data-go="2">Practise it →</button></div></div>
+  <div class="vis"><div class="vhead"><span class="lbl">Script · write on it</span>${MODE}</div><div class="paper"><div class="gx">${PARTS.map(([t,s,q,ex],i)=>`<div class="r"><span>${i+1}</span><div><label>${t} · ${s} · ${q}</label>${F('p'+i,{ph:q,rows:2,ex})}</div></div>`).join('')}</div></div><span class="wc" id="wc"></span></div>`},
+ {nav:'Practise',part:'2',html:()=>`<div><div class="kick">Step 2</div><h2>Practise with the timer</h2>
+  <p class="what">Read your script aloud while the bar runs. Stop between 30 and 45 seconds.</p>
+  <ol class="how"><li>Practise three times. Then put the text away and try once from memory.</li><li>Pause after the hook and before the ask.</li><li>Look at the lens, not the screen.</li></ol>
+  <div class="acts"><button type="button" class="b" id="go">▶ Start the timer</button><button type="button" class="b g" id="useEx">Use the example script</button></div></div>
+  <div class="vis"><span class="lbl">Prompter</span><div class="paper"><div class="tlab"><span id="tt">0.0 s</span><span>30 s · 45 s</span></div><div class="tbar"><i id="tb"></i></div><div class="prompt" id="pr"></div></div></div>`,
+  after:el=>prompter(el)},
+ {nav:'Record',part:'3',html:()=>`<div><div class="kick">Step 3</div><h2>Record it with your phone</h2>
+  <ol class="how"><li><b>Light:</b> face a window or lamp, not your back to it.</li><li><b>Frame:</b> eyes on the top third line, phone at eye level, stable.</li><li><b>Sound:</b> a quiet room, phone about one arm away.</li><li><b>Take:</b> one continuous take, no cuts or music needed.</li><li><b>Check:</b> watch it once. If it runs over 45 s, cut words, not speed.</li></ol></div>
+  <div class="vis"><span class="lbl">Good framing</span><div class="paper" style="justify-items:center"><div class="phone" aria-hidden="true"><span class="rec">● REC</span><div class="third" style="top:33%"></div><div class="third" style="top:66%"></div><div class="face"></div><div class="body"></div></div><div class="wc">Eyes on the top line · head and shoulders · plain background</div></div></div>`},
+ {nav:'Submit',html:()=>`<div><div class="kick">Tue 24 Nov · 23:59 <span class="mk">Activity 2 · 10%</span></div><h2>Check and submit</h2>
+  <ul class="ck">${['30–45 seconds','My face is visible and the sound is clear','Hook, problem, solution, proof, ask: all five are there','One number, and it is true','File named Name_StudentID_Pitch.mp4'].map((c,i)=>`<li><label><input type="checkbox" data-ck="${i}"> ${c}</label></li>`).join('')}</ul>
+  <div class="acts" style="margin-top:18px">${MOODLE?`<a class="b" href="${esc(MOODLE)}" target="_blank" rel="noopener">Submit on Moodle ↗</a>`:`<span class="b" aria-disabled="true">Moodle link coming soon</span>`}</div></div>
+  <div class="vis"><span class="lbl">Marks · 10</span><div class="mbar">${[['Hook',2],['Problem + solution',3],['Proof',2],['Delivery',2],['Ask',1]].map(([t,m])=>`<div><span>${t}</span><span><i style="width:${m*33}%"></i></span><span>${m}</span></div>`).join('')}</div>
+  <p class="wc" style="margin-top:10px">Delivery: clear voice, eye contact, within 30–45 seconds.</p></div>`,
+  after:el=>{ el.querySelectorAll('[data-ck]').forEach(c=>{ const k='ent142-a2-ck'+c.dataset.ck; try{ c.checked=localStorage.getItem(k)==='1'; }catch(e){} c.onchange=()=>{ try{ localStorage.setItem(k,c.checked?'1':'0'); }catch(e){} }; }); }}
+];
+let timer=null, exMode=false;
+function prompter(el){ const pr=el.querySelector('#pr'); const txt=script(exMode); pr.textContent=txt||'Write your script in Step 1, or use the example script.';
+  el.querySelector('#useEx').onclick=()=>{ exMode=!exMode; el.querySelector('#useEx').textContent=exMode?'Use my script':'Use the example script'; prompter(el); };
+  el.querySelector('#go').onclick=()=>{ clearInterval(timer); const t0=performance.now(), tb=el.querySelector('#tb'), tt=el.querySelector('#tt'), b=el.querySelector('#go'); b.textContent='■ Stop';
+    const stop=()=>{ clearInterval(timer); timer=null; b.textContent='▶ Start the timer'; b.onclick=()=>prompter(el)||el.querySelector('#go').click(); };
+    timer=setInterval(()=>{ const s=(performance.now()-t0)/1000; tt.textContent=s.toFixed(1)+' s'+(s<30?'':s<=45?' · in range':' · too long'); tb.style.width=Math.min(100,s/45*100)+'%'; tb.style.background=s>45?'#B23A2E':s>=30?'#2E7D5B':''; pr.scrollTop=(pr.scrollHeight-pr.clientHeight)*Math.min(1,s/40); if(s>60) stop(); },100);
+    b.onclick=stop; }; }
+const wc=()=>{ const n=ids.reduce((a,id)=>a+Deck.words(Deck.get(id)),0); const w=document.getElementById('wc'); if(w) w.innerHTML=`<b>${n}</b> words ≈ <b>${Math.round(n/150*60)}</b> seconds · aim for 75–110 words`; };
+Deck.mount({slides:SL,key:'ent142-a2',onInput:()=>wc()});
+</script>
+</body>
+</html>

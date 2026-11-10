@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 13 · Elevator Pitch Workshop (Part 1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#C2410C;--wk-soft:rgba(194,65,12,.10);--wk-d:#FB923C;--wk-soft-d:rgba(251,146,60,.14)}
+.svgfig{width:100%;height:auto;display:block}
+</style>
+</head>
+<body>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W,B} = Lecture;
+const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your project</b>${html}</div>`;
+const F1='Schibsted Grotesk,Arial,sans-serif', FM='JetBrains Mono,monospace';
+
+/* ---------- Scene 2: camera position (framing + eye line) ---------- */
+const FRAME=`<svg class="svgfig" viewBox="0 0 640 300" role="img" aria-label="Left: landscape frame with rule-of-thirds grid, head and shoulders, eyes on the top third line. Right: side view, phone lens at eye level, about one arm's length away.">
+<rect x="20" y="30" width="320" height="180" rx="8" fill="none" stroke="var(--ink)" stroke-width="2"/>
+<line x1="126.7" y1="30" x2="126.7" y2="210" stroke="var(--line)" stroke-dasharray="4 4"/><line x1="233.3" y1="30" x2="233.3" y2="210" stroke="var(--line)" stroke-dasharray="4 4"/>
+<line x1="20" y1="90" x2="340" y2="90" stroke="var(--wk)" stroke-width="1.5" stroke-dasharray="5 4"/><line x1="20" y1="150" x2="340" y2="150" stroke="var(--line)" stroke-dasharray="4 4"/>
+<circle cx="180" cy="95" r="34" fill="var(--wk)" opacity=".35"/><path d="M110 210 Q112 140 180 136 Q248 140 250 210Z" fill="var(--wk)" opacity=".35"/>
+<circle cx="168" cy="90" r="3" fill="var(--ink)"/><circle cx="192" cy="90" r="3" fill="var(--ink)"/>
+<text x="346" y="94" font-family="${FM}" font-size="10" fill="var(--wk)">eyes</text>
+<text x="20" y="232" font-family="${F1}" font-size="13" font-weight="600" fill="var(--ink)">Framing · landscape, head + shoulders</text>
+<text x="20" y="250" font-family="${FM}" font-size="10" fill="var(--muted)">eyes on the top third · small gap above the head</text>
+<circle cx="440" cy="110" r="22" fill="var(--wk)" opacity=".35"/><rect x="424" y="134" width="32" height="70" rx="8" fill="var(--wk)" opacity=".35"/>
+<rect x="590" y="88" width="8" height="44" rx="2" fill="var(--ink)"/><circle cx="594" cy="96" r="2.5" fill="var(--surface)"/>
+<line x1="594" y1="132" x2="594" y2="204" stroke="var(--muted)" stroke-width="2"/><line x1="575" y1="204" x2="613" y2="204" stroke="var(--muted)" stroke-width="2"/>
+<line x1="452" y1="106" x2="588" y2="96" stroke="var(--wk)" stroke-width="2" stroke-dasharray="6 4"/>
+<line x1="462" y1="160" x2="586" y2="160" stroke="var(--muted)" marker-start="url(#a13)" marker-end="url(#a13)"/>
+<defs><marker id="a13" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+<text x="524" y="178" text-anchor="middle" font-family="${FM}" font-size="10" fill="var(--muted)">about an arm's length</text>
+<text x="390" y="232" font-family="${F1}" font-size="13" font-weight="600" fill="var(--ink)">Eye line · lens at eye level</text>
+<text x="390" y="250" font-family="${FM}" font-size="10" fill="var(--muted)">look at the lens, not your face</text>
+</svg>`;
+
+/* ---------- Scene 3: the room ---------- */
+const ROOM={
+ 'Light':[
+  ['Face the light','Sit facing a window or lamp. The light falls on your face, not behind you.'],
+  ['Avoid backlight','A bright window behind you turns your face into a dark shape. The phone exposes for the window.'],
+  ['Soft, even light','Daylight through a window is softer than one ceiling lamp straight above your head.']],
+ 'Sound':[
+  ['Quiet room','Close doors and windows. Switch off fans and air-conditioning noise if you can for 45 seconds.'],
+  ['Soft room','Curtains, sofas and carpets reduce echo. Empty rooms and corridors echo.'],
+  ['Close microphone','Keep the phone about an arm\'s length away. Wired or wireless earphones with a microphone help in noisy places.']]
+};
+
+/* ---------- Scene 4: one clean take ---------- */
+const TAKE=`<svg class="svgfig" viewBox="0 0 640 120" role="img" aria-label="A 45-second timeline: hook 0 to 5 s, problem 5 to 15, solution 15 to 27, proof 27 to 38, ask 38 to 45.">
+${[['Hook',0,5],['Problem',5,15],['Solution',15,27],['Proof',27,38],['Ask',38,45]].map(([t,a,b],i)=>{const x=20+a*600/45,w=(b-a)*600/45;return `<rect x="${x}" y="30" width="${w-3}" height="38" rx="5" fill="var(--wk)" opacity="${.35+i*.13}"/><text x="${x+w/2}" y="54" text-anchor="middle" font-family="${F1}" font-size="13" font-weight="700" fill="var(--ink)">${t}</text><text x="${x}" y="86" font-family="${FM}" font-size="10" fill="var(--muted)">${a}s</text>`}).join('')}
+<text x="620" y="86" text-anchor="end" font-family="${FM}" font-size="10" fill="var(--muted)">45s</text>
+<text x="20" y="112" font-family="${FM}" font-size="10" fill="var(--muted)">≈ 75–110 words at about 150 words per minute · no cuts, no music, no slides</text>
+</svg>`;
+
+/* ---------- Scene 5: file ---------- */
+const FILE=`<table class="tbl"><thead><tr><th>Setting</th><th>Use</th><th>Why</th></tr></thead><tbody>
+<tr><td>Resolution</td><td>1080p HD, 30 fps</td><td>Clear enough; 4K files are several times larger</td></tr>
+<tr><td>Format</td><td>MP4 (H.264)</td><td>Plays on almost any laptop</td></tr>
+<tr><td>iPhone</td><td>Camera › Formats › Most Compatible</td><td>Records H.264 instead of HEVC</td></tr>
+<tr><td>Android</td><td>Camera settings › video size 1080p</td><td>Menu names differ by brand</td></tr>
+<tr><td>File name</td><td>ENT142_A2_Surname_StudentID.mp4</td><td>The marker finds it fast</td></tr>
+<tr><td>Check</td><td>Play the file on a laptop before uploading</td><td>Sound, start and end are complete</td></tr></tbody></table>`;
+
+/* ---------- Scene 6: mistakes ---------- */
+const MIST=`<table class="tbl"><thead><tr><th>Mistake</th><th>What the viewer sees</th><th>Fix</th></tr></thead><tbody>
+<tr><td>Window behind you</td><td>A dark face</td><td>Turn around: face the window</td></tr>
+<tr><td>Watching your own face</td><td>Eyes looking down, away</td><td>Look at the lens; a small sticker beside it helps</td></tr>
+<tr><td>Reading a script</td><td>Flat voice, no eye contact</td><td>Five keywords on a card behind the phone</td></tr>
+<tr><td>58 seconds</td><td>Lost the delivery mark for time</td><td>Cut to about 110 words; drop adjectives first</td></tr></tbody></table>`;
+
+/* ---------- Scene 7: activity ---------- */
+const RUBRIC=`<table class="tbl"><thead><tr><th>Activity 2 criterion</th><th>Marks</th></tr></thead><tbody>
+<tr><td>Hook</td><td>2</td></tr><tr><td>Problem + solution clarity</td><td>3</td></tr><tr><td>Proof / evidence</td><td>2</td></tr>
+<tr><td>Delivery: voice, eye contact, within time</td><td>2</td></tr><tr><td>Clear ask</td><td>1</td></tr><tr><td><b>Total</b></td><td><b>10</b></td></tr></tbody></table>`;
+
+Lecture.mount({
+  id:'ent142-w13', week:13, clo:2, course:'ENT 142', short:'Week 13 · Elevator Pitch Workshop (Part 1)',
+  title:'Elevator Pitch Workshop (Part 1)',
+  meta:'Activity 2 guide, Kawasaki (2005) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'How do you record a 45-second pitch with only a phone?', minutes:5,
+    narration:[`Set up, record and review take 1 of your Activity 2 video pitch. <span class="mono">Topics: Recording with a phone · Framing · Light · Sound · Eye line · One clean take · File size and format · Peer review. CLO 2.</span>`],
+    src:`Reading: <a href="activity-2.html">Activity 2 guide</a> · Kawasaki, G. (2005). <em>The 10/20/30 rule of PowerPoint</em>. guykawasaki.com · Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Think first`,5,'l'],[`Camera position`,10,'l'],[`The room`,8,'l'],[`One clean take`,8,'l'],[`File and format`,5,'l'],[`Mistakes → fixes`,5,'l'],[`Record take 1 + peer review`,62,'a'],[`Check`,10,'c'],[`Takeaways`,2,'l']])} },
+
+  { nav:'Think first', title:'Same words, two videos', minutes:5,
+    narration:[`Founders pitch on video too. Y Combinator asks applicants for a one-minute founder video.`],
+    think:`Two classmates send the same script. One is dark, echoing and looking down. One is bright, clear and looking at you. Which venture do you trust more? Why, if the words are the same?`,
+    src:`Y Combinator. <em>Apply to Y Combinator</em> (founder video). ycombinator.com/apply`,
+    fig:{label:`What the marker notices first`, flow:[
+      {t:'See',s:'0–2 s',d:'Face, light, background.'},
+      {t:'Hear',s:'0–3 s',d:'Clear voice or echo and noise.'},
+      {t:'Connect',s:'first sentence',d:'Eye contact and the hook.'},
+      {t:'Judge',s:'45 s',d:'Problem, solution, proof, ask.'}]} },
+
+  { nav:'Camera position', title:'Framing and eye line', minutes:10,
+    narration:[`<b>Framing</b> is what the lens sees. Hold the phone horizontally on a stand or books, lens at eye level, about an arm's length away. Head and shoulders fill the frame; eyes sit on the top third. Look into the lens.`],
+    src:`Y Combinator. <em>Apply to Y Combinator</em>: founders record a short video of themselves talking to the camera.`,
+    fig:{label:`Framing · eye line`, html:FRAME, caption:`Plain, tidy background. Nothing moving behind you.`} },
+
+  { nav:'The room', title:'Light and sound', minutes:8,
+    narration:[`The room decides the quality before you speak. Face the light. Choose a quiet, soft room. Click each card.`],
+    fig:{label:`Room check · click a card`, build:el=>W.picker(el,ROOM,'Select a card.')} },
+
+  { nav:'One clean take', title:'One clean take', minutes:8,
+    narration:[`A <b>clean take</b> is one continuous recording: no cuts, music or slides. Follow Hook → Problem → Solution → Proof → Ask in 30–45 seconds. Rehearse twice, then record. Restart if you stumble.`],
+    src:`Activity 2 brief: Hook → Problem → Solution → Proof → Ask, 30–45 seconds. · Kawasaki, G. (2005). <em>The 10/20/30 rule of PowerPoint</em>: short, focused pitches.`,
+    fig:{label:`45 seconds · one take`, html:TAKE, caption:`Timings are a guide, not a rule. Proof uses your Project 1 prototype test.`} },
+
+  { nav:'File and format', title:'File size and format', minutes:5,
+    narration:[`A great pitch that will not play earns nothing. Record at 1080p, export MP4, name the file clearly and test it on a laptop before uploading.`],
+    src:`Apple. <em>iPhone User Guide</em>: Change advanced camera settings (Formats: High Efficiency or Most Compatible). support.apple.com`,
+    fig:{label:`Before you upload`, html:FILE} },
+
+  { nav:'Mistakes → fixes', title:'Four common mistakes', kind:'review', minutes:5,
+    narration:[`Check your take 1 against this table before peer review.`],
+    fig:{label:`Mistake → fix`, html:MIST} },
+
+  { nav:'Record take 1', title:'Activity · Record take 1 and peer review', kind:'activity', minutes:62, wide:true,
+    narration:[`Work in pairs. Record each other with your own phones, then mark your partner's take 1 out of 10. Be specific.`],
+    fig:{label:`Pairs · record, swap, review`, flow:[
+      {t:'Key words',s:'5 min',d:'Five keywords on a card: hook, problem, solution, proof, ask.'},
+      {t:'Set up',s:'5 min',d:'Framing, light, sound, eye line. Use the partner as the camera holder.'},
+      {t:'Record',s:'15 min',d:'Two rehearsals, then take 1. One clean take each.'},
+      {t:'Swap',s:'15 min',d:'Your partner records you.'},
+      {t:'Review',s:'22 min',d:'Watch together. Mark with the rubric. Write one change for take 2.'}],
+      html:RUBRIC,
+      build:el=>W.worksheet(el,{id:'ent142-w13-take1',title:'ENT 142 · Week 13 · Take 1 peer review',fields:[
+      {l:'Partner name and take 1 length (seconds)',rows:1},
+      {l:'Marks: Hook /2 · Problem + solution /3 · Proof /2 · Delivery /2 · Ask /1 · Total /10',rows:2},
+      {l:'Strongest moment: what worked, and why',rows:2},
+      {l:'Set-up fix: framing, light, sound or eye line',rows:2},
+      {l:'One change for take 2',hint:'One sentence. Name the criterion it improves.',rows:2}]})} },
+
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
+    narration:[`Five scenarios. One click per question.`],
+    fig:{label:`5 questions`, build:el=>W.quiz(el,[
+      {q:'Amira records at her desk with a bright window behind her. Her face looks dark. What is the best fix?',
+       o:['Turn the desk so she faces the window','Raise the phone screen brightness','Add a bright filter after recording','Move the phone closer to her face'],a:0,
+       why:'Facing the window puts the light on her face. Screen brightness changes only what she sees, not the recording. A filter also brightens the window and cannot rebuild lost detail. Moving closer does not change where the light comes from.'},
+      {q:'Omar\'s pitch is clear and well structured but lasts 58 seconds. Which mark is most directly at risk?',
+       o:['Hook','Proof / evidence','Delivery (includes within time)','Clear ask'],a:2,
+       why:'Time sits inside the delivery criterion. Hook, proof and ask are judged on content, and his content is clear. Length does not remove his hook or evidence.'},
+      {q:'Which line is the strongest proof for a surplus-meal app?',
+       o:['"Our idea is very innovative and unique."','"We tested a paper prototype with 12 students; 9 asked to join the pilot."','"Food waste is a huge global problem."','"Our team is passionate and hardworking."'],a:1,
+       why:'Proof is evidence from a test: who, how many, what they did. "Innovative" is a claim with no evidence. Global food waste describes the problem, not proof your solution works. Passion is about the team, not evidence.'},
+      {q:'Sara looks at her own face on the screen while recording. How does the viewer see it?',
+       o:['As natural eye contact','As looking slightly down and away','As confident, because she is smiling','No difference on a phone'],a:1,
+       why:'The lens sits above the screen, so watching the screen looks like looking down. Eye contact only appears when you look at the lens. A smile does not fix the eye line. The gap is visible on every phone.'},
+      {q:'Lina\'s 4K video plays on her phone but not on the marker\'s laptop. What is the best first step?',
+       o:['Zip the file before uploading','Record again at 1080p, Most Compatible / MP4','Trim it to 20 seconds','Upload screenshots instead'],a:1,
+       why:'1080p H.264 MP4 is smaller and plays almost everywhere. Zipping does not change the codec and barely shrinks video. 20 seconds breaks the 30–45 second requirement. Screenshots are not a video pitch.'}])} },
+
+  { nav:'Takeaways', title:'Takeaways', minutes:2,
+    narration:[`<ul><li>Lens at eye level, face the light, quiet soft room.</li><li>One clean take: Hook → Problem → Solution → Proof → Ask, 30–45 seconds.</li><li>1080p MP4, clear file name, tested before upload.</li></ul>`,
+      `<b>Activity 2 due:</b> Tuesday 24 November, 23:59, on Moodle. <a href="activity-2.html">Activity 2 guide</a>.`,
+      `<b>Next week:</b> bring your submitted video and your partner's peer-review marks.`,
+      `<a class="btn" href="week-14.html">Next lecture · Week 14 · Elevator Pitch Workshop (Part 2) →</a>`]} },
+
+  ]
+});
+</script>
+</body>
+</html>

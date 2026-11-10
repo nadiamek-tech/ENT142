@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 11 · Reflection and Reflective Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#A3510A;--wk-soft:rgba(163,81,10,.10);--wk-d:#F2A65A;--wk-soft-d:rgba(242,166,90,.14)}
+.svgfig{width:100%;height:auto;display:block}
+</style>
+</head>
+<body>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script src="assets/proto-bot.js"></script>
+<script>
+const {W,B} = Lecture;
+const T=(x,y,t,o={})=>`<text x="${x}" y="${y}" text-anchor="${o.a||'middle'}" font-family="${o.m?'JetBrains Mono,monospace':'Schibsted Grotesk,Arial'}" font-weight="${o.w||400}" font-size="${o.s||13}" fill="${o.f||'var(--ink)'}">${t}</text>`;
+
+/* ---------- Scene 2: levels staircase ---------- */
+const STAIRS=`<svg class="svgfig" viewBox="0 0 640 270" role="img" aria-label="Four levels of reflective writing, rising: descriptive writing, descriptive reflection, dialogic reflection, critical reflection.">
+${[['Descriptive writing','not reflection'],['Descriptive reflection','gives reasons'],['Dialogic reflection','weighs options'],['Critical reflection','wider context']].map(([t,s],i)=>{const x=20+i*152,h=40+i*40;return `<rect x="${x}" y="${240-h}" width="144" height="${h}" rx="6" fill="var(--wk)" opacity="${.3+i*.22}"/>${T(x+72,240-h-24,t,{w:700,s:13})}${T(x+72,240-h-8,s,{m:1,s:11,f:'var(--muted)'})}`}).join('')}
+${T(20,262,'Hatton &amp; Smith (1995) · deeper →',{a:'start',m:1,s:11,f:'var(--muted)'})}</svg>`;
+
+/* ---------- Scene 3: SWOT grid ---------- */
+const SWOT=`<svg class="svgfig" viewBox="0 0 640 330" role="img" aria-label="SWOT grid. Rows: internal (you) and external (your environment). Columns: helpful and harmful.">
+${T(250,22,'Helpful',{m:1,s:12,f:'var(--muted)'})}${T(500,22,'Harmful',{m:1,s:12,f:'var(--muted)'})}
+${T(60,110,'Internal',{m:1,s:12,f:'var(--muted)'})}${T(60,128,'you',{m:1,s:11,f:'var(--muted)'})}${T(60,250,'External',{m:1,s:12,f:'var(--muted)'})}${T(60,268,'environment',{m:1,s:11,f:'var(--muted)'})}
+${[[130,34,'S','Strengths','skills you can prove',.9],[380,34,'W','Weaknesses','gaps you can fix',.45],[130,182,'O','Opportunities','chances around you',.7],[380,182,'T','Threats','risks you cannot control',.3]].map(([x,y,l,t,s,o])=>`<rect x="${x}" y="${y}" width="240" height="140" rx="10" fill="var(--wk)" fill-opacity="${o*.35}" stroke="var(--wk)" stroke-width="1.5"/>${T(x+120,y+58,l,{w:800,s:34,f:'var(--wk)'})}${T(x+120,y+90,t,{w:700,s:15})}${T(x+120,y+112,s,{m:1,s:11,f:'var(--muted)'})}`).join('')}
+</svg>`;
+
+/* ---------- Scene 4: evidence + ranking ---------- */
+const EVID=`<table class="tbl"><thead><tr><th>Rank</th><th>Strength</th><th>Evidence from the course</th></tr></thead><tbody>
+<tr><td>1</td><td>User testing</td><td>Ran the Second Plate test with 12 students; wrote the test notes (Week 5).</td></tr>
+<tr><td>2</td><td>Data use</td><td>Found the open data set used in our Project 1 report.</td></tr>
+<tr><td>3</td><td>Answering under pressure</td><td>Handled two of three panel questions on 27 October.</td></tr></tbody></table>`;
+
+/* ---------- Scene 6: mistakes ---------- */
+const FIX=`<table class="tbl"><thead><tr><th>Mistake</th><th>Fix</th></tr></thead><tbody>
+<tr><td>“I am hardworking and creative.”</td><td>Add evidence: what you did, when, and the result.</td></tr>
+<tr><td>“The job market is difficult” listed as a weakness</td><td>It is outside you: move it to Threats.</td></tr>
+<tr><td>Eight unranked items per box</td><td>Top 3 only, ranked by impact on your three-year plan.</td></tr></tbody></table>`;
+
+Lecture.mount({
+  id:'ent142-w11', week:11, clo:4, course:'ENT 142', short:'Week 11 · Reflective Assessment',
+  title:'Reflection and Reflective Assessment',
+  meta:'Hatton & Smith (1995), Gibbs (1988) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'How do you show what you learned, not only what you did?', minutes:5,
+    narration:[`Write reflection that goes deeper, and build a personal SWOT you can prove. <span class="mono">Topics: Levels of reflective writing · Personal SWOT · Evidence and ranking · How Project 2 is assessed. CLO 4.</span>`],
+    src:`Reading: Hatton, N., &amp; Smith, D. (1995). Reflection in teacher education: Towards definition and implementation. <em>Teaching and Teacher Education, 11</em>(1), 33–49. · Gibbs, G. (1988). <em>Learning by doing</em>. Further Education Unit.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Same event, two texts`,5,'l'],[`Four levels`,20,'l'],[`Personal SWOT`,10,'l'],[`Evidence and ranking`,15,'l'],[`Project 2 assessment`,10,'l'],[`Mistakes → fixes`,5,'l'],[`Draft your SWOT`,35,'a'],[`Check`,10,'c'],[`Takeaways`,5,'l']])} },
+
+  { nav:'Same event, two texts', title:'Same event, two texts', minutes:5,
+    narration:[`<b>Text 1:</b> “Our team presented on 27 October. I spoke first. Then we answered questions.”`,
+      `<b>Text 2:</b> “I spoke first, but I had not checked food-safety rules. I see two explanations: poor preparation, or a question outside our scope. My notes suggest the first.”`],
+    think:`Both describe the same event. Which one would earn more marks, and what does Text 2 do that Text 1 does not?` },
+
+  { nav:'Four levels', title:'Four levels of reflective writing', minutes:20, wide:true,
+    narration:[`Hatton and Smith (1995) found four types of writing, from describing to questioning the wider context. Only the last three count as reflection. Aim for dialogic, with some critical.`],
+    src:`Hatton, N., &amp; Smith, D. (1995). Reflection in teacher education. <em>Teaching and Teacher Education, 11</em>(1), 33–49.`,
+    fig:{label:`One event, four levels · press Play`, flow:[
+      {t:'Descriptive writing',s:'reports only',d:'“Our team presented Second Plate on 27 October and answered three questions.”'},
+      {t:'Descriptive reflection',s:'gives reasons',d:'“I could not answer the food-safety question because I had not researched it.”'},
+      {t:'Dialogic reflection',s:'weighs explanations',d:'“It may have been poor preparation, or a question outside our scope. My notes show we listed the risk but never checked it, so preparation is the likelier cause.”'},
+      {t:'Critical reflection',s:'wider context',d:'“A 5-dirham meal may still exclude the students who need it most. Who does our venture really serve?”'}],
+      html:STAIRS} },
+
+  { nav:'Personal SWOT', title:'Personal SWOT: internal vs external', minutes:10,
+    narration:[`A <b>personal SWOT</b> applies the business tool to you. Strengths and weaknesses are <b>internal</b>: you control them. Opportunities and threats are <b>external</b>: they come from your environment.`],
+    fig:{label:`Two questions decide the box`, html:SWOT, caption:`Ask: is it about me or my environment? Does it help or harm my goals?`} },
+
+  { nav:'Evidence and ranking', title:'Evidence for every item, then rank', minutes:15,
+    narration:[`Each item needs <b>evidence from the course</b>: something you did, made or received. Then rank the top 3 per box by impact on your three-year plan. Example (fictional student):`],
+    fig:{label:`Strengths · ranked, with evidence`, html:EVID, flow:[
+      {t:'List',s:'brainstorm',d:'Write every item you can think of in each box.'},
+      {t:'Prove',s:'evidence',d:'Keep only items with course evidence: a test, a report section, a pitch, feedback, a certificate.'},
+      {t:'Rank',s:'top 3',d:'Order by impact on your three-year goals. Number 1 matters most.'},
+      {t:'Link',s:'to Part C',d:'Each top item should lead to a goal in your action plan.'}]} },
+
+  { nav:'Project 2 assessment', title:'How Project 2 is assessed', minutes:10,
+    narration:[`Project 2 is an individual Reflective Portfolio: 30%, about 1500 words plus an evidence appendix, one Word file. Due <b>Tuesday 15 December, 23:59</b> on Moodle. Full guide: <a href="project-2.html">Project 2 guide</a>.`],
+    src:`Doran, G. T. (1981). There’s a S.M.A.R.T. way to write management’s goals and objectives. <em>Management Review, 70</em>(11).`,
+    fig:{label:`Four parts · press Play`, flow:[
+      {t:'Part A',s:'~600 words',d:'Course reflection on your Project 1 experience using Gibbs’ cycle (Week 10 draft).'},
+      {t:'Part B',s:'~400 words',d:'Ranked personal SWOT: top 3 per box, each with course evidence (today).'},
+      {t:'Part C',s:'~400 words',d:'Three-year entrepreneurship action plan: SMART goals per year, linked to your SWOT.'},
+      {t:'Part D',s:'appendix',d:'Evidence: prototype photos, pitch video link, feedback, certificates.'}]} },
+
+  { nav:'Mistakes → fixes', title:'Three common SWOT mistakes', kind:'review', minutes:5,
+    narration:[`A SWOT without evidence is a list of opinions.`],
+    fig:{label:`Mistake → fix`, html:FIX} },
+
+  { nav:'Draft your SWOT', title:'Activity · Draft your ranked personal SWOT', kind:'activity', minutes:35, wide:true,
+    narration:[`Top 3 per box, ranked. For each item write: <b>item → evidence</b>.`,
+      `This draft becomes <b>Part B</b> of Project 2 (about 400 words).`],
+    fig:{label:`Personal SWOT · saves in your browser`, build:el=>W.worksheet(el,{id:'ent142-w11-swot',title:'ENT 142 · Week 11 · Ranked personal SWOT',fields:[
+      {l:'Strengths (internal, helpful): 1, 2, 3',hint:'Item → evidence from the course.',rows:4},
+      {l:'Weaknesses (internal, harmful): 1, 2, 3',hint:'Item → evidence from the course.',rows:4},
+      {l:'Opportunities (external, helpful): 1, 2, 3',hint:'Item → where you found it.',rows:4},
+      {l:'Threats (external, harmful): 1, 2, 3',hint:'Item → where you found it.',rows:4},
+      {l:'Which number-1 item matters most for your next three years, and why?',rows:2}]})} },
+
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
+    narration:[`Five questions. One attempt each.`],
+    fig:{label:`Quiz · 5 questions`, build:el=>W.quiz(el,[
+      {q:`“The Q&A went badly. It may have been my preparation, or the question was outside our scope. My notes show we listed the risk but never checked it, so it was my preparation.” Which level is this?`,
+       o:[`Descriptive writing`,`Descriptive reflection`,`Dialogic reflection`,`Critical reflection`],a:2,
+       why:`It weighs two explanations and judges between them: dialogic. Descriptive writing gives no reasons. Descriptive reflection gives one reason without weighing alternatives. Critical reflection would question the wider social or ethical context.`},
+      {q:`Which sentence is critical reflection?`,
+       o:[`We sold 40 meals in the test week.`,`Sales were low because our poster was hard to read.`,`A fixed price may exclude the students most affected by food insecurity, so our model may serve the wrong group.`,`I could have tested a bigger poster or a social post instead.`],a:2,
+       why:`It questions who the venture serves in its wider social context. The first is descriptive writing. The second gives one reason: descriptive reflection. The fourth weighs alternatives: close to dialogic, but it stays inside the task.`},
+      {q:`A student writes: “A new campus incubator opens next semester.” Where does it go?`,
+       o:[`Strength`,`Weakness`,`Opportunity`,`Threat`],a:2,
+       why:`It is external (in the environment) and helpful: an opportunity. It is not a strength because the student does not own it. It is not harmful, so not a weakness or threat.`},
+      {q:`Which strength is best supported?`,
+       o:[`I am a natural leader.`,`Leadership: I chaired four team meetings and kept the minutes for Project 1.`,`Leadership: my friends say I am a good leader.`,`Leadership: I want to lead a company one day.`],a:1,
+       why:`Only the second gives course evidence (what you did, how often). The first has no evidence. The third is opinion, not course evidence. The fourth is a goal, not proof of a strength.`},
+      {q:`A student has five weaknesses. What is the best way to choose and order the top 3?`,
+       o:[`Alphabetical order`,`By how embarrassing each one is`,`By impact on the three-year action plan`,`By how easy each one is to fix`],a:2,
+       why:`Ranking by impact on your goals links Part B to Part C. Alphabetical order is arbitrary. Embarrassment is a feeling, not a criterion. Easy fixes may not be the ones that matter most.`}])} },
+
+  { nav:'Takeaways', title:'Takeaways', minutes:5,
+    narration:[`<ul><li>Move from describing to weighing explanations (dialogic) and questioning context (critical).</li><li>SWOT: internal = you, external = your environment.</li><li>Every SWOT item needs course evidence; rank the top 3 by impact.</li></ul>`,
+      `<b>Next week:</b> read Moore (1991) on the positioning statement; bring your Project 1 venture summary.`,
+      `<a class="btn" href="week-12.html">Next lecture · Week 12 · Elevator Pitch →</a>`] },
+  ]
+});
+</script>
+</body>
+</html>

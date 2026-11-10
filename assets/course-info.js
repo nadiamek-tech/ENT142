@@ -5,10 +5,11 @@ window.COURSE={
   instructor:'Eng. Nadia Mek',
   nav:[
     {key:'lectures',label:'Lectures',href:'lectures.html',icon:'lectures',blurb:'Each week: the lab topic, real examples, your project work.'},
-    {key:'project',label:'Project',href:'project-1.html',icon:'project',blurb:'The report explained, one page per section, with an example.'},
-    {key:'present',label:'Presentation',href:'presentation.html',icon:'present',blurb:'Your minute, slides, voice and the questions.'}
+    {key:'project2',label:'Project 2',href:'project-2.html',icon:'project',blurb:'Your reflective portfolio: four parts, a template to write on, an example.'},
+    {key:'pitch',label:'Video pitch',href:'activity-2.html',icon:'present',blurb:'Activity 2: script, timer, recording tips, marks.'}
   ],
-  assessPage:'project-1.html', assessLabel:'Project',
+  navExtra:[['project-1.html','Project 1','project']],
+  assessPage:'project-2.html', assessLabel:'Project 2',
   onlineAnswer:'No. Classes are on campus, in the lab, with your team. This site supports your classes: lab notes, the project guide and dates.',
 
   links:{
@@ -30,8 +31,10 @@ window.COURSE={
     {id:'p1p',name:'Project 1 · Presentation',short:'P1 Presentation',type:'Project',weight:'10%',date:'2026-10-27T09:00:00+04:00',time:false,
       covers:['1 minute each + 2 minutes Q&A per team','PowerPoint, same day as the report'],format:'Team, graded individually',clos:'2',
       revise:[['Presentation tips','presentation.html']]},
-    {id:'a2',name:'Activity 2 · Video pitch',short:'Activity 2',type:'Activity',weight:'10%',when:'Week 13',covers:['30–45 second video pitch','Requirements published later'],format:'Individual',clos:'2'},
-    {id:'p2',name:'Project 2 · Reflective Portfolio',short:'Project 2',type:'Project',weight:'30%',when:'Week 16',covers:['Individual reflective portfolio','Requirements published later'],format:'Individual',clos:'4'}
+    {id:'a2',name:'Activity 2 · Video pitch',short:'Activity 2',type:'Activity',weight:'10%',date:'2026-11-24T09:00:00+04:00',time:false,covers:['30–45 second phone video, face on camera','Hook, problem, solution, proof, ask'],format:'Individual',clos:'2',
+      submit:{link:'',due:'2026-11-24T23:59:00+04:00',dueText:'Tue 24 Nov'},revise:[['Video pitch guide','activity-2.html'],['Week 12 · Elevator Pitch','week-12.html']]},
+    {id:'p2',name:'Project 2 · Reflective Portfolio',short:'Project 2',type:'Project',weight:'30%',date:'2026-12-15T09:00:00+04:00',time:false,covers:['A · Reflection on Project 1 (Gibbs cycle)','B · Ranked personal SWOT with evidence','C · Three-year action plan, SMART goals','D · Evidence appendix · about 1500 words, one Word file'],format:'Individual',clos:'4',
+      submit:{link:'',due:'2026-12-15T23:59:00+04:00',dueText:'Tue 15 Dec'},revise:[['Project 2 guide','project-2.html'],['Week 10 · Reflection','week-10.html'],['Week 15 · Action plan','week-15.html']]}
   ],
 
   /* semester calendar: lec = [title, link] (no link = in preparation) */
@@ -41,17 +44,17 @@ window.COURSE={
     {w:'3', lec:['Lean Startups','week-03.html']},
     {w:'4', lec:['Sustainable Innovation and Entrepreneurship','week-04.html']},
     {w:'5', lec:['Prototyping','week-05.html']},
-    {w:'6', lec:'Industry Barriers', ev:['a1']},
-    {w:'7', lec:'Lean Model Canvas'},
-    {w:'8', lec:'Pitching Workshop'},
-    {w:'9', lec:'Presenting the Idea', ev:['p1','p1p']},
-    {w:'10', lec:'Reflection Workshop'},
-    {w:'11', lec:'Reflection and Reflective Assessment'},
-    {w:'12', lec:'Elevator Pitch'},
-    {w:'13', lec:'Elevator Pitch Workshop (Part 1)', ev:['a2']},
-    {w:'14', lec:'Elevator Pitch Workshop (Part 2)'},
-    {w:'15', lec:'Course Reflection (Part 1)'},
-    {w:'16', lec:'Course Reflection (Part 2)', ev:['p2']}
+    {w:'6', lec:['Industry Barriers','week-06.html'], ev:['a1']},
+    {w:'7', lec:['Lean Model Canvas','week-07.html']},
+    {w:'8', lec:['Pitching Workshop','week-08.html']},
+    {w:'9', lec:['Presenting the Idea','week-09.html'], ev:['p1','p1p']},
+    {w:'10', lec:['Reflection Workshop','week-10.html']},
+    {w:'11', lec:['Reflection and Reflective Assessment','week-11.html']},
+    {w:'12', lec:['Elevator Pitch','week-12.html']},
+    {w:'13', lec:['Elevator Pitch Workshop (Part 1)','week-13.html'], ev:['a2']},
+    {w:'14', lec:['Elevator Pitch Workshop (Part 2)','week-14.html']},
+    {w:'15', lec:['Course Reflection (Part 1)','week-15.html']},
+    {w:'16', lec:['Course Reflection (Part 2)','week-16.html'], ev:['p2']}
   ],
 
   clos:[
@@ -62,6 +65,8 @@ window.COURSE={
   ],
 
   faqExtra:[
+    ['What is Project 2?','An individual reflective portfolio (30%): a Gibbs reflection on Project 1, a ranked personal SWOT, a three-year action plan and an evidence appendix. Due Tue 15 Dec. <a href="project-2.html">See the guide →</a>'],
+    ['What is Activity 2?','A 30–45 second video pitch, recorded with your phone (10%). Due Tue 24 Nov. <a href="activity-2.html">See the guide →</a>'],
     ['What is Project 1?','A team report (4000 words) that turns your idea into a social enterprise and proves it with real data and a tested prototype. <a href="project-1.html">See the project guide, one section per page →</a>'],
     ['How do we register our team?','One person registers the whole team with the <a href="project-1.html#s2">Microsoft Form</a>, using a CUD account.'],
     ['Do we need a survey or interviews?','No. Your evidence is verified open data plus your own prototype test.'],

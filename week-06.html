@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 6 · Industry Barriers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#B42318;--wk-soft:rgba(180,35,24,.10);--wk-d:#FF8F85;--wk-soft-d:rgba(255,143,133,.14)}
+.forces{width:100%;max-width:560px;height:auto;display:block;margin:0 auto}
+.wall{width:100%;height:auto;display:block}
+</style>
+</head>
+<body>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W,B} = Lecture;
+
+/* ---------- Scene 3: Porter's five forces, threat of entry highlighted ---------- */
+const box=(x,y,w,t,s,on)=>`<rect x="${x}" y="${y}" width="${w}" height="54" rx="10" fill="${on?'var(--wk)':'var(--surface)'}" stroke="${on?'var(--wk)':'var(--line)'}" stroke-width="1.5"/><text x="${x+w/2}" y="${y+24}" text-anchor="middle" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="14" font-weight="700" fill="${on?'var(--on-wk)':'var(--ink)'}">${t}</text><text x="${x+w/2}" y="${y+42}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="${on?'var(--on-wk)':'var(--muted)'}">${s}</text>`;
+const FORCES=`<svg class="forces" viewBox="0 0 560 330" role="img" aria-label="Porter's five forces. Threat of new entrants at the top is highlighted. Supplier power left, buyer power right, threat of substitutes below, rivalry in the centre.">
+<defs><marker id="a6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+<g stroke="var(--muted)" stroke-width="1.5" marker-end="url(#a6)"><line x1="280" y1="76" x2="280" y2="128"/><line x1="280" y1="254" x2="280" y2="204"/><line x1="152" y1="165" x2="192" y2="165"/><line x1="408" y1="165" x2="368" y2="165"/></g>
+${box(170,20,220,'Threat of new entrants','barriers decide this',true)}
+${box(195,136,170,'Rivalry','existing competitors',false)}
+${box(10,138,140,'Supplier power','',false)}
+${box(410,138,140,'Buyer power','',false)}
+${box(170,256,220,'Threat of substitutes','',false)}
+</svg>`;
+
+/* ---------- Scene 5: ways around ---------- */
+const AROUND={
+ 'Real cases':[
+  ['Airbnb · around capital','Airbnb owns no hotels. Hosts supply the rooms; the platform matches them with guests. An asset-light model removes most of the capital barrier of the hotel industry.<br><br><span class="mono">Source: Airbnb, Inc. (2020). Form S-1. U.S. SEC.</span>'],
+  ['Dollar Shave Club · around distribution and brand','Shop shelves were held by large razor brands. Dollar Shave Club sold razors online by monthly subscription and reached buyers directly. Unilever acquired it in 2016.<br><br><span class="mono">Source: Unilever (2016). Unilever acquires Dollar Shave Club [press release].</span>'],
+  ['ADGM RegLab · around regulation','Abu Dhabi Global Market offers fintech start-ups a regulatory laboratory: a tailored licence to test a product for a limited period before full authorisation.<br><br><span class="mono">Source: ADGM Financial Services Regulatory Authority. Regulatory Laboratory (RegLab) guidance.</span>']],
+ 'Team tactics':[
+  ['Lower switching costs','Make changing easy: free set-up, import of old data, a free trial period.'],
+  ['Borrow a partner\'s strength','Use an existing licence, shelf or brand: sell through the campus café instead of opening your own outlet.'],
+  ['Start in a niche','Serve a small group the big firms ignore. Scale and brand matter less there.']]
+};
+
+Lecture.mount({
+  id:'ent142-w06', week:6, clo:1, course:'ENT 142', short:'Week 6 · Industry Barriers',
+  title:'Industry Barriers',
+  meta:'Byers et al. (2019). Ch. 4, 7 · Porter (2008) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'What stops a new venture from entering a market?', minutes:5,
+    narration:[`Every industry has walls. Today you map the walls around your venture and find a way around each one. <span class="mono">Topics: Threat of entry · Six barriers to entry · Ways around barriers · Barriers you build. CLO 1.</span>`],
+    src:`Reading: Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.), Ch. 4, 7. McGraw-Hill Education. · Porter, M. E. (2008). The five competitive forces that shape strategy. <em>Harvard Business Review</em>.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Think first`,5,'l'],[`Threat of entry`,10,'l'],[`Six barriers`,10,'l'],[`Ways around`,10,'l'],[`Barriers you build`,10,'l'],[`Mistake → fix`,10,'l'],[`Barrier map`,45,'a'],[`Check`,10,'c'],[`Takeaways`,5,'l']])} },
+
+  { nav:'Think first', title:'Café in a mall or home-cook app?', minutes:5,
+    narration:[`Two teams in Dubai. Team A opens a café in a shopping mall. Team B launches a WhatsApp ordering service for home cooks.`],
+    think:`Which team finds it harder to enter? Name two walls each team must climb.` },
+
+  { nav:'Threat of entry', title:'Barriers decide the threat of entry', minutes:10,
+    narration:[`Porter (2008) names five forces that shape profit in an industry. One is the <b>threat of new entrants</b>. <b>Barriers to entry</b> set its level: high barriers protect existing firms; low barriers let newcomers, like your team, in.`],
+    src:`Porter, M. E. (2008). The five competitive forces that shape strategy. <em>Harvard Business Review</em>.`,
+    fig:{label:`Porter's five forces`, html:FORCES, caption:`This week focuses on the highlighted force.`} },
+
+  { nav:'Six barriers', title:'Six barriers to entry', minutes:10,
+    narration:[`A <b>barrier to entry</b> is anything that makes entry slow or costly for a new firm. Six matter most for a student venture. Click each branch.`],
+    src:`Porter (2008) · Byers et al. (2019), Ch. 4, 7.`,
+    fig:{label:`Six barriers · click a branch`, mindmap:{center:'Barriers to entry',branches:[
+      {t:'Capital',items:['Money needed before the first sale','A hospital or an airline must build or buy first']},
+      {t:'Scale',items:['Large firms have a lower cost per unit','A national supermarket buys rice cheaper than a new grocer']},
+      {t:'Regulation and licensing',items:['Licences, permits, standards','Selling food needs a trade licence and food-safety approval']},
+      {t:'Switching costs',items:['What a customer loses by changing supplier','Changing bank means new cards, transfers, standing orders']},
+      {t:'Distribution access',items:['Reaching shelves, apps or channels','A new drink must win space on full supermarket shelves']},
+      {t:'Incumbent brand',items:['Trust and loyalty already won','Buyers stay with a known name when risk feels high']}]}} },
+
+  { nav:'Ways around', title:'Ways around a barrier', minutes:10,
+    narration:[`A barrier is a cost, not a stop sign. Successful entrants changed the model so the wall no longer applied. Click each case.`],
+    src:`Airbnb, Inc. (2020). Form S-1. U.S. SEC. · Unilever (2016). Unilever acquires Dollar Shave Club. · ADGM FSRA. Regulatory Laboratory (RegLab).`,
+    fig:{label:`Real cases and team tactics · click one`, build:el=>W.picker(el,AROUND,'Select a case.')} },
+
+  { nav:'Barriers you build', title:'Once inside, build your own barrier', minutes:10,
+    narration:[`After entry, the same walls protect you. Porter (2008) lists <b>demand-side benefits of scale</b>: more users attract more users. Trust, partnerships and data also make you hard to copy (Byers et al., 2019).`],
+    src:`Porter (2008) · Byers et al. (2019), Ch. 4.`,
+    fig:{label:`From entrant to defender · surplus-meal app`, flow:[
+      {t:'Enter low',s:'pick the lowest wall',d:'Start on one campus with cafés that already sell food: no kitchen, no new licence.'},
+      {t:'Learn fast',s:'real users',d:'Track meals saved and pick-up times every week.'},
+      {t:'Network',s:'two sides',d:'More cafés attract more students; more students attract more cafés.'},
+      {t:'Partnerships',s:'formal',d:'A signed agreement with the cafés makes it harder for a rival to join.'},
+      {t:'Defend',s:'your wall',d:'A rival now faces the barrier you built.'}]} },
+
+  { nav:'Mistake → fix', title:'Common mistakes and the fix', kind:'review', minutes:10,
+    narration:[`Check your barrier map against these three mistakes.`],
+    fig:{label:`Mistake → fix`, html:`<table class="tbl"><thead><tr><th>Mistake</th><th>Fix</th></tr></thead><tbody>
+      <tr><td>“We have no competitors, so no barriers.”</td><td>Barriers exist without rivals: licences, trust, access to customers.</td></tr>
+      <tr><td>Listing barriers with no way around</td><td>Pair each barrier with one action and its cost.</td></tr>
+      <tr><td>Treating all barriers as equal</td><td>Rate each one 1–3 and tackle the highest first.</td></tr></tbody></table>`} },
+
+  { nav:'Barrier map', title:'Activity · Barrier map for your team venture', kind:'activity', minutes:45, wide:true,
+    narration:[`Work as a team. Rate each barrier, then write one way around the three highest.`],
+    fig:{label:`Barrier map · saves in your browser`, flow:[
+      {t:'Industry',s:'one line',d:'Name the industry your venture enters.'},
+      {t:'Six barriers',s:'check each',d:'Capital, scale, regulation, switching costs, distribution, brand.'},
+      {t:'Rate',s:'1 low · 3 high',d:'How hard is each one for your team?'},
+      {t:'Way around',s:'top three',d:'One action for each of the three highest barriers.'},
+      {t:'Our wall',s:'after entry',d:'One barrier you will build to protect the venture.'}],
+      build:el=>W.worksheet(el,{id:'ent142-w06-barriers',title:'ENT 142 · Week 6 · Barrier map',fields:[
+      {l:'01 · Our venture and the industry it enters',rows:1},
+      {l:'02 · Ratings: capital, scale, regulation, switching costs, distribution, brand (1–3 each)',rows:2},
+      {l:'03 · Highest barrier and our way around it',rows:2},
+      {l:'04 · Second barrier and our way around it',rows:2},
+      {l:'05 · Third barrier and our way around it',rows:2},
+      {l:'06 · One barrier we will build after entry',rows:2}]})} },
+
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
+    narration:[`Five scenario questions. Your first click is final.`],
+    fig:{label:`Quiz · 5 questions`, build:el=>W.quiz(el,[
+      {q:'A start-up offers clinics free transfer of all patient records from their current software. Which barrier is it lowering?',
+       o:['Capital requirements','Switching costs','Distribution access','Regulation'],a:1,
+       why:'Free transfer cuts the effort a clinic loses by changing supplier: a switching cost. Capital is the entrant\'s own spending, not the buyer\'s. Distribution is about reaching buyers, not keeping them. Data rules still apply, so regulation is unchanged.'},
+      {q:'Dollar Shave Club sold razors online by subscription. Which barrier did this mainly bypass?',
+       o:['Economies of scale','Distribution access','Switching costs','Regulation'],a:1,
+       why:'Selling direct avoided shop shelves held by large brands: distribution access. Larger rivals kept their unit-cost advantage, so scale was not bypassed. Razor switching costs are already low. Razors face no special licence.'},
+      {q:'Which venture faces the highest capital barrier?',
+       o:['A WhatsApp tutoring service','A new private hospital','A campus second-hand book exchange','An Instagram shop for upcycled bags'],a:1,
+       why:'A hospital needs a building, equipment and staff before the first patient. The other three can start with a phone, a table or a free account.'},
+      {q:'A supermarket chain sells rice cheaper than a new grocer because it buys in huge volume. What should the new grocer do?',
+       o:['Cut prices below the chain','Serve a niche the chain serves poorly, such as local organic delivery','Ignore the barrier','Buy in large volume from day one'],a:1,
+       why:'A niche makes the scale advantage matter less. Cutting prices against a lower-cost rival loses money. Ignoring a barrier does not remove it. Buying large volumes on day one needs capital the grocer does not have.'},
+      {q:'A food-waste app has many cafés and many students; each side attracts the other. For a new rival this is…',
+       o:['A switching cost','A demand-side benefit of scale (network effect)','A capital requirement','A licensing rule'],a:1,
+       why:'Value grows with the number of users: Porter (2008) calls this a demand-side benefit of scale. A switching cost is what one user loses by changing. No large investment or licence is involved.'}])} },
+
+  { nav:'Takeaways', title:'Takeaways', minutes:5,
+    narration:[`<ul><li>A barrier to entry makes entry slow or costly for a new firm (Porter, 2008).</li><li>Rate each barrier and pair it with a way around: asset-light model, direct channel, sandbox, partner.</li><li>Once inside, build your own barrier: network, trust, partnerships.</li></ul>`,
+      `<b>Next week:</b> read Maurya (2012), <em>Running lean</em>, the Lean Canvas chapter. Bring your barrier map.`,
+      `<a class="btn" href="week-07.html">Next lecture · Week 7 · Lean Model Canvas →</a>`] },
+  ]
+});
+</script>
+</body>
+</html>
