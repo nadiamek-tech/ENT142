@@ -67,7 +67,7 @@ const allText=()=>{ const D=Deck.data();
   const A=GIBBS.map(([t],i)=>`${t}: ${D['g'+i]||''}`).join('\n');
   const B=SW.map(([k,t])=>`${t}:\n`+[0,1,2].map(i=>`${i+1}. ${D['sw-'+k+i]||''}`).join('\n')).join('\n');
   const C=YR.map(([y,d],i)=>`${y} (${d}):\nGoal 1: ${D['pl-'+i+'a']||''} [${D['pl-'+i+'al']||''}]\nGoal 2: ${D['pl-'+i+'b']||''} [${D['pl-'+i+'bl']||''}]`).join('\n');
-  return [['Part A · Reflection on my Project 1 experience (Gibbs, 1988)',A],['Part B · My ranked personal SWOT',B],['Part C · My three-year entrepreneurship action plan',C],['Part D · Evidence appendix',EVID.map(e=>'• '+e).join('\n')],['References','Gibbs, G. (1988). Learning by doing: A guide to teaching and learning methods. Further Education Unit.']]; };
+  return [['Part A · Reflection on my Project 1 experience (Gibbs, 1988)',A],['Part B · My ranked personal SWOT',B],['Part C · My three-year entrepreneurship action plan',C],['Part D · Evidence appendix',D.evText||EVID.map(e=>'• '+e).join('\n')],['References','Gibbs, G. (1988). Learning by doing: A guide to teaching and learning methods. Further Education Unit.']]; };
 
 const SL=[
  {nav:'What',html:()=>`<div><div class="kick">Project 2 · after Project 1</div><h2>Your Reflective Portfolio</h2>
@@ -78,7 +78,7 @@ const SL=[
  {nav:'Map',one:true,html:()=>`<div><div class="kick">Project 2 · the portfolio</div><h2>Four parts, in this order</h2>
   <p class="what">Click a part. Write on the template online, or switch to Example to see a finished one.</p>
   <div class="road">${[['A','Reflection','Gibbs (1988) · ≈ 600 words',2],['B','Ranked SWOT','top 3 per box · ≈ 400',3],['C','3-year plan','SMART · ≈ 400',4],['D','Evidence','appendix',5]].map(([n,t,s,g])=>`<button type="button" data-go="${g}"><span class="n">${n}</span><b>${t}</b><small>${s}</small></button>`).join('')}</div>
-  <div class="acts" style="margin-top:18px"><a class="b g" href="week-10.html">Week 10 · Reflection Workshop</a><a class="b g" href="week-11.html">Week 11 · Reflective assessment</a><a class="b g" href="week-15.html">Week 15 · Action plan</a></div></div>`},
+  <div class="acts" style="margin-top:18px"><a class="b" href="toolkit.html">Portfolio Toolkit →</a><a class="b g" href="week-10.html">Week 10 · Reflection Workshop</a><a class="b g" href="week-11.html">Week 11 · Reflective assessment</a><a class="b g" href="week-15.html">Week 15 · Action plan</a></div></div>`},
  {nav:'A',part:'A',html:()=>`<div><div class="kick">Part A <span class="mk">≈ 600 words</span></div><h2>Reflect on Project 1</h2>
   <p class="what">Use Gibbs' six stages. Describe briefly; spend most words on analysis and what you will change.</p>
   <p class="how-t">How to write it</p><ol class="how"><li>One short paragraph per stage, in the first person.</li><li>Analysis: explain why, using one idea from the course (cite it).</li><li>End with an action you will really take.</li></ol>

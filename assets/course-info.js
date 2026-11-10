@@ -8,7 +8,7 @@ window.COURSE={
     {key:'project2',label:'Project 2',href:'project-2.html',icon:'project',blurb:'Your reflective portfolio: four parts, a template to write on, an example.'},
     {key:'pitch',label:'Video pitch',href:'activity-2.html',icon:'present',blurb:'Activity 2: script, timer, recording tips, marks.'}
   ],
-  navExtra:[['roadmap.html','Roadmap','roadmap'],['project-1.html','Project 1','project']],
+  navExtra:[['roadmap.html','Roadmap','roadmap'],['toolkit.html','Toolkit','toolkit'],['project-1.html','Project 1','project']],
   assessPage:'project-2.html', assessLabel:'Project 2',
   onlineAnswer:'No. Classes are on campus, in the lab, with your team. This site supports your classes: lab notes, the project guide and dates.',
 

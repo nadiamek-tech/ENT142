@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Portfolio Toolkit · ENT 142</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="assets/portal.css">
+<link rel="stylesheet" href="assets/deck.css">
+<style>
+:root{--wk:#6D3FC0;--wk-soft:rgba(109,63,192,.10);--wk-d:#B79CF2;--wk-soft-d:rgba(183,156,242,.15)}
+body{font-family:var(--f-display);background:var(--bg);color:var(--ink);margin:0}
+.tk{max-width:1120px;margin:0 auto;padding:0 16px 80px}
+.tk h1{font-size:clamp(1.8rem,4vw,2.6rem);margin:24px 0 4px;letter-spacing:-.015em}
+.lead{color:var(--muted);margin:0 0 16px;font-size:1.05rem}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px;position:sticky;top:58px;z-index:5;background:var(--bg);padding:8px 0}
+.tabs button{font:700 .95rem var(--f-display);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:9px 14px;cursor:pointer;display:flex;gap:8px;align-items:center}
+.tabs button span{font:800 .72rem var(--f-mono);background:var(--wk-soft);color:var(--wk);border-radius:999px;padding:2px 7px}
+.tabs button[aria-selected=true]{background:var(--wk);border-color:var(--wk);color:var(--on-wk,#fff)}
+.tabs button[aria-selected=true] span{background:rgba(255,255,255,.22);color:inherit}
+.tool{display:none;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+.tool.on{display:grid}
+.tool h2{margin:0 0 6px;font-size:1.6rem}
+.tool .what{margin:0 0 12px;color:var(--muted)}
+.lbl2{font:700 .74rem var(--f-mono);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:10px 0 6px;display:block}
+select,input[type=text]{font:inherit;font-size:.95rem;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:100%;box-sizing:border-box}
+.ta{width:100%;box-sizing:border-box;font:500 .95rem/1.45 var(--f-display);padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);resize:vertical}
+.ta:focus,select:focus,input:focus{outline:none;border-color:var(--wk)}
+.checks{display:grid;gap:8px}
+.chk{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
+.chk i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:800 .8rem var(--f-display);font-style:normal;background:var(--line);color:var(--muted)}
+.chk.ok i{background:var(--good);color:#fff}
+.chk.warn i{background:#D98A1C;color:#fff}
+.chk b{display:block;font-size:.95rem}
+.chk small{color:var(--muted);font-size:.86rem}
+.meter{display:grid;gap:6px;margin:8px 0 14px}
+.meter .steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.meter .steps4 div{height:12px;border-radius:6px;background:var(--line)}
+.meter .steps4 div.on{background:var(--wk)}
+.meter .nm{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;font:600 .68rem var(--f-mono);color:var(--muted);text-align:center}
+.meter .nm span.on{color:var(--wk)}
+.stage-t{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.stage-t button{font:700 .82rem var(--f-display);border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:6px 11px;cursor:pointer}
+.stage-t button[aria-pressed=true]{border-color:var(--wk);background:var(--wk-soft)}
+.stage-t button.has::after{content:' ✓';color:var(--good)}
+.rank{display:grid;gap:8px}
+.ritem{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:var(--bg)}
+.ritem .n{width:26px;height:26px;border-radius:50%;background:var(--wk);color:var(--on-wk,#fff);display:grid;place-items:center;font:800 .8rem var(--f-display)}
+.ritem .t{font-size:.92rem}
+.ritem .t em{display:block;font-style:normal;font:600 .72rem var(--f-mono);color:#B4521E}
+.ritem .t em.ok{color:var(--good)}
+.ritem .mv{display:flex;gap:4px}
+.ritem .mv button{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font-weight:800}
+.ritem .mv button:disabled{opacity:.3;cursor:default}
+.qtabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.qtabs button{font:800 .9rem var(--f-display);border:0;border-radius:10px;padding:10px 6px;cursor:pointer;color:#1d2430;opacity:.6}
+.qtabs button[aria-pressed=true]{opacity:1;box-shadow:inset 0 0 0 2px #1d2430}
+.qs{background:#E5F4EC}.qw{background:#FCEBE4}.qo{background:#E6EEFB}.qt{background:#F6EFD9}
+.smart5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:12px 0}
+.smart5 div{border-radius:12px;padding:10px 6px;text-align:center;background:var(--bg);border:1.5px solid var(--line)}
+.smart5 div b{display:block;font:800 1.5rem var(--f-display);color:var(--muted)}
+.smart5 div small{font:600 .68rem var(--f-mono);color:var(--muted)}
+.smart5 div.ok{border-color:var(--good)}.smart5 div.ok b{color:var(--good)}
+.btn2{font:700 .92rem var(--f-display);border:1.5px solid var(--wk);background:var(--wk);color:var(--on-wk,#fff);border-radius:999px;padding:9px 16px;cursor:pointer}
+.btn2.g{background:transparent;color:var(--ink);border-color:var(--line)}
+.row2{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.note{font:600 .8rem var(--f-mono);color:var(--muted)}
+.ev{display:grid;gap:8px}
+.evi{display:grid;grid-template-columns:24px 1fr;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
+.evi input[type=checkbox]{width:20px;height:20px;accent-color:var(--wk);margin-top:2px}
+.evi b{font-size:.93rem}
+.evi small{display:block;color:var(--muted);font-size:.82rem}
+.evi input[type=text]{margin-top:6px;font-size:.88rem;padding:6px 8px}
+.evlist{display:grid;gap:8px}
+.evlist div{border-left:4px solid var(--wk);background:var(--wk-soft);border-radius:0 10px 10px 0;padding:8px 12px;font-size:.92rem}
+.budget{display:grid;gap:12px}
+.budget .r{display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;font-weight:700}
+.budget .tr{height:22px;border-radius:11px;background:var(--line);position:relative;overflow:hidden}
+.budget .tr i{position:absolute;left:0;top:0;bottom:0;background:var(--wk);border-radius:11px}
+.budget .tr i.over{background:#B4521E}
+.budget .r span:last-child{font:600 .85rem var(--f-mono);color:var(--muted);text-align:right}
+.big{font:800 2.4rem var(--f-display);color:var(--wk);line-height:1}
+@media (max-width:860px){.tool.on{grid-template-columns:minmax(0,1fr)}.tabs{top:52px}.smart5{grid-template-columns:repeat(5,minmax(0,1fr))}.budget .r{grid-template-columns:100px 1fr 74px}}
+</style>
+</head>
+<body>
+<div id="hub" data-cur="toolkit"></div>
+<main class="tk">
+  <h1>Portfolio Toolkit</h1>
+  <p class="lead">Five tools for Project 2. They share your notes with the <a href="project-2.html">Project 2 guide</a>, so your Word download includes everything.</p>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div id="tools"></div>
+</main>
+<footer class="pt-foot">This website is interactive course support. It does not replace classes, attendance or class activities.<br> <b>Eng. Nadia Mek</b></footer>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script>
+Portal.header('toolkit');
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const KEY='ent142-p2'; let D={};
+const load=()=>{ try{ D=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ D={}; } };
+const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(D)); }catch(e){} };
+const words=t=>(String(t||'').trim().match(/\S+/g)||[]).length;
+load();
+
+/* ---------- 1 · Reflection depth (Part A) ---------- */
+const G=[['Description','What happened?'],['Feelings','What did I think and feel?'],['Evaluation','What went well and what did not?'],['Analysis','Why did it happen?'],['Conclusion','What did I learn?'],['Action plan','What will I do next time?']];
+let gs=0;
+function depth(){
+  const all=G.map((_,i)=>D['g'+i]||''), txt=all.join(' '), n=words(txt), low=txt.toLowerCase();
+  const desc=words(all[0]), share=n?desc/n:0;
+  const why=/\b(because|so that|therefore|this meant|which meant|as a result|the reason|due to)\b/.test(low);
+  const cite=/\([A-Z][A-Za-z&.\s]+,?\s*(19|20)\d\d\)|\b[A-Z][a-z]+ (et al\.? )?\((19|20)\d\d\)/.test(txt);
+  const alt=/\b(however|on the other hand|alternatively|another reason|could also|might have|if we had)\b/.test(low);
+  const wider=/\b(society|community|ethic|sdg|stakeholder|industry|market|customers|future|career)\b/.test(low);
+  const act=/\b(i will|next time|i plan to|from now on)\b/.test(low);
+  let lvl=!n?0:(why&&alt&&wider&&cite)?4:(why&&alt)?3:why?2:1; if(n<150) lvl=Math.min(lvl,2); else if(n<300) lvl=Math.min(lvl,3);
+  const C=[
+   [n>=500?'ok':n?'warn':'',`Length: ${n} words`,'Target ≈ 600 for Part A.'],
+   [share&&share<=.25?'ok':desc?'warn':'',`Description is ${Math.round(share*100)}% of your text`,'Keep it under a quarter. Spend words on analysis.'],
+   [why?'ok':'','You explain why','Use "because", "this meant", "as a result".'],
+   [alt?'ok':'','You weigh another view','"However", "another reason could be", "if we had…".'],
+   [cite?'ok':'','You cite a course idea','e.g. (Gibbs, 1988) or Ries (2011).'],
+   [act?'ok':'','Your action is concrete','"Next time I will … by …".']];
+  return {lvl,C};
+}
+const T1={id:'reflect',tab:'Reflection depth',part:'A',html:()=>`<div><h2>Reflection depth</h2><p class="what">Write each Gibbs stage. The checker shows how deep your reflection reads.</p>
+  <div class="stage-t" id="gst">${G.map(([t],i)=>`<button type="button" data-i="${i}">${i+1} ${t}</button>`).join('')}</div>
+  <label class="lbl2" for="gta" id="gq"></label><textarea class="ta" id="gta" rows="8"></textarea>
+  <div class="row2"><button type="button" class="btn2 g" id="gprev">← Stage</button><button type="button" class="btn2" id="gnext">Next stage →</button></div></div>
+  <div><span class="lbl2">Level of your writing · Hatton &amp; Smith (1995)</span><div class="meter"><div class="steps4" id="gm"></div><div class="nm" id="gn"></div></div>
+  <div class="checks" id="gc"></div><p class="note" style="margin-top:10px">A guide, not a mark. Your instructor marks with the rubric.</p></div>`,
+  init(){ const ta=document.getElementById('gta');
+    const show=()=>{ document.querySelectorAll('#gst button').forEach((b,i)=>{ b.setAttribute('aria-pressed',i===gs); b.classList.toggle('has',!!(D['g'+i]||'').trim()); });
+      document.getElementById('gq').textContent=`${gs+1} · ${G[gs][0]} · ${G[gs][1]}`; ta.value=D['g'+gs]||''; ta.placeholder=G[gs][1]; upd(); };
+    const upd=()=>{ const {lvl,C}=depth(); const N=['Descriptive','Desc. reflection','Dialogic','Critical'];
+      document.getElementById('gm').innerHTML=N.map((_,i)=>`<div class="${i<lvl?'on':''}"></div>`).join('');
+      document.getElementById('gn').innerHTML=N.map((x,i)=>`<span class="${i===lvl-1?'on':''}">${x}</span>`).join('');
+      document.getElementById('gc').innerHTML=C.map(([s,b,sm])=>`<div class="chk ${s}"><i>${s==='ok'?'✓':s==='warn'?'!':'·'}</i><div><b>${esc(b)}</b><small>${esc(sm)}</small></div></div>`).join(''); };
+    document.getElementById('gst').onclick=e=>{ const b=e.target.closest('button'); if(b){ gs=+b.dataset.i; show(); } };
+    ta.oninput=()=>{ D['g'+gs]=ta.value; save(); upd(); document.querySelectorAll('#gst button')[gs].classList.toggle('has',!!ta.value.trim()); };
+    document.getElementById('gprev').onclick=()=>{ if(gs>0){ gs--; show(); } };
+    document.getElementById('gnext').onclick=()=>{ if(gs<5){ gs++; show(); } };
+    show(); }};
+
+/* ---------- 2 · SWOT ranker (Part B) ---------- */
+const Q=[['s','Strengths','qs'],['w','Weaknesses','qw'],['o','Opportunities','qo'],['t','Threats','qt']]; let qk='s';
+const proof=t=>/\d|feedback|mark|grade|score|week|project|pitch|prototype|report|test|certificate|activity/i.test(t);
+const T2={id:'swot',tab:'SWOT ranker',part:'B',html:()=>`<div><h2>SWOT ranker</h2><p class="what">Write three items per box, then move them up or down. Number 1 matters most for your plan.</p>
+  <div class="qtabs">${Q.map(([k,t,c])=>`<button type="button" class="${c}" data-k="${k}">${t}</button>`).join('')}</div>
+  <div class="rank" id="rk"></div></div>
+  <div><span class="lbl2">Proof check</span><div class="checks" id="rc"></div><p class="note" style="margin-top:10px">Proof = a mark, a number, feedback, or a course task you can point to.</p></div>`,
+  init(){ const draw=()=>{ document.querySelectorAll('.qtabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===qk));
+      document.getElementById('rk').innerHTML=[0,1,2].map(i=>{ const v=D['sw-'+qk+i]||''; return `<div class="ritem"><span class="n">${i+1}</span><div class="t"><input type="text" data-i="${i}" value="${esc(v)}" placeholder="Item ${i+1}, with proof"><em class="${v&&proof(v)?'ok':''}">${!v?'empty':proof(v)?'✓ has proof':'add proof'}</em></div><div class="mv"><button type="button" data-u="${i}" ${i===0?'disabled':''} aria-label="Move up">↑</button><button type="button" data-d="${i}" ${i===2?'disabled':''} aria-label="Move down">↓</button></div></div>`; }).join(''); checks(); };
+    const checks=()=>{
+      const all=Q.flatMap(([k])=>[0,1,2].map(i=>D['sw-'+k+i]||'')), filled=all.filter(x=>x.trim()).length, pr=all.filter(x=>x.trim()&&proof(x)).length;
+      const inside=/\b(market|economy|competitor|government|trend|industry)\b/i.test([0,1,2].map(i=>(D['sw-s'+i]||'')+(D['sw-w'+i]||'')).join(' '));
+      document.getElementById('rc').innerHTML=[[filled===12?'ok':filled?'warn':'',`${filled} of 12 items written`,'Three in each box.'],[pr===filled&&filled?'ok':pr?'warn':'',`${pr} of ${filled} have proof`,'Every item needs evidence from the course.'],[inside?'warn':filled?'ok':'',inside?'Check your S and W':'S and W are about you','Market, competitors and trends are O or T, not S or W.']]
+        .map(([s,b,sm])=>`<div class="chk ${s}"><i>${s==='ok'?'✓':s==='warn'?'!':'·'}</i><div><b>${esc(b)}</b><small>${esc(sm)}</small></div></div>`).join(''); };
+    const tool=document.getElementById('t-swot');
+    tool.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
+      if(b.dataset.k){ qk=b.dataset.k; draw(); return; }
+      const sw=(a,c)=>{ const x=D['sw-'+qk+a]||'', y=D['sw-'+qk+c]||''; D['sw-'+qk+a]=y; D['sw-'+qk+c]=x; save(); draw(); };
+      if(b.dataset.u) sw(+b.dataset.u,+b.dataset.u-1); if(b.dataset.d) sw(+b.dataset.d,+b.dataset.d+1); });
+    tool.addEventListener('input',e=>{ const t=e.target.closest('input[data-i]'); if(!t) return; D['sw-'+qk+t.dataset.i]=t.value; save(); const em=t.nextElementSibling; em.className=t.value&&proof(t.value)?'ok':''; em.textContent=!t.value?'empty':proof(t.value)?'✓ has proof':'add proof'; checks(); });
+    draw(); }};
+
+/* ---------- 3 · SMART goal checker (Part C) ---------- */
+const T3={id:'smart',tab:'SMART checker',part:'C',html:()=>`<div><h2>SMART goal checker</h2><p class="what">Type a goal. The letters turn green as it becomes SMART (Doran, 1981).</p>
+  <label class="lbl2" for="sg">My goal</label><textarea class="ta" id="sg" rows="3" placeholder="e.g. Complete the IBM SkillsBuild design thinking badge by March 2027"></textarea>
+  <label class="lbl2" for="sl">Links to my SWOT item</label><select id="sl"></select>
+  <label class="lbl2" for="sa">How realistic is it for me?</label><select id="sa"><option value="">Choose</option><option value="1">I can do it with what I have</option><option value="1">I can do it with some help</option><option value="0">I would need a lot I don't have</option></select>
+  <label class="lbl2" for="ss">Save it as</label><select id="ss">${[0,1,2].flatMap(y=>['a','b'].map((g,j)=>`<option value="${y}${g}">Year ${y+1} · Goal ${j+1}</option>`)).join('')}</select>
+  <div class="row2"><button type="button" class="btn2" id="sv">Save to my plan</button><span class="note" id="svm"></span></div></div>
+  <div><span class="lbl2">Your goal</span><div class="smart5" id="s5"></div><div class="checks" id="sc"></div></div>`,
+  init(){ const g=document.getElementById('sg'), sl=document.getElementById('sl'), sa=document.getElementById('sa');
+    const items=Q.flatMap(([k,t])=>[0,1,2].map(i=>[`${k.toUpperCase()}${i+1}`,D['sw-'+k+i]])).filter(x=>x[1]);
+    sl.innerHTML=`<option value="">Choose</option>`+items.map(([c,t])=>`<option value="${c}">${c} · ${esc(t.slice(0,60))}</option>`).join('')+(items.length?'':`<option value="" disabled>Fill your SWOT first (tool B)</option>`);
+    const run=()=>{ const t=g.value, l=t.toLowerCase();
+      const S=words(t)>=5&&/\b(complete|finish|launch|build|pitch|run|write|join|register|earn|apply|test|sell|publish|learn|attend|find|meet|start|create|record|present)\b/.test(l);
+      const M=/\d/.test(t)||/\b(one|two|three|four|five|ten|first)\b/.test(l);
+      const A=sa.value==='1', R=!!sl.value;
+      const T=/\b(by|before|until|within)\b/.test(l)&&(/\b(19|20)\d\d\b/.test(t)||/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|week|month|semester|year|graduation|summer)\w*/.test(l));
+      const L=[['S','Specific',S,'Start with an action verb: complete, launch, pitch…'],['M','Measurable',M,'Add a number someone could check.'],['A','Achievable',A,'Choose how realistic it is.'],['R','Relevant',R,'Link it to one SWOT item.'],['T','Time-bound',T,'Add "by" and a date.']];
+      document.getElementById('s5').innerHTML=L.map(([a,b,ok])=>`<div class="${ok?'ok':''}"><b>${a}</b><small>${b}</small></div>`).join('');
+      document.getElementById('sc').innerHTML=L.filter(x=>!x[2]).map(([a,b,ok,h])=>`<div class="chk"><i>${a}</i><div><b>${b}</b><small>${h}</small></div></div>`).join('')||`<div class="chk ok"><i>✓</i><div><b>SMART</b><small>Save it to your plan.</small></div></div>`; };
+    [g,sl,sa].forEach(x=>x.addEventListener('input',run)); [sl,sa].forEach(x=>x.addEventListener('change',run));
+    document.getElementById('sv').onclick=()=>{ const k=document.getElementById('ss').value; if(!g.value.trim()) return; D['pl-'+k]=g.value.trim(); if(sl.value) D['pl-'+k+'l']=sl.value; save(); document.getElementById('svm').textContent='Saved to Year '+(+k[0]+1)+'. See Part C in the guide.'; };
+    run(); }};
+
+/* ---------- 4 · Evidence bank (Part D) ---------- */
+const EV=[['Week 2','Idea scoring sheet'],['Week 5','Prototype photos and test notes'],['Week 6','Barrier map'],['Week 7','Lean canvas'],['Week 9','Project 1 report (my section)'],['Week 9','Presentation slides'],['Week 9','Feedback from the Q&A or instructor'],['Week 13','Activity 2 video pitch link'],['Week 13','Peer review of my pitch'],['Any','Certificate or badge completed'],['Any','Event, competition or workshop attended']];
+const T4={id:'evidence',tab:'Evidence bank',part:'D',html:()=>`<div><h2>Evidence bank</h2><p class="what">Tick what you have and say what it proves. The tool numbers your evidence for the appendix.</p><div class="ev" id="evb"></div></div>
+  <div><span class="lbl2">My appendix</span><div class="evlist" id="evl"></div><div class="row2"><button type="button" class="btn2 g" id="evc">Copy the list</button><span class="note" id="evm"></span></div></div>`,
+  init(){ const E=()=>{ try{ return JSON.parse(D.ev||'{}'); }catch(e){ return {}; } };
+    const draw=()=>{ const e=E(); document.getElementById('evb').innerHTML=EV.map(([w,t],i)=>`<label class="evi"><input type="checkbox" data-i="${i}" ${e[i]?'checked':''}><span><b>${t}</b><small>${w}</small>${e[i]?`<input type="text" data-p="${i}" value="${esc(e[i].p||'')}" placeholder="What does it prove? Which part uses it?">`:''}</span></label>`).join('');
+      list(); };
+    const list=()=>{ const e=E(); const ks=Object.keys(e).map(Number).sort((a,b)=>a-b);
+      const L=ks.map((i,n)=>`Evidence ${n+1} · ${EV[i][1]} (${EV[i][0]})${e[i].p?' · '+e[i].p:''}`);
+      D.evText=L.join('\n'); save();
+      document.getElementById('evl').innerHTML=L.length?L.map(x=>`<div>${esc(x)}</div>`).join(''):'<p class="note">Nothing ticked yet.</p>'; };
+    const tool=document.getElementById('t-evidence');
+    tool.addEventListener('change',ev=>{ const c=ev.target.closest('input[type=checkbox]'); if(!c) return; const e=E(); if(c.checked) e[c.dataset.i]={p:''}; else delete e[c.dataset.i]; D.ev=JSON.stringify(e); save(); draw(); });
+    tool.addEventListener('input',ev=>{ const p=ev.target.closest('input[data-p]'); if(!p) return; const e=E(); e[p.dataset.p]={p:p.value}; D.ev=JSON.stringify(e); list(); });
+    document.getElementById('evc').onclick=()=>{ const t=D.evText||''; const ok=()=>document.getElementById('evm').textContent='Copied.'; try{ navigator.clipboard.writeText(t).then(ok,()=>{}); }catch(e){} };
+    draw(); }};
+
+/* ---------- 5 · Word budget ---------- */
+const T5={id:'budget',tab:'Word budget',part:'Σ',html:()=>`<div><h2>Word budget</h2><p class="what">Your notes so far against each part's target. Notes grow when you write them into paragraphs.</p><div class="big" id="wt"></div><p class="note">of about 1500 words</p>
+  <div class="row2"><a class="btn2" href="project-2.html#s6" style="text-decoration:none">Download my portfolio →</a></div></div>
+  <div><span class="lbl2">Per part</span><div class="budget" id="wb"></div></div>`,
+  init(){ const P=[['A · Reflection',[0,1,2,3,4,5].map(i=>'g'+i),600],['B · SWOT',Q.flatMap(([k])=>[0,1,2].map(i=>'sw-'+k+i)),400],['C · Plan',[0,1,2].flatMap(i=>['pl-'+i+'a','pl-'+i+'b']),400]];
+    let tot=0; document.getElementById('wb').innerHTML=P.map(([t,ids,tg])=>{ const n=ids.reduce((a,id)=>a+words(D[id]),0); tot+=n; return `<div class="r"><span>${t}</span><span class="tr"><i class="${n>tg*1.15?'over':''}" style="width:${Math.min(100,n/tg*100)}%"></i></span><span>${n} / ${tg}</span></div>`; }).join('')+`<div class="r"><span>D · Evidence</span><span class="tr"><i style="width:${Math.min(100,Object.keys(JSON.parse(D.ev||'{}')).length/5*100)}%"></i></span><span>${Object.keys(JSON.parse(D.ev||'{}')).length} items</span></div>`;
+    document.getElementById('wt').textContent=tot; }};
+
+const TOOLS=[T1,T2,T3,T4,T5];
+document.getElementById('tabs').innerHTML=TOOLS.map(t=>`<button type="button" role="tab" data-t="${t.id}"><span>${t.part}</span>${t.tab}</button>`).join('');
+document.getElementById('tools').innerHTML=TOOLS.map(t=>`<section class="tool" id="t-${t.id}" role="tabpanel">${t.html()}</section>`).join('');
+const inited=new Set();
+function open(id){ load(); TOOLS.forEach(t=>{ const on=t.id===id; document.getElementById('t-'+t.id).classList.toggle('on',on); document.querySelector(`[data-t="${t.id}"]`).setAttribute('aria-selected',on); });
+  const t=TOOLS.find(x=>x.id===id); if(!inited.has(id)||id==='budget'||id==='smart'){ if(inited.has(id)) document.getElementById('t-'+id).innerHTML=t.html(); t.init(); inited.add(id); }
+  try{ history.replaceState(null,'','#'+id); }catch(e){} }
+document.getElementById('tabs').onclick=e=>{ const b=e.target.closest('button'); if(b) open(b.dataset.t); };
+open((location.hash.slice(1)&&TOOLS.some(t=>t.id===location.hash.slice(1)))?location.hash.slice(1):'reflect');
+</script>
+</body>
+</html>
