@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 16 · Course Reflection (Part 2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#BE185D;--wk-soft:rgba(190,24,93,.10);--wk-d:#F472B6;--wk-soft-d:rgba(244,114,182,.14)}
+.svgfig{width:100%;height:auto;display:block}
+.chk{display:grid;gap:6px;font-family:var(--f-display);font-size:.9rem;margin-bottom:16px}
+.chk label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);cursor:pointer}
+.chk input{accent-color:var(--wk);margin-top:3px;flex:none}
+.chk label:has(input:checked){border-color:var(--wk);background:var(--wk-soft)}
+</style>
+</head>
+<body>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W,B} = Lecture;
+const KEY = html=>`<div class="box exam"><b class="lbl">Remember for your project</b>${html}</div>`;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const F1='Schibsted Grotesk,Arial,sans-serif', FM='JetBrains Mono,monospace';
+
+/* ---------- Scene 2: four parts ---------- */
+const PARTS=`<svg class="svgfig" viewBox="0 0 640 170" role="img" aria-label="Portfolio bar: Part A Gibbs reflection about 600 words, Part B SWOT about 400, Part C action plan about 400, then Part D evidence appendix.">
+${[['A','Gibbs reflection','~600 words',0,600],['B','Ranked SWOT','~400 words',600,1000],['C','3-year plan','~400 words',1000,1400]].map(([p,t,w,a,b],i)=>{const x=20+a*0.36,wd=(b-a)*0.36;return `<rect x="${x}" y="40" width="${wd-4}" height="56" rx="6" fill="var(--wk)" opacity="${.65-i*.15}"/><text x="${x+12}" y="66" font-family="${F1}" font-size="18" font-weight="800" fill="var(--ink)">${p}</text><text x="${x+12}" y="86" font-family="${F1}" font-size="12" fill="var(--ink)">${t}</text><text x="${x+12}" y="116" font-family="${FM}" font-size="10" fill="var(--muted)">${w}</text>`}).join('')}
+<rect x="530" y="40" width="90" height="56" rx="6" fill="none" stroke="var(--wk)" stroke-width="2" stroke-dasharray="5 4"/><text x="542" y="66" font-family="${F1}" font-size="18" font-weight="800" fill="var(--ink)">D</text><text x="542" y="86" font-family="${F1}" font-size="12" fill="var(--ink)">Appendix</text><text x="542" y="116" font-family="${FM}" font-size="10" fill="var(--muted)">evidence</text>
+<text x="20" y="24" font-family="${FM}" font-size="10" fill="var(--muted)">about 1500 words in total · one Word file</text>
+<line x1="20" y1="140" x2="520" y2="140" stroke="var(--muted)"/><text x="270" y="160" text-anchor="middle" font-family="${FM}" font-size="10" fill="var(--muted)">reflection → self-analysis → plan</text>
+</svg>`;
+
+/* ---------- Scene 4: referencing ---------- */
+const REFS=`<table class="tbl"><thead><tr><th>In the text</th><th>Reference list (APA 7)</th></tr></thead><tbody>
+<tr><td>(Gibbs, 1988)</td><td>Gibbs, G. (1988). <em>Learning by doing: A guide to teaching and learning methods</em>. Further Education Unit.</td></tr>
+<tr><td>Doran (1981)</td><td>Doran, G. T. (1981). There's a S.M.A.R.T. way to write management's goals and objectives. <em>Management Review, 70</em>(11), 35–36.</td></tr>
+<tr><td>(Byers et al., 2019)</td><td>Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.</td></tr></tbody></table>`;
+
+/* ---------- Scene 5: career paths ---------- */
+const PATHS={
+ 'Start something':[
+  ['Founder','You start and own the venture and carry the risk.<br><br><b>Real case:</b> Careem was founded in Dubai in 2012 by Mudassir Sheikha and Magnus Olsson. Uber agreed to acquire it for US$3.1 billion in 2019. (Uber, 2019)'],
+  ['Social entrepreneur','You build a venture whose main goal is social impact, funded by what it sells.<br><br><b>Real case:</b> Muhammad Yunus and Grameen Bank shared the 2006 Nobel Peace Prize for microcredit. (NobelPrize.org)'],
+  ['Freelancer','You sell your own skills to several clients: design, data, content, coding.<br><br><b>In the UAE:</b> freelancing needs a permit or licence. Check the official guidance on u.ae before you start.']],
+ 'Join something':[
+  ['Intrapreneur','You innovate inside an existing company, with its resources.<br><br><b>Real case:</b> at 3M, Spencer Silver developed a low-tack adhesive and Art Fry used it for bookmarks; Post-it Notes followed. (3M)'],
+  ['Joining a startup','You join an early team: fast learning, many roles, more risk.<br><br><b>Where to look:</b> startup hubs such as in5 (Dubai) and Hub71 (Abu Dhabi) list the companies they support.']]
+};
+
+/* ---------- Scene 7: activity checklist ---------- */
+const CHECK=['Parts A–C have headings and are about 600 / 400 / 400 words','Part A follows all six Gibbs stages: description, feelings, evaluation, analysis, conclusion, action plan','Part B: top 3 per quadrant, ranked, each with course evidence','Part C: one SMART goal per year, each linked to a SWOT item','Part D: every item labelled (D1, D2…) and cited in the text','Pitch video link opens without a login request','In-text citations match the reference list (APA 7)','One Word file, named with your name and student ID'];
+function checklist(el){
+  const key='ent142-w16-check'; let st=[]; try{st=JSON.parse(store.get(key)||'[]')}catch(e){}
+  const box=document.createElement('div'); box.className='chk';
+  box.innerHTML=CHECK.map((c,i)=>`<label><input type="checkbox" data-i="${i}" ${st[i]?'checked':''}><span>${c}</span></label>`).join('')+`<div class="feedback" id="chk-o"></div>`;
+  el.appendChild(box);
+  const upd=()=>{ const n=st.filter(Boolean).length; box.querySelector('#chk-o').innerHTML=n===CHECK.length?'<b>Ready.</b> Submit on Moodle by Tuesday 15 December, 23:59.':`${n} of ${CHECK.length} done.`; store.set(key,JSON.stringify(st)); };
+  box.querySelectorAll('input').forEach(c=>c.addEventListener('change',()=>{ st[+c.dataset.i]=c.checked; upd(); }));
+  upd();
+}
+
+/* ---------- Scene 6: mistakes ---------- */
+const MIST=`<table class="tbl"><thead><tr><th>Mistake</th><th>Fix</th></tr></thead><tbody>
+<tr><td>Part A tells the story only</td><td>Spend most words on evaluation and analysis</td></tr>
+<tr><td>Appendix never mentioned in the text</td><td>Cite each item: "(see Appendix D2)"</td></tr>
+<tr><td>Video link asks for a login</td><td>Set sharing to "anyone with the link" and test it in a private window</td></tr></tbody></table>`;
+
+Lecture.mount({
+  id:'ent142-w16', week:16, clo:4, course:'ENT 142', short:'Week 16 · Course Reflection (Part 2)',
+  title:'Course Reflection (Part 2)',
+  meta:'Project 2 guide, Gibbs (1988), Byers et al (2019) · 2-hour lab',
+  scenes:[
+  { nav:'Start here', title:'Is your portfolio ready to submit?', minutes:5,
+    narration:[`Assemble, check and peer-review your Project 2 draft, then look at the paths ahead. <span class="mono">Topics: Four parts · Evidence appendix · Word count · Referencing · Submission checklist · Peer review · Entrepreneurial career paths. CLO 4.</span>`],
+    src:`Reading: <a href="project-2.html">Project 2 guide</a> · Gibbs, G. (1988). <em>Learning by doing: A guide to teaching and learning methods</em>. Further Education Unit. · Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Think first`,5,'l'],[`Four parts`,8,'l'],[`Evidence appendix`,8,'l'],[`Referencing`,7,'l'],[`Career paths`,10,'l'],[`Mistakes → fixes`,5,'l'],[`Checklist + peer review`,60,'a'],[`Check`,10,'c'],[`Takeaways`,2,'l']])} },
+
+  { nav:'Think first', title:'Thirty seconds with the marker', minutes:5,
+    narration:[`A marker opens your Word file.`],
+    think:`In the first 30 seconds, what must they see to trust that your portfolio is complete? Write three things in your head, then compare with the checklist later today.`,
+    fig:{label:`What the marker scans first`, flow:[
+      {t:'File',s:'name + format',d:'One Word file, clearly named.'},
+      {t:'Headings',s:'A · B · C · D',d:'Four parts, in order.'},
+      {t:'Evidence',s:'appendix',d:'Labelled items, cited in the text.'},
+      {t:'References',s:'APA 7',d:'Every citation in the list, every list item cited.'}]} },
+
+  { nav:'Four parts', title:'Assembling the four parts', minutes:8,
+    narration:[`The portfolio moves from reflection to self-analysis to plan. Part A: Gibbs reflection on Project 1. Part B: ranked SWOT. Part C: three-year plan. Part D: evidence. Keep within about 1500 words.`],
+    fig:{label:`Project 2 · word budget`, html:PARTS, caption:`Word count covers Parts A–C. The appendix holds evidence, not extra text.`} },
+
+  { nav:'Evidence appendix', title:'The evidence appendix', minutes:8,
+    narration:[`<b>Evidence</b> shows a claim is true. Label each item (D1, D2…), add a one-line caption with the date, and cite it in the text where you make the claim.`],
+    fig:{label:`Claim → label → item`, flow:[
+      {t:'Claim',s:'in Part B',d:'"Strength: testing prototypes with users."'},
+      {t:'Citation',s:'in the text',d:'"…we tested it with 12 students (see Appendix D2)."'},
+      {t:'Item',s:'in Part D',d:'D2 · Photo of the paper prototype test, Week 5.'},
+      {t:'Caption',s:'one line',d:'What it is, when, and your role.'}],
+      html:`<table class="tbl"><thead><tr><th>Item</th><th>Example</th></tr></thead><tbody><tr><td>D1</td><td>Prototype photos</td></tr><tr><td>D2</td><td>Pitch video link (Activity 2 or take 2)</td></tr><tr><td>D3</td><td>Written feedback from peers or the instructor</td></tr><tr><td>D4</td><td>Certificates (e.g. a free course badge)</td></tr></tbody></table>`} },
+
+  { nav:'Referencing', title:'Referencing', minutes:7,
+    narration:[`Every model you use needs a citation: Gibbs for Part A, Doran for Part C. Cite in the text, then list the full reference at the end in APA 7.`],
+    fig:{label:`In the text → reference list`, html:REFS} },
+
+  { nav:'Career paths', title:'Entrepreneurial career paths', minutes:10,
+    narration:[`Entrepreneurship is a way of working, not only a job title. Five paths; click each for a real case. Which one fits your Part C?`],
+    src:`Uber (2019, March 26). Uber to acquire Careem. Uber Newsroom. · NobelPrize.org. The Nobel Peace Prize 2006. · 3M. History of Post-it Notes. · UAE Government portal (u.ae). Freelancing.`,
+    fig:{label:`Five paths · click for a case`, build:el=>W.picker(el,PATHS,'Select a path.')} },
+
+  { nav:'Mistakes → fixes', title:'Three common mistakes', kind:'review', minutes:5,
+    narration:[`Check your draft against this table.`],
+    fig:{label:`Mistake → fix`, html:MIST} },
+
+  { nav:'Checklist + peer review', title:'Activity · Final checklist and peer review', kind:'activity', minutes:60, wide:true,
+    narration:[`Tick the checklist on your own draft first. Then swap drafts with a partner and review it with the rubric on the <a href="project-2.html">Project 2 guide</a>. Be specific and kind.`],
+    fig:{label:`Submission checklist · saves in your browser`, build:el=>{ checklist(el);
+      W.worksheet(el,{id:'ent142-w16-peer',title:'ENT 142 · Week 16 · Project 2 peer review',fields:[
+      {l:'Part A: which Gibbs stage is weakest, and why?',rows:2},
+      {l:'Part B: is every SWOT item backed by course evidence? Which one is not?',rows:2},
+      {l:'Part C: which goal is least SMART? Suggest a fix.',rows:2},
+      {l:'Part D and references: anything missing or not cited?',rows:2},
+      {l:'One change that would raise this portfolio the most',rows:2}]}); }} },
+
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
+    narration:[`Five scenarios. One click per question.`],
+    fig:{label:`5 questions`, build:el=>W.quiz(el,[
+      {q:'Rania\'s appendix has eight prototype photos, but her text never mentions them. What is the best fix?',
+       o:['Add more photos','Cite each item in the text where it supports a claim','Move the photos into Part A','Delete the appendix'],a:1,
+       why:'Evidence counts when it is linked to a claim, e.g. "(see Appendix D1)". More photos repeats the problem. Photos in Part A use up the word budget. Deleting removes Part D, which is required.'},
+      {q:'Khalid\'s draft: Part A 1100 words, Part B 250, Part C 150. What is the main problem?',
+       o:['It is too short overall','Parts B and C are under-developed against their ~400-word targets','Part A needs to be longer','Nothing; the total is about 1500'],a:1,
+       why:'The total is right, but the balance is wrong: B and C need about 400 each. It is not too short overall. Part A is already far above ~600. Meeting the total alone does not meet the part targets.'},
+      {q:'Which in-text citation is correct in APA 7 for Gibbs\' reflective cycle?',
+       o:['(Graham Gibbs, Learning by doing)','(Gibbs, 1988)','[Gibbs]','(Further Education Unit, 1988, Gibbs)'],a:1,
+       why:'APA 7 uses author surname and year. Full name and title belong in the reference list. Square brackets without a year are not APA. The publisher is not the author.'},
+      {q:'Hessa works at a bank and leads a new internal digital-wallet project using the bank\'s budget and team. Which path is this?',
+       o:['Founder','Freelancer','Intrapreneur','Social entrepreneur'],a:2,
+       why:'She innovates inside an existing company with its resources. A founder owns the venture and its risk. A freelancer sells skills to several clients. A social entrepreneur\'s main goal is social impact.'},
+      {q:'Which peer-review comment is most useful?',
+       o:['"Good work, well done."','"Part C is weak."','"Part C, year 2: add a number and a date, e.g. \'50 users by December 2028\'."','"I would write it differently."'],a:2,
+       why:'It names the part, the problem (Measurable, Time-related) and a fix. Praise alone gives no direction. "Weak" names no problem. A personal preference gives nothing to act on.'}])} },
+
+  { nav:'Takeaways', title:'Takeaways', minutes:2,
+    narration:[`<ul><li>Four parts, about 1500 words in A–C, evidence in D.</li><li>Every claim has evidence; every appendix item is cited in the text.</li><li>Choose a path for Part C: founder, intrapreneur, social entrepreneur, freelancer or startup team.</li></ul>`,
+      `<b>Project 2 due:</b> Tuesday 15 December, 23:59, on Moodle, as one Word file.`,
+      `<a class="btn" href="project-2.html">Project 2 guide →</a>`] },
+
+  ]
+});
+</script>
+</body>
+</html>

@@ -41,14 +41,14 @@ const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},se
 /* ---------- Scene 5: before / after slide ---------- */
 const SLIDES=`<svg class="slides" viewBox="0 0 640 230" role="img" aria-label="Two slides compared. Left: a crowded slide with a title and eight small bullet lines. Right: one headline, one large number and one short label.">
 <rect x="10" y="20" width="295" height="170" rx="8" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
-<text x="24" y="44" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="12" font-weight="700" fill="var(--ink)">Our Project</text>
+<text x="24" y="44"  font-size="12" font-weight="700" style="fill:var(--ink);font-family:var(--f-display)">Our Project</text>
 ${[0,1,2,3,4,5,6,7].map(i=>`<rect x="24" y="${58+i*15}" width="${200+((i*37)%60)}" height="5" rx="2" fill="var(--muted)" opacity=".55"/>`).join('')}
-<text x="157" y="212" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="var(--muted)">before · read, not seen</text>
+<text x="157" y="212" text-anchor="middle"  font-size="11" style="fill:var(--muted);font-family:var(--f-mono)">before · read, not seen</text>
 <rect x="335" y="20" width="295" height="170" rx="8" fill="var(--surface)" stroke="var(--wk)" stroke-width="2"/>
-<text x="350" y="48" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="15" font-weight="700" fill="var(--ink)">Cafés bin good food every night</text>
-<text x="482" y="125" text-anchor="middle" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="54" font-weight="800" fill="var(--wk)">40</text>
-<text x="482" y="152" text-anchor="middle" font-family="Schibsted Grotesk,Arial,sans-serif" font-size="13" fill="var(--muted)">meals counted in one week (example)</text>
-<text x="482" y="212" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="var(--muted)">after · one idea, seen at once</text>
+<text x="350" y="48"  font-size="15" font-weight="700" style="fill:var(--ink);font-family:var(--f-display)">Cafés bin good food every night</text>
+<text x="482" y="125" text-anchor="middle"  font-size="54" font-weight="800" style="fill:var(--wk);font-family:var(--f-display)">40</text>
+<text x="482" y="152" text-anchor="middle"  font-size="13" style="fill:var(--muted);font-family:var(--f-display)">meals counted in one week (example)</text>
+<text x="482" y="212" text-anchor="middle"  font-size="11" style="fill:var(--muted);font-family:var(--f-mono)">after · one idea, seen at once</text>
 </svg>`;
 
 /* ---------- Scene 8: 60-second timer + peer feedback grid ---------- */
