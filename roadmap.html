@@ -120,7 +120,7 @@ const SL={d:'Done',t:'Today',u:'Upcoming'};
 document.getElementById('rows').innerHTML=WEEKS.map(([ph,rows])=>`<tr class="ph"><td colspan="6">${ph}</td></tr>`+rows.map(([w,d,t,what,as,big])=>{ const s=status(w), dl=t==='—';
   return `<tr class="${s}"><td><b>${dl?'':w}</b></td><td>${d}</td><td>${dl?'<b>Deadline</b>':`<a href="week-${String(w).padStart(2,'0')}.html">${esc(t)}</a>`}</td><td>${esc(what)}</td><td>${as?`<span class="as${big?' big':''}">${esc(as)}</span>`:''}</td><td><span class="st ${s}">${SL[s]}</span></td></tr>`; }).join('')).join('');
 
-const SC=[['Activity 1','10%','Week 6','d'],['Project 1 · Report','40%','27 Oct','d'],['Project 1 · Presentation','10%','27 Oct','d'],['Activity 2 · Video pitch','10%','Tue 24 Nov','n','activity-2.html'],['Project 2 · Portfolio','30%','Mon 16 Nov','n','project-2.html']];
+const SC=[['Activity 1','10%','Week 6','d'],['Project 1 · Report','40%','27 Oct','d'],['Project 1 · Presentation','10%','27 Oct','d'],['Project 2 · Portfolio','30%','Mon 16 Nov','n','project-2.html'],['Activity 2 · Video pitch','10%','Tue 24 Nov','n','activity-2.html']];
 document.getElementById('score').innerHTML=SC.map(([t,w,d,s,l])=>`<div class="${s==='d'?'done':'next'}"><span class="w">${w}</span><b>${l?`<a href="${l}" style="color:inherit">${t} →</a>`:t}</b><small>${s==='d'?'✓ Done':'Due '+d}</small></div>`).join('');
 
 const STEPS=[
