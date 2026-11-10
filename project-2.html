@@ -61,7 +61,7 @@ const YR=[
  ['Year 3','2029',['Register the venture or join a startup as a product intern by graduation.','Guards T3'],['Build a portfolio of 3 tested projects.','Uses S2']]];
 const planHTML=()=>`<div class="yrs">${YR.map(([y,d,g1,g2],i)=>`<div><small>${y} · ${d}</small><b>Goal 1</b>${F('pl-'+i+'a',{ph:'SMART goal',rows:2,ex:g1[0]})}${F('pl-'+i+'al',{ph:'SWOT link, e.g. fixes W2',rows:1,ex:g1[1]})}<b>Goal 2</b>${F('pl-'+i+'b',{ph:'SMART goal',rows:2,ex:g2[0]})}${F('pl-'+i+'bl',{ph:'SWOT link, e.g. fixes W2',rows:1,ex:g2[1]})}</div>`).join('')}</div>`;
 
-const EVID=['Photos of our prototype and test (Project 1)','Link to my Activity 2 video pitch','Feedback I received (pitch, peer review, instructor)','Certificates or badges completed this semester','Any other proof I mention in Parts A–C'];
+const EVID=['Photos of our prototype and test (Project 1)','Feedback I received (pitch, peer review, instructor)','Any other proof I mention in Parts A–C'];
 
 const allText=()=>{ const D=Deck.data();
   const A=GIBBS.map(([t],i)=>`${t}: ${D['g'+i]||''}`).join('\n');
@@ -74,7 +74,7 @@ const SL=[
   <p class="what">Look back at what you did this semester, see where you stand, and plan your next three years as an entrepreneur.</p>
   <div class="chips"><span>Individual</span><span><b>30%</b></span><span>≈ <b>1500</b> words + evidence</span><span>Due <b>Tue 15 Dec</b></span><span>CLO <b>4</b></span></div>
   <div class="acts"><button type="button" class="b" data-go="1">See the four parts →</button></div></div>
-  <div class="vis"><span class="lbl">Your portfolio in four parts</span><div class="paper" style="grid-template-columns:1fr 1fr">${[['A','Reflection','Gibbs cycle on Project 1','≈ 600'],['B','Ranked SWOT','you, with evidence','≈ 400'],['C','3-year plan','SMART goals','≈ 400'],['D','Evidence','photos, links, feedback','appendix']].map(([n,t,s,w])=>`<div style="border:1.5px solid #e2d9c2;border-radius:10px;padding:12px"><b style="color:var(--wk);font-size:1.6rem">${n}</b><div style="font-weight:800">${t}</div><div style="color:#6b6455;font-size:.85rem">${s}</div><div class="wc">${w==='appendix'?'appendix':w+' words'}</div></div>`).join('')}</div></div>`},
+  <div class="vis"><span class="lbl">Your portfolio in four parts</span><div class="paper" style="grid-template-columns:1fr 1fr">${[['A','Reflection','Gibbs cycle on Project 1','≈ 600'],['B','Ranked SWOT','you, with evidence','≈ 400'],['C','3-year plan','SMART goals','≈ 400'],['D','Evidence','photos, feedback','appendix']].map(([n,t,s,w])=>`<div style="border:1.5px solid #e2d9c2;border-radius:10px;padding:12px"><b style="color:var(--wk);font-size:1.6rem">${n}</b><div style="font-weight:800">${t}</div><div style="color:#6b6455;font-size:.85rem">${s}</div><div class="wc">${w==='appendix'?'appendix':w+' words'}</div></div>`).join('')}</div></div>`},
  {nav:'Map',one:true,html:()=>`<div><div class="kick">Project 2 · the portfolio</div><h2>Four parts, in this order</h2>
   <p class="what">Click a part. Write on the template online, or switch to Example to see a finished one.</p>
   <div class="road">${[['A','Reflection','Gibbs (1988) · ≈ 600 words',2],['B','Ranked SWOT','top 3 per box · ≈ 400',3],['C','3-year plan','SMART · ≈ 400',4],['D','Evidence','appendix',5]].map(([n,t,s,g])=>`<button type="button" data-go="${g}"><span class="n">${n}</span><b>${t}</b><small>${s}</small></button>`).join('')}</div>
@@ -101,7 +101,7 @@ const SL=[
  {nav:'D',part:'D',html:()=>`<div><div class="kick">Part D <span class="mk">appendix · not counted</span></div><h2>Evidence appendix</h2>
   <p class="what">Proof for what you wrote in Parts A–C. Label each item and refer to it in your text (e.g. "see Evidence 2").</p>
   <p class="how-t">Tick what you have</p><ul class="ck">${EVID.map((e,i)=>`<li><label><input type="checkbox" data-ck="${i}"> ${e}</label></li>`).join('')}</ul></div>
-  <div class="vis"><span class="lbl">Example label</span><div class="paper"><b>Evidence 2 · Activity 2 video pitch</b><div style="color:#6b6455">Link: (your Moodle or OneDrive link) · recorded 24 Nov 2026 · 41 seconds</div><b>Evidence 3 · Peer feedback, Week 13</b><div style="color:#6b6455">"Strong hook; the price was not clear." · used in Part A, stage 3</div></div></div>`,
+  <div class="vis"><span class="lbl">Example label</span><div class="paper"><b>Evidence 2 · Project 1 report, market section</b><div style="color:#6b6455">Pages 4–5 · written by me · used in Part B, S2</div><b>Evidence 3 · Feedback on our Project 1 presentation</b><div style="color:#6b6455">"Clear problem; the price was not explained." · used in Part A, stage 3</div></div></div>`,
   after:el=>{ el.querySelectorAll('[data-ck]').forEach(c=>{ const k='ent142-p2-ck'+c.dataset.ck; try{ c.checked=localStorage.getItem(k)==='1'; }catch(e){} c.onchange=()=>{ try{ localStorage.setItem(k,c.checked?'1':'0'); }catch(e){} }; }); }},
  {nav:'Submit',html:()=>`<div><div class="kick">Tue 15 Dec <span class="mk">Project 2 · 30%</span></div><h2>Download, finish in Word, submit</h2>
   <ol class="how"><li>Download your portfolio as a Word file. It has all four parts and the heading structure.</li><li>Turn the notes into paragraphs, add references (APA) and your evidence.</li><li>Upload one Word file on Moodle.</li></ol>

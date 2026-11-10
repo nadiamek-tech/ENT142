@@ -56,7 +56,7 @@ const PATHS={
 };
 
 /* ---------- Scene 7: activity checklist ---------- */
-const CHECK=['Parts A–C have headings and are about 600 / 400 / 400 words','Part A follows all six Gibbs stages: description, feelings, evaluation, analysis, conclusion, action plan','Part B: top 3 per quadrant, ranked, each with course evidence','Part C: one SMART goal per year, each linked to a SWOT item','Part D: every item labelled (D1, D2…) and cited in the text','Pitch video link opens without a login request','In-text citations match the reference list (APA 7)','One Word file, named with your name and student ID'];
+const CHECK=['Parts A–C have headings and are about 600 / 400 / 400 words','Part A follows all six Gibbs stages: description, feelings, evaluation, analysis, conclusion, action plan','Part B: top 3 per quadrant, ranked, each with course evidence','Part C: one SMART goal per year, each linked to a SWOT item','Part D: every item labelled (D1, D2…) and cited in the text','In-text citations match the reference list (APA 7)','One Word file, named with your name and student ID'];
 function checklist(el){
   const key='ent142-w16-check'; let st=[]; try{st=JSON.parse(store.get(key)||'[]')}catch(e){}
   const box=document.createElement('div'); box.className='chk';
@@ -71,7 +71,7 @@ function checklist(el){
 const MIST=`<table class="tbl"><thead><tr><th>Mistake</th><th>Fix</th></tr></thead><tbody>
 <tr><td>Part A tells the story only</td><td>Spend most words on evaluation and analysis</td></tr>
 <tr><td>Appendix never mentioned in the text</td><td>Cite each item: "(see Appendix D2)"</td></tr>
-<tr><td>Video link asks for a login</td><td>Set sharing to "anyone with the link" and test it in a private window</td></tr></tbody></table>`;
+<tr><td>Photos with no caption</td><td>Add what it is, when, and your role</td></tr></tbody></table>`;
 
 Lecture.mount({
   id:'ent142-w16', week:16, clo:4, course:'ENT 142', short:'Week 16 · Course Reflection (Part 2)',
@@ -103,7 +103,7 @@ Lecture.mount({
       {t:'Citation',s:'in the text',d:'"…we tested it with 12 students (see Appendix D2)."'},
       {t:'Item',s:'in Part D',d:'D2 · Photo of the paper prototype test, Week 5.'},
       {t:'Caption',s:'one line',d:'What it is, when, and your role.'}],
-      html:`<table class="tbl"><thead><tr><th>Item</th><th>Example</th></tr></thead><tbody><tr><td>D1</td><td>Prototype photos</td></tr><tr><td>D2</td><td>Pitch video link (Activity 2 or take 2)</td></tr><tr><td>D3</td><td>Written feedback from peers or the instructor</td></tr><tr><td>D4</td><td>Certificates (e.g. a free course badge)</td></tr></tbody></table>`} },
+      html:`<table class="tbl"><thead><tr><th>Item</th><th>Example</th></tr></thead><tbody><tr><td>D1</td><td>Prototype photos</td></tr><tr><td>D2</td><td>Extract from your Project 1 report</td></tr><tr><td>D3</td><td>Written feedback from peers or the instructor</td></tr></tbody></table>`} },
 
   { nav:'Referencing', title:'Referencing', minutes:7,
     narration:[`Every model you use needs a citation: Gibbs for Part A, Doran for Part C. Cite in the text, then list the full reference at the end in APA 7.`],

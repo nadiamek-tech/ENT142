@@ -198,7 +198,7 @@ const T3={id:'smart',tab:'SMART checker',part:'C',html:()=>`<div><h2>SMART goal 
     run(); }};
 
 /* ---------- 4 · Evidence bank (Part D) ---------- */
-const EV=[['Week 2','Idea scoring sheet'],['Week 5','Prototype photos and test notes'],['Week 6','Barrier map'],['Week 7','Lean canvas'],['Week 9','Project 1 report (my section)'],['Week 9','Presentation slides'],['Week 9','Feedback from the Q&A or instructor'],['Week 13','Activity 2 video pitch link'],['Week 13','Peer review of my pitch'],['Any','Certificate or badge completed'],['Any','Event, competition or workshop attended']];
+const EV=[['Week 2','Idea scoring sheet'],['Week 5','Prototype photos and test notes'],['Week 6','Barrier map'],['Week 7','Lean canvas'],['Week 9','Project 1 report (my section)'],['Week 9','Presentation slides'],['Week 9','Feedback from the Q&A or instructor'],['Week 13','Peer review of my pitch'],['Any','Event, competition or workshop attended']];
 const T4={id:'evidence',tab:'Evidence bank',part:'D',html:()=>`<div><h2>Evidence bank</h2><p class="what">Tick what you have and say what it proves. The tool numbers your evidence for the appendix.</p><div class="ev" id="evb"></div></div>
   <div><span class="lbl2">My appendix</span><div class="evlist" id="evl"></div><div class="row2"><button type="button" class="btn2 g" id="evc">Copy the list</button><span class="note" id="evm"></span></div></div>`,
   init(){ const E=()=>{ try{ return JSON.parse(D.ev||'{}'); }catch(e){ return {}; } };
