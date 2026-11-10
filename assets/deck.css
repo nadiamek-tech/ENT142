@@ -123,3 +123,9 @@ details.rb>summary{cursor:pointer;font-weight:700;color:var(--wk)}
 .tlab{display:flex;justify-content:space-between;font:700 .9rem var(--f-mono);color:#4a4f5a}
 @media (max-width:860px){.yrs{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:420px){.swot{grid-template-columns:minmax(0,1fr)}}
+.rub details{border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:8px 12px;margin-bottom:6px;font-family:var(--f-display);font-size:.9rem}
+.rub summary{cursor:pointer;font-weight:700}
+.rub dl{margin:8px 0 0;display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 10px}
+.rub dt{font-family:var(--f-mono);font-size:.74rem;color:var(--wk)}
+.rub dd{margin:0}
+.rub .desc{color:var(--muted);margin:6px 0 0}
