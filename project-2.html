@@ -43,7 +43,7 @@ body{font-family:var(--f-display);background:var(--bg);color:var(--ink);margin:0
 .fmt button{font:700 .78rem var(--f-display);border:0;background:transparent;color:var(--pm);border-radius:8px;padding:6px 10px;cursor:pointer}
 .fmt button[aria-pressed=true]{background:var(--pa);color:#fff}
 .exmode .fmt{display:none}
-.q{margin:0 0 14px}
+.q{margin:0 0 14px;background:none;border:0;border-radius:0;padding:0}
 .q label{display:block;font-weight:700;font-size:.95rem;margin-bottom:4px;color:var(--pi)}
 .q label span{color:var(--pa);margin-right:6px}
 .para .q label{color:#B5AEC4;font-weight:600;font-size:.82rem}
@@ -125,7 +125,7 @@ input.fld{min-height:0;font-family:var(--f-display);font-weight:600}
     <button type="button" class="bbtn pri" id="dx">Save as Word</button>
     <button type="button" class="bbtn" id="pdf">Print or PDF</button>
     <button type="button" class="bbtn" id="save" title="Save everything (with screenshots) to a file, to continue on another device">Save file</button>
-    <label class="bbtn" title="Open a file you saved before">Open file<input type="file" id="open" accept=".json,application/json" hidden></label>
+    <label class="bbtn" title="Open a file you saved before">Open file<input type="file" id="open" hidden></label>
     <a class="bbtn" href="toolkit.html">Toolkit</a>
     <span class="prog" id="prog"></span>
   </div>
@@ -276,7 +276,10 @@ async function makeDocx(){
       k.push(new Paragraph({children:[new ImageRun({data:u,type:'jpg',transformation:{width:w,height:Math.round(m.h*w/m.w)}})]})); } }
   const doc=new Document({creator:V('name')||'ENT 142 student',title:'ENT 142 Project 2 Reflective Portfolio',styles:{default:{document:{run:{font:'Calibri',size:24}}}},sections:[{children:k}]});
   const blob=await Packer.toBlob(doc); dl(blob,`${(V('name')||'Student').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_')}_${V('sid')||'ID'}_ENT142_Project2.docx`); }
-function dl(blob,name){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },800); }
+async function dl(blob,name){ const touch=matchMedia('(pointer:coarse)').matches;
+  if(touch&&navigator.canShare){ try{ const f=new File([blob],name,{type:blob.type||'application/octet-stream'}); if(navigator.canShare({files:[f]})){ await navigator.share({files:[f],title:name}); return 'shared'; } }catch(e){ if(e&&e.name==='AbortError') return 'cancel'; } }
+  const a=document.createElement('a'); a.href=URL.createObjectURL(/\.json$/.test(name)?new Blob([blob],{type:'application/octet-stream'}):blob); a.download=name; a.rel='noopener'; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },60000); return 'dl'; }
+const INAPP=/MoodleMobile|FBAN|FBAV|Instagram|Line\/|; wv\)/i.test(navigator.userAgent);
 function printPDF(){ const r=document.getElementById('print-root');
   const b=blocks().map(x=>x.h?`<h3>${esc(x.h)}</h3>`:x.h3?`<h4>${esc(x.h3)}</h4>`:x.p?`<p>${esc(x.p)}</p>`:x.cap?`<p><i>${esc(x.cap)}</i></p>`:x.img?`<img src="${x.img.src}" alt="">`:x.table?`<table>${x.table.map((row,i)=>`<tr>${row.map(c=>`<${x.head.includes(i)?'th':'td'}>${esc(c).replace(/\n/g,'<br>')}</${x.head.includes(i)?'th':'td'}>`).join('')}</tr>`).join('')}</table>`:'').join('');
   r.innerHTML=`<style>#print-root{font:11pt/1.5 Georgia,serif;color:#000}#print-root h1{font:700 22pt Arial}#print-root h3{font:700 13pt Arial;margin:16pt 0 6pt}#print-root h4{font:700 11pt Arial;margin:8pt 0 2pt}#print-root table{border-collapse:collapse;width:100%}#print-root td,#print-root th{border:1px solid #888;padding:4pt;vertical-align:top;text-align:left}#print-root img{max-width:100%;max-height:120mm}#print-root .cv{min-height:240mm;display:flex;flex-direction:column;justify-content:center;break-after:page}</style>

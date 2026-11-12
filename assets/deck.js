@@ -15,8 +15,9 @@ function words(t){ return (String(t).trim().match(/\S+/g)||[]).length; }
 function doc(title,parts){
   const body=parts.map(([h,t])=>`<h2>${esc(h)}</h2>${String(t||'').split(/\n+/).map(p=>`<p>${esc(p)}</p>`).join('')}`).join('');
   const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>${esc(title)}</title><style>body{font-family:Calibri,Arial,sans-serif;font-size:12pt;line-height:1.5}h1{font-size:20pt}h2{font-size:14pt;margin-top:18pt}</style></head><body><h1>${esc(title)}</h1>${body}</body></html>`;
-  const blob=new Blob(['﻿',html],{type:'application/msword'}); const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob); a.download=title.replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_')+'.doc'; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },500);
+  const blob=new Blob(['﻿',html],{type:'application/msword'}), name=title.replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_')+'.doc';
+  if(matchMedia('(pointer:coarse)').matches&&navigator.canShare){ try{ const f=new File([blob],name,{type:blob.type}); if(navigator.canShare({files:[f]})){ navigator.share({files:[f],title:name}).catch(()=>{}); return; } }catch(e){} }
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },60000);
 }
 function mount({slides,key,onInput,all}){
   KEY=key; load();
