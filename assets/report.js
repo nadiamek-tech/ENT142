@@ -44,7 +44,7 @@ function cover(mode){
   const total=SECS.filter(c=>c.target).reduce((a,c)=>{ const x=section(c.key); return a+(x.ok?words(x.text):0); },0);
   return `<section class="rp-pg rp-cover"><img src="assets/cud-logo.png" alt="Canadian University Dubai" class="rp-logo">
     <div class="rp-ct"><span class="rp-k">Social Enterprise Project</span><h2>${e(name||'Venture name')}</h2><p>${e(V('idea')||'One line: what your venture is')}</p></div>
-    <dl class="rp-meta"><dt>Team</dt><dd>${mem.length?mem.map(e).join('<br>'):'Names and student IDs'}</dd><dt>Course</dt><dd>ENT 142 · Fundamentals of Innovation and Entrepreneurship 2</dd><dt>Instructor</dt><dd>Eng. Nadia Mek</dd><dt>Word count</dt><dd>${total} of 4000 ${mode==='edit'?'(drafts; expand in Word)':''}</dd></dl>
+    <dl class="rp-meta"><dt>Team</dt><dd>${mem.length?mem.map(e).join('<br>'):'Names and student IDs'}</dd><dt>Course</dt><dd>ENT 142 · Fundamentals of Innovation and Entrepreneurship 2</dd><dt>Instructor</dt><dd>Nadia</dd><dt>Word count</dt><dd>${total} of 4000 ${mode==='edit'?'(drafts; expand in Word)':''}</dd></dl>
     ${mode==='edit'?`<a class="rp-w" href="report-lab.html#s1">Edit the venture card →</a>`:''}</section>`;
 }
 function contents(){

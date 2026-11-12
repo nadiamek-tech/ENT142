@@ -2,7 +2,7 @@
    To update the site, edit only this file. Empty links show "coming soon" until you paste them. */
 window.COURSE={
   code:'ENT 142', title:['Innovation &','Entrepreneurship 2'], eyebrow:'ENT 142 · Fall 2026 · Lab · on campus',
-  instructor:'Eng. Nadia Mek',
+  instructor:'Nadia',
   nav:[
     {key:'lectures',label:'Lectures',href:'lectures.html',icon:'lectures',blurb:'Each week: the lab topic, real examples, your project work.'},
     {key:'project',label:'Project 1',href:'project-1.html',icon:'project',blurb:'Team report: done 27 Oct.'},
