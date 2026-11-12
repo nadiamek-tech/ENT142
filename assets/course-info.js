@@ -34,7 +34,7 @@ window.COURSE={
       covers:['1 minute each + 2 minutes Q&A per team','PowerPoint, same day as the report'],format:'Team, graded individually',clos:'2',
       revise:[['Presentation tips','presentation.html']]},
     {id:'a2',name:'Activity 2 · Video pitch',short:'Activity 2',type:'Activity',weight:'10%',date:'2026-11-24T09:00:00+04:00',time:false,covers:['30–45 second phone video, face on camera','Hook, problem, solution, proof, ask'],format:'Individual',clos:'2',
-      submit:{link:'',due:'2026-11-24T23:59:00+04:00',dueText:'Tue 24 Nov'},revise:[['Video pitch guide','activity-2.html'],['Week 12 · Elevator Pitch','week-12.html']]},
+      submit:{link:'https://my.cud.ac.ae/mod/assign/view.php?id=23276',due:'2026-11-24T23:59:00+04:00',dueText:'Tue 24 Nov'},revise:[['Video pitch guide','activity-2.html'],['Week 12 · Elevator Pitch','week-12.html']]},
     {id:'p2',name:'Project 2 · Reflective Portfolio',short:'Project 2',type:'Project',weight:'30%',date:'2026-11-16T09:00:00+04:00',time:false,covers:['A · Reflection on Project 1 (Gibbs cycle)','B · Ranked personal SWOT with evidence','C · Three-year action plan, SMART goals','D · Evidence appendix · about 1500 words, one Word file'],format:'Individual',clos:'4',
       submit:{link:'https://my.cud.ac.ae/mod/assign/view.php?id=22821',due:'2026-11-16T23:59:00+04:00',dueText:'Mon 16 Nov'},revise:[['Project 2 guide','project-2.html'],['Week 10 · Reflection','week-10.html'],['Week 15 · Action plan','week-15.html']]}
   ],
