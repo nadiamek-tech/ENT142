@@ -4,7 +4,7 @@
 window.ENT142_REG='https://forms.cloud.microsoft/r/B905PpvTTv';  /* ENT 142 Project 1 progress & team form (CUD account) */
 window.ENT142_KB=[
 /* ---------- course & assessment ---------- */
-{q:'What is Activity 2?',k:'activity 2 video pitch elevator 30 45 seconds record phone',a:'A 30–45 second video pitch to camera (10%, individual): hook, problem, solution, proof, ask. Due Tue 24 Nov on Moodle.',l:'activity-2.html'},
+{q:'What is Activity 2?',k:'activity 2 pitch case analysis video elevator real pitch',a:'An in-class pitch case analysis (10%, individual): choose one of 20 real pitches, analyse hook, problem, solution, proof and ask, judge it and reflect. Save as Word and submit on Moodle by Tue 24 Nov, 23:59.',l:'activity-2.html'},
 {q:'How is Project 2 marked?',k:'project 2 marks rubric portfolio grading',a:'Out of 100, adjusted to 30%: Reflection 30, SWOT 25, Action plan 25, Evidence and writing 20.',l:'project-2.html#submit'},
 {q:'What is the Gibbs reflective cycle?',k:'gibbs reflective cycle reflection stages description feelings evaluation analysis conclusion action',a:'Six stages: description, feelings, evaluation, analysis, conclusion, action plan (Gibbs, 1988). Use it for Part A of Project 2.',l:'week-10.html'},
 {q:'What is a SMART goal?',k:'smart goal specific measurable achievable relevant time action plan',a:'Specific, Measurable, Achievable, Relevant, Time-bound (Doran, 1981). Each goal in Part C of Project 2 must be SMART.',l:'week-15.html'},
@@ -23,7 +23,7 @@ window.ENT142_KB=[
 {q:'How do we register our team?',k:'register registration team sign up form group list',a:'Fill in the ENT 142 Project 1 Progress & Team form with your CUD account: https://forms.cloud.microsoft/r/B905PpvTTv',l:'project-1.html#s2'},
 {q:'How big is a team?',k:'team size group members how many people',a:'4–5 members, each with a lead role.',l:'week-02.html#s4'},
 {q:'How do I prepare my presentation?',k:'presentation tips oral skills speak slides practice timer nervous',a:'Plan your 60 seconds with the practice timer, one idea per slide, and prepare answers to the likely questions.',l:'presentation.html#s1'},
-{q:'What are the upcoming projects?',k:'upcoming project 2 portfolio activity 1 activity 2 video pitch requirements',a:'Next: Activity 2, a 30–45 second video pitch (10%, due Tue 24 Nov), and Project 2, the Reflective Portfolio (30%, due Mon 16 Nov).',l:'project-2.html'},
+{q:'What are the upcoming projects?',k:'upcoming project 2 portfolio activity 1 activity 2 video pitch requirements',a:'Next: Project 2, the Reflective Portfolio (30%, due Mon 16 Nov), and Activity 2, a pitch case analysis (10%, due Tue 24 Nov).',l:'project-2.html'},
 {q:'How does the presentation work?',k:'presentation pitch 1b slides minute q&a individual',a:'Worth 10%. 1-minute individual presentation plus 2 minutes of Q&A, 7 minutes per group. Graded individually. On 27 October, the same day as the report.',l:'presentation.html#s0'},
 {q:'How is the report marked?',k:'rubric marking criteria marks how graded report',a:'Knowledge, analysis, creativity and evaluation of your proposal. Both rubric versions are in the lab.',l:'report-lab.html#s13'},
 {q:'What is Project 2?',k:'project 2 reflective portfolio swot action plan',a:'An individual reflective portfolio (30%, about 1500 words + evidence): A Gibbs reflection on Project 1, B ranked personal SWOT with evidence, C three-year action plan with SMART goals, D evidence appendix. Due Mon 16 Nov on Moodle. Build it in the Project 2 builder and save it as Word or PDF.',l:'project-2.html'},

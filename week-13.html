@@ -92,9 +92,9 @@ Lecture.mount({
   meta:'Activity 2 guide, Kawasaki (2005) · 2-hour lab',
   scenes:[
   { nav:'Start here', title:'How do you record a 45-second pitch with only a phone?', minutes:5,
-    narration:[`Set up, record and review take 1 of your Activity 2 video pitch. <span class="mono">Topics: Recording with a phone · Framing · Light · Sound · Eye line · One clean take · File size and format · Peer review. CLO 2.</span>`],
-    src:`Reading: <a href="activity-2.html">Activity 2 guide</a> · Kawasaki, G. (2005). <em>The 10/20/30 rule of PowerPoint</em>. guykawasaki.com · Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
-    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Think first`,5,'l'],[`Camera position`,10,'l'],[`The room`,8,'l'],[`One clean take`,8,'l'],[`File and format`,5,'l'],[`Mistakes → fixes`,5,'l'],[`Record take 1 + peer review`,62,'a'],[`Check`,10,'c'],[`Takeaways`,2,'l']])} },
+    narration:[`Record a practice take of your pitch (not graded), then do Activity 2: analyse a real pitch. <span class="mono">Topics: Recording with a phone · Framing · Light · Sound · Eye line · One clean take · File size and format · Peer review. CLO 2.</span>`],
+    src:`Reading: <a href="activity-2.html">Activity 2 guide</a> · <a href="pitch-practice.html">Pitch practice</a> · Kawasaki, G. (2005). <em>The 10/20/30 rule of PowerPoint</em>. guykawasaki.com · Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
+    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Think first`,5,'l'],[`Camera position`,10,'l'],[`The room`,8,'l'],[`One clean take`,8,'l'],[`File and format`,5,'l'],[`Mistakes → fixes`,5,'l'],[`Practice take`,22,'a'],[`Activity 2 · pitch case analysis`,40,'a'],[`Check`,10,'c'],[`Takeaways`,2,'l']])} },
 
   { nav:'Think first', title:'Same words, two videos', minutes:5,
     narration:[`Founders pitch on video too. Y Combinator asks applicants for a one-minute founder video.`],
@@ -129,14 +129,14 @@ Lecture.mount({
     narration:[`Check your take 1 against this table before peer review.`],
     fig:{label:`Mistake → fix`, html:MIST} },
 
-  { nav:'Record take 1', title:'Activity · Record take 1 and peer review', kind:'activity', minutes:62, wide:true,
-    narration:[`Work in pairs. Record each other with your own phones, then mark your partner's take 1 out of 10. Be specific.`],
+  { nav:'Practice take', title:'Practice · Record a take and peer review', kind:'activity', minutes:22, wide:true,
+    narration:[`Work in pairs. Record each other with your own phones and give one specific change. Not graded. Then open <a href="activity-2.html">Activity 2 · pitch case analysis</a> (40 min, 10%).`],
     fig:{label:`Pairs · record, swap, review`, flow:[
-      {t:'Key words',s:'5 min',d:'Five keywords on a card: hook, problem, solution, proof, ask.'},
-      {t:'Set up',s:'5 min',d:'Framing, light, sound, eye line. Use the partner as the camera holder.'},
-      {t:'Record',s:'15 min',d:'Two rehearsals, then take 1. One clean take each.'},
-      {t:'Swap',s:'15 min',d:'Your partner records you.'},
-      {t:'Review',s:'22 min',d:'Watch together. Mark with the rubric. Write one change for take 2.'}],
+      {t:'Key words',s:'2 min',d:'Five keywords on a card: hook, problem, solution, proof, ask.'},
+      {t:'Set up',s:'3 min',d:'Framing, light, sound, eye line. Use the partner as the camera holder.'},
+      {t:'Record',s:'6 min',d:'One rehearsal, then one clean take.'},
+      {t:'Swap',s:'6 min',d:'Your partner records you.'},
+      {t:'Review',s:'5 min',d:'Watch together. Write one change for next week.'}],
       html:RUBRIC,
       build:el=>W.worksheet(el,{id:'ent142-w13-take1',title:'ENT 142 · Week 13 · Take 1 peer review',fields:[
       {l:'Partner name and take 1 length (seconds)',rows:1},
@@ -167,7 +167,7 @@ Lecture.mount({
   { nav:'Takeaways', title:'Takeaways', minutes:2,
     narration:[`<ul><li>Lens at eye level, face the light, quiet soft room.</li><li>One clean take: Hook → Problem → Solution → Proof → Ask, 30–45 seconds.</li><li>1080p MP4, clear file name, tested before upload.</li></ul>`,
       `<b>Activity 2 due:</b> Tuesday 24 November, 23:59, on Moodle. <a href="activity-2.html">Activity 2 guide</a>.`,
-      `<b>Next week:</b> bring your submitted video and your partner's peer-review marks.`,
+      `<b>Next week:</b> bring your practice video for live Q&amp;A practice.`,
       `<a class="btn" href="week-14.html">Next lecture · Week 14 · Elevator Pitch Workshop (Part 2) →</a>`] },
 
   ]

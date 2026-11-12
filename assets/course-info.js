@@ -8,7 +8,7 @@ window.COURSE={
     {key:'project',label:'Project 1',href:'project-1.html',icon:'project',blurb:'Team report: done 27 Oct.'},
     {key:'present',label:'P1 Presentation',href:'presentation.html',icon:'present',blurb:'Individual presentation: done 27 Oct.'},
     {key:'project2',label:'Project 2',href:'project-2.html',icon:'project',blurb:'Reflective Portfolio builder: write, save as Word or PDF, submit.'},
-    {key:'pitch',label:'Video pitch',href:'activity-2.html',icon:'present',blurb:'Activity 2: script, timer, recording tips, marks.'}
+    {key:'pitch',label:'Activity 2',href:'activity-2.html',icon:'present',blurb:'Activity 2: pitch case analysis. Choose 1 of 20 real pitches, analyse, reflect.'}
   ],
   navExtra:[['roadmap.html','Roadmap','roadmap'],['toolkit.html','Toolkit','toolkit']],
   assessPage:'project-2.html', assessLabel:'Project 2',
@@ -33,8 +33,8 @@ window.COURSE={
     {id:'p1p',name:'Project 1 · Presentation',short:'P1 Presentation',type:'Project',weight:'10%',date:'2026-10-27T09:00:00+04:00',time:false,
       covers:['1 minute each + 2 minutes Q&A per team','PowerPoint, same day as the report'],format:'Team, graded individually',clos:'2',
       revise:[['Presentation tips','presentation.html']]},
-    {id:'a2',name:'Activity 2 · Video pitch',short:'Activity 2',type:'Activity',weight:'10%',date:'2026-11-24T09:00:00+04:00',time:false,covers:['30–45 second phone video, face on camera','Hook, problem, solution, proof, ask'],format:'Individual',clos:'2',
-      submit:{link:'https://my.cud.ac.ae/mod/assign/view.php?id=23276',due:'2026-11-24T23:59:00+04:00',dueText:'Tue 24 Nov'},revise:[['Video pitch guide','activity-2.html'],['Week 12 · Elevator Pitch','week-12.html']]},
+    {id:'a2',name:'Activity 2 · Pitch case analysis',short:'Activity 2',type:'Activity',weight:'10%',date:'2026-11-24T09:00:00+04:00',time:false,covers:['One of 20 real pitches: TV, investor deck, launch video, around us','Hook, problem, solution, proof, ask · verdict · reflection'],format:'Individual',clos:'2',
+      submit:{link:'https://my.cud.ac.ae/mod/assign/view.php?id=23276',due:'2026-11-24T23:59:00+04:00',dueText:'Tue 24 Nov'},revise:[['Activity 2 guide','activity-2.html'],['Pitch practice','pitch-practice.html'],['Week 12 · Elevator Pitch','week-12.html']]},
     {id:'p2',name:'Project 2 · Reflective Portfolio',short:'Project 2',type:'Project',weight:'30%',date:'2026-11-16T09:00:00+04:00',time:false,covers:['A · Reflection on Project 1 (Gibbs cycle)','B · Ranked personal SWOT with evidence','C · Three-year action plan, SMART goals','D · Evidence appendix · about 1500 words, one Word file'],format:'Individual',clos:'4',
       submit:{link:'https://my.cud.ac.ae/mod/assign/view.php?id=22821',due:'2026-11-16T23:59:00+04:00',dueText:'Mon 16 Nov'},revise:[['Project 2 guide','project-2.html'],['Week 10 · Reflection','week-10.html'],['Week 15 · Action plan','week-15.html']]}
   ],
@@ -68,7 +68,7 @@ window.COURSE={
 
   faqExtra:[
     ['What is Project 2?','An individual reflective portfolio (30%): a Gibbs reflection on Project 1, a ranked personal SWOT, a three-year action plan and an evidence appendix. Due Mon 16 Nov on Moodle. <a href="project-2.html">Open the builder →</a>'],
-    ['What is Activity 2?','A 30–45 second video pitch, recorded with your phone (10%). Due Tue 24 Nov. <a href="activity-2.html">See the guide →</a>'],
+    ['What is Activity 2?','An in-class pitch case analysis (10%, individual): choose one of 20 real pitches and analyse it. Due Tue 24 Nov. <a href="activity-2.html">See the guide →</a>'],
     ['What is Project 1?','A team report (4000 words) that turns your idea into a social enterprise and proves it with real data and a tested prototype. <a href="project-1.html">See the project guide, one section per page →</a>'],
     ['How do we register our team?','One person registers the whole team with the <a href="project-1.html#s2">Microsoft Form</a>, using a CUD account.'],
     ['Do we need a survey or interviews?','No. Your evidence is verified open data plus your own prototype test.'],

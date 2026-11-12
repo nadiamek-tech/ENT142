@@ -3,25 +3,65 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Activity 2 · Video Pitch · ENT 142</title>
+<title>Activity 2 · Pitch Case Analysis · ENT 142</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 <link rel="stylesheet" href="assets/course.css">
 <link rel="stylesheet" href="assets/portal.css">
-<link rel="stylesheet" href="assets/deck.css">
+<link rel="stylesheet" href="assets/docbuilder.css">
 <style>:root{--wk:#C2185B;--wk-soft:rgba(194,24,91,.09);--wk-d:#F48FB1;--wk-soft-d:rgba(244,143,177,.15)}
-.phone{width:min(240px,70%);aspect-ratio:9/16;margin:0 auto;border-radius:28px;border:8px solid #1d2430;background:linear-gradient(#cfd8e6,#eef2f7);position:relative;overflow:hidden}
-.phone .face{position:absolute;left:50%;top:22%;width:42%;aspect-ratio:1;border-radius:50%;background:#c9a27e;transform:translateX(-50%)}
-.phone .body{position:absolute;left:50%;top:52%;width:80%;height:60%;border-radius:40% 40% 0 0;background:#5a6c8a;transform:translateX(-50%)}
-.phone .third{position:absolute;left:0;right:0;border-top:1px dashed rgba(29,36,48,.35)}
-.phone .rec{position:absolute;top:10px;left:10px;font:700 .7rem var(--f-mono);color:#c2185b}
+.pf-doc{--paper-a:#C2185B;--paper-a2:#7B1040}
+.guide3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:6px 0 18px}
+.guide3>div{border:1.5px solid var(--line);border-radius:14px;padding:12px;background:var(--surface);display:grid;gap:2px}
+.guide3 .n{width:26px;height:26px;border-radius:50%;background:var(--wk);color:var(--on-wk,#fff);display:grid;place-items:center;font-weight:800;font-size:.85rem}
+.guide3 small{color:var(--muted)}
+.tfil{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.tfil button{font:700 .85rem var(--f-display);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.tfil button[aria-pressed=true]{background:var(--wk);border-color:var(--wk);color:var(--on-wk,#fff)}
+.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:0 0 18px}
+.tp{text-align:left;font:inherit;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;display:grid;gap:4px}
+.tp:hover{border-color:var(--wk)}.tp[aria-pressed=true]{border-color:var(--wk);box-shadow:inset 0 0 0 2px var(--wk)}
+.tp .c{font:600 .7rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--wk)}
+.tp small{color:var(--muted);line-height:1.35}
+.picked{border:1.5px solid var(--wk);border-radius:16px;padding:16px 18px;background:var(--surface);margin:0 0 22px;scroll-margin-top:140px}
+.picked .lbl2{font:700 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--wk)}
+.picked a{color:var(--wk);font-weight:700}
+.watch{display:inline-flex;margin:4px 0 10px;font:700 .9rem var(--f-display);text-decoration:none;background:var(--wk);color:var(--on-wk,#fff)!important;border-radius:999px;padding:8px 14px}
+@media (max-width:720px){.guide3{grid-template-columns:repeat(2,minmax(0,1fr));margin-left:16px;margin-right:16px}.tfil,.topics,.picked,.pw>h2{margin-left:16px;margin-right:16px}}
 </style>
 </head>
 <body>
 <div id="hub" data-cur="pitch"></div>
-<main class="deck" id="deck"></main>
-<nav class="dnav" aria-label="Slides"><div class="dnav-in"><button type="button" class="nb prev">← Back</button><div class="dots" id="dots"></div><span class="pos" id="pos"></span><button type="button" class="nb next">Next →</button></div></nav>
+<main class="pw" id="pw">
+  <h1>Activity 2 · Pitch case analysis</h1>
+  <p class="lead">An in-class activity. Choose one real pitch, break it into five parts, judge it, and reflect.</p>
+  <div class="chips" id="chips"></div>
+  <div class="bar" id="bar">
+    <div class="seg" role="group" aria-label="Show"><button type="button" data-m="edit" aria-pressed="true">My analysis</button><button type="button" data-m="ex" aria-pressed="false">Example</button></div>
+    <button type="button" class="bbtn pri" data-act="docx">Save as Word</button>
+    <button type="button" class="bbtn" data-act="pdf">Print or PDF</button>
+    <button type="button" class="bbtn" data-act="save">Save file</button>
+    <label class="bbtn">Open file<input type="file" data-act="open" hidden></label>
+    <span class="prog" id="prog"></span>
+  </div>
+  <p class="msg" id="msg" aria-live="polite"></p>
+  <p class="exnote"><b>Example:</b> one student’s answer on Reggae Reggae Sauce, to show the depth expected. Choose your own case.</p>
+  <div class="guide3"><div><span class="n">1</span><b>Choose</b><small>One of 20 real pitches.</small></div><div><span class="n">2</span><b>Watch or read</b><small>Note the facts.</small></div><div><span class="n">3</span><b>Analyse</b><small>Hook, problem, solution, proof, ask.</small></div><div><span class="n">4</span><b>Judge and reflect</b><small>Lessons for your pitch.</small></div></div>
+  <h2 style="margin:6px 0 8px">Step 1 · Choose your pitch</h2>
+  <div class="tfil" id="tfil"></div>
+  <div class="topics" id="topics"></div>
+  <div class="picked" id="picked" hidden></div>
+  <div id="doc"></div>
+  <section class="sub" id="submit">
+    <h2>Submit</h2>
+    <p style="margin:0">1. Save as Word (or PDF). 2. Open Moodle. 3. Upload before <b id="due"></b>.</p>
+    <div class="acts"><button type="button" class="bbtn pri" data-act="docx">Save as Word</button><span id="mdl"></span></div>
+    <details class="rub"><summary>How it is marked · 10 marks</summary><div id="rub" style="margin-top:8px"></div></details>
+  </section>
+</main>
+<div id="print-root"></div>
+<footer class="pt-foot">This website is interactive course support. It does not replace classes, attendance or class activities.<br> <b>Nadia</b></footer>
 <script src="assets/supports.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/kb.js"></script>
@@ -30,57 +70,113 @@
 <script src="assets/professor.js"></script>
 <script src="assets/course-info.js"></script>
 <script src="assets/portal.js"></script>
-<script src="assets/deck.js"></script>
+<script src="assets/docbuilder.js"></script>
 <script>
 Portal.header('pitch');
-const {field:F,esc}=Deck;
-const A2=COURSE.assess.find(a=>a.id==='a2')||{};
-const MOODLE=(A2.submit||{}).link||'';
-const MODE=`<div class="mode" role="group" aria-label="Template or example"><button type="button" data-mode="me" aria-pressed="true">My script</button><button type="button" data-mode="ex" aria-pressed="false">Example</button></div>`;
-const PARTS=[
- ['Hook','≈ 5 s','One surprising fact or question.','Every evening, our campus cafés throw away good food.'],
- ['Problem','≈ 8 s','Who suffers, and how much.','Students want cheap meals, and cafés lose money on food they cannot sell after 6 pm.'],
- ['Solution','≈ 10 s','What you offer, in one clear sentence.','Second Plate is an app that lists surplus meals at 6 pm for 5 AED, collected in ten minutes.'],
- ['Proof','≈ 10 s','One number from your test or data.','We tested a paper version with 12 students: 9 said they would use it every week.'],
- ['Ask','≈ 5 s','What you want from the listener.','We are looking for one campus café to run a four-week pilot with us. Will you be the first?']];
-const ids=PARTS.map((_,i)=>'p'+i);
-const script=ex=>PARTS.map((p,i)=>ex?p[3]:(Deck.get('p'+i)||'')).filter(Boolean).join('\n');
-const SL=[
- {nav:'What',html:()=>`<div><div class="kick">Activity 2 · Week 13</div><h2>A 30–45 second video pitch</h2>
-  <p class="what">Pitch your team venture, or your own idea, to camera. One person, one phone, one clear message.</p>
-  <div class="chips"><span>Individual</span><span><b>10%</b></span><span><b>30–45</b> seconds</span><span>Due <b>Tue 24 Nov</b></span><span>CLO <b>2</b></span></div>
-  <div class="acts"><button type="button" class="b" data-go="1">Write my script →</button><a class="b g" href="week-12.html">Week 12 · Elevator Pitch</a></div></div>
-  <div class="vis"><span class="lbl">What you hand in</span><div class="paper" style="justify-items:center"><div class="phone" aria-hidden="true"><span class="rec">● REC 0:41</span><div class="third" style="top:33%"></div><div class="third" style="top:66%"></div><div class="face"></div><div class="body"></div></div><div class="wc">One video file (MP4 or MOV), face on camera, 30–45 seconds</div></div></div>`},
- {nav:'Script',part:'1',html:()=>`<div><div class="kick">Step 1 <span class="mk">75–110 words</span></div><h2>Write the script</h2>
-  <p class="what">Five parts, one or two sentences each. Speak at about 150 words a minute, so 75–110 words fits 30–45 seconds.</p>
-  <ol class="how"><li>Write it as you speak: short sentences, no slides.</li><li>Keep only one number, the strongest.</li><li>End with a clear ask.</li></ol>
-  <div class="acts"><button type="button" class="b" data-go="2">Practise it →</button></div></div>
-  <div class="vis"><div class="vhead"><span class="lbl">Script · write on it</span>${MODE}</div><div class="paper"><div class="gx">${PARTS.map(([t,s,q,ex],i)=>`<div class="r"><span>${i+1}</span><div><label>${t} · ${s} · ${q}</label>${F('p'+i,{ph:q,rows:2,ex})}</div></div>`).join('')}</div></div><span class="wc" id="wc"></span></div>`},
- {nav:'Practise',part:'2',html:()=>`<div><div class="kick">Step 2</div><h2>Practise with the timer</h2>
-  <p class="what">Read your script aloud while the bar runs. Stop between 30 and 45 seconds.</p>
-  <ol class="how"><li>Practise three times. Then put the text away and try once from memory.</li><li>Pause after the hook and before the ask.</li><li>Look at the lens, not the screen.</li></ol>
-  <div class="acts"><button type="button" class="b" id="go">▶ Start the timer</button><button type="button" class="b g" id="useEx">Use the example script</button></div></div>
-  <div class="vis"><span class="lbl">Prompter</span><div class="paper"><div class="tlab"><span id="tt">0.0 s</span><span>30 s · 45 s</span></div><div class="tbar"><i id="tb"></i></div><div class="prompt" id="pr"></div></div></div>`,
-  after:el=>prompter(el)},
- {nav:'Record',part:'3',html:()=>`<div><div class="kick">Step 3</div><h2>Record it with your phone</h2>
-  <ol class="how"><li><b>Light:</b> face a window or lamp, not your back to it.</li><li><b>Frame:</b> eyes on the top third line, phone at eye level, stable.</li><li><b>Sound:</b> a quiet room, phone about one arm away.</li><li><b>Take:</b> one continuous take, no cuts or music needed.</li><li><b>Check:</b> watch it once. If it runs over 45 s, cut words, not speed.</li></ol></div>
-  <div class="vis"><span class="lbl">Good framing</span><div class="paper" style="justify-items:center"><div class="phone" aria-hidden="true"><span class="rec">● REC</span><div class="third" style="top:33%"></div><div class="third" style="top:66%"></div><div class="face"></div><div class="body"></div></div><div class="wc">Eyes on the top line · head and shoulders · plain background</div></div></div>`},
- {nav:'Submit',html:()=>`<div><div class="kick">Tue 24 Nov · 23:59 <span class="mk">Activity 2 · 10%</span></div><h2>Check and submit</h2>
-  <ul class="ck">${['30–45 seconds','My face is visible and the sound is clear','Hook, problem, solution, proof, ask: all five are there','One number, and it is true','File named Name_StudentID_Pitch.mp4'].map((c,i)=>`<li><label><input type="checkbox" data-ck="${i}"> ${c}</label></li>`).join('')}</ul>
-  <div class="acts" style="margin-top:18px">${MOODLE?`<a class="b" href="${esc(MOODLE)}" target="_blank" rel="noopener">Submit on Moodle ↗</a>`:`<span class="b" aria-disabled="true">Moodle link coming soon</span>`}</div></div>
-  <div class="vis"><span class="lbl">Marks · 10</span><div class="mbar">${[['Hook',2],['Problem + solution',3],['Proof',2],['Delivery',2],['Ask',1]].map(([t,m])=>`<div><span>${t}</span><span><i style="width:${m*33}%"></i></span><span>${m}</span></div>`).join('')}</div>
-  <p class="wc" style="margin-top:10px">Delivery: clear voice, eye contact, within 30–45 seconds.</p></div>`,
-  after:el=>{ el.querySelectorAll('[data-ck]').forEach(c=>{ const k='ent142-a2-ck'+c.dataset.ck; try{ c.checked=localStorage.getItem(k)==='1'; }catch(e){} c.onchange=()=>{ try{ localStorage.setItem(k,c.checked?'1':'0'); }catch(e){} }; }); }}
-];
-let timer=null, exMode=false;
-function prompter(el){ const pr=el.querySelector('#pr'); const txt=script(exMode); pr.textContent=txt||'Write your script in Step 1, or use the example script.';
-  el.querySelector('#useEx').onclick=()=>{ exMode=!exMode; el.querySelector('#useEx').textContent=exMode?'Use my script':'Use the example script'; prompter(el); };
-  el.querySelector('#go').onclick=()=>{ clearInterval(timer); const t0=performance.now(), tb=el.querySelector('#tb'), tt=el.querySelector('#tt'), b=el.querySelector('#go'); b.textContent='■ Stop';
-    const stop=()=>{ clearInterval(timer); timer=null; b.textContent='▶ Start the timer'; b.onclick=()=>prompter(el)||el.querySelector('#go').click(); };
-    timer=setInterval(()=>{ const s=(performance.now()-t0)/1000; tt.textContent=s.toFixed(1)+' s'+(s<30?'':s<=45?' · in range':' · too long'); tb.style.width=Math.min(100,s/45*100)+'%'; tb.style.background=s>45?'#B23A2E':s>=30?'#2E7D5B':''; pr.scrollTop=(pr.scrollHeight-pr.clientHeight)*Math.min(1,s/40); if(s>60) stop(); },100);
-    b.onclick=stop; }; }
-const wc=()=>{ const n=ids.reduce((a,id)=>a+Deck.words(Deck.get(id)),0); const w=document.getElementById('wc'); if(w) w.innerHTML=`<b>${n}</b> words ≈ <b>${Math.round(n/150*60)}</b> seconds · aim for 75–110 words`; };
-Deck.mount({slides:SL,key:'ent142-a2',onInput:()=>wc()});
+const {esc,V}=DocB;
+const A2=COURSE.assess.find(a=>a.id==='a2')||{}, MOODLE=(A2.submit||{}).link||'', DUE=(A2.submit||{}).dueText||'';
+const YT=q=>'https://www.youtube.com/results?search_query='+encodeURIComponent(q);
+/* [type, key, name, one line, watch label, watch url, read (facts only), facts[], sources[[title,url]]] */
+const TOPICS=[
+ ['tv','ring','Ring (Doorbot)','A video doorbell pitched on Shark Tank in 2013. No deal.','Watch the Shark Tank pitch',YT('Doorbot Shark Tank pitch Jamie Siminoff'),
+  'Jamie Siminoff pitched DoorBot, a video doorbell, on Shark Tank in 2013. He asked for $700,000 for 10% of the company. Only Kevin O’Leary made an offer: a loan, a royalty and 5% equity. Siminoff said no and left with no deal. He renamed the product Ring. In 2018 Amazon bought Ring; the deal was reported at more than $1 billion.',
+  ['Ask: $700,000 for 10% (2013).','He rejected the only offer.','Amazon bought Ring in 2018 (reported over $1 billion).'],[['GeekWire, 2018','https://www.geekwire.com/2018/amazons-1b-deal-acquire-ring-probably-biggest-miss-shark-tank-history/']]],
+ ['tv','scrub','Scrub Daddy','A smiley-face sponge pitched on Shark Tank in 2012.','Watch the Shark Tank pitch',YT('Scrub Daddy Shark Tank pitch Aaron Krause'),
+  'Aaron Krause pitched Scrub Daddy, a sponge that is hard in cold water and soft in warm water, on Shark Tank. The episode aired in October 2012. Lori Greiner invested $200,000 for 20%. The day after the show, they sold 42,000 sponges on the QVC shopping channel in under seven minutes.',
+  ['Deal: $200,000 for 20% with Lori Greiner.','42,000 sponges sold on QVC in under 7 minutes.','Became one of Shark Tank’s top-earning products.'],[['Wikipedia · Scrub Daddy','https://en.wikipedia.org/wiki/Scrub_Daddy']]],
+ ['tv','squatty','Squatty Potty','A toilet stool pitched on Shark Tank in 2014.','Watch the Shark Tank pitch',YT('Squatty Potty Shark Tank pitch'),
+  'The Squatty Potty is a small stool for the bathroom. The founders pitched it on Shark Tank in 2014. Lori Greiner invested $350,000 for 10%. Online sales reached about $3 million within three weeks of the show. In 2015 the company released a funny “unicorn” video advert. It had about 30 million views in its first week.',
+  ['Deal: $350,000 for 10% (2014).','About $3 million online sales in three weeks.','2015 video: about 30 million views in one week.'],[['Entrepreneur, 2016','https://www.entrepreneur.com/article/273490']]],
+ ['tv','bombas','Bombas','Socks with a “one bought, one donated” model. Shark Tank 2014.','Watch the Shark Tank pitch',YT('Bombas Shark Tank pitch'),
+  'Bombas sells socks and donates an item to someone in need for each item sold. It launched in 2013 after a crowdfunding campaign. The founders pitched on Shark Tank in 2014. Daymond John offered $200,000 for 17.5%. The company reported revenue of $102 million in 2018.',
+  ['Founded 2013; Shark Tank 2014.','Offer: $200,000 for 17.5% from Daymond John.','Reported revenue: $102 million in 2018.'],[['CNBC, 2019','https://www.cnbc.com/2019/04/16/daymond-john-backed-sock-start-up-bombas-is-bringing-in-millions.html']]],
+ ['tv','reggae','Reggae Reggae Sauce','Levi Roots sang his pitch on Dragons’ Den in 2007.','Watch the Dragons’ Den pitch',YT('Levi Roots Reggae Reggae Sauce Dragons Den pitch'),
+  'Levi Roots pitched his Caribbean sauce on the BBC show Dragons’ Den on 7 February 2007. He sang a “Reggae Reggae Sauce” song during the pitch. Peter Jones and Richard Farleigh invested £50,000 for 40%. The sauce went on sale in Sainsbury’s supermarkets across the UK on 7 March 2007.',
+  ['Dragons’ Den: 7 February 2007.','£50,000 for 40% (Peter Jones, Richard Farleigh).','In Sainsbury’s nationwide one month later.'],[['Wikipedia · Reggae Reggae Sauce','https://en.wikipedia.org/wiki/Reggae_Reggae_Sauce']]],
+ ['tv','trunki','Trunki','A ride-on suitcase for children. Dragons’ Den 2006.','Watch the Dragons’ Den pitch',YT('Trunki Dragons Den pitch strap'),
+  'Rob Law pitched Trunki, a ride-on suitcase for children, on Dragons’ Den in 2006. During the pitch, Theo Paphitis pulled a strap and it broke. Richard Farleigh offered £100,000 for 50%, and Law said no. By 2016, more than three million Trunki cases had been sold in over 100 countries.',
+  ['Dragons’ Den: 2006. The strap broke on camera.','He refused £100,000 for 50%.','Over 3 million sold by 2016, in 100+ countries.'],[['Wikipedia · Trunki','https://en.wikipedia.org/wiki/Trunki']]],
+ ['deck','airbnb','Airbnb seed deck','The 14-slide deck behind a $600,000 seed round in 2009.','See the deck','https://alexanderjarvis.com/airbnb-seed-pitch-deck/',
+  'Airbnb raised a $600,000 seed round in April 2009, led by Sequoia Capital. Its early deck had 14 slides, starting with the problem and the solution. It covered market validation, market size, product, business model, competition, team, press and user quotes. The market slide counted trips (84 million), not dollars.',
+  ['Seed: $600,000, April 2009, led by Sequoia.','14 slides: problem first, then solution.','Market slide: 84 million trips.'],[['Alexander Jarvis · Airbnb seed deck','https://alexanderjarvis.com/airbnb-seed-pitch-deck/']]],
+ ['deck','uber','UberCab deck','Uber’s first pitch deck, written in late 2008.','Find the deck','https://www.google.com/search?q='+encodeURIComponent('UberCab pitch deck 2008 Garrett Camp'),
+  'Garrett Camp wrote Uber’s first pitch deck in late 2008, when the idea was called UberCab. The idea came from the cost and trouble of getting a car in a city. Camp published the deck online in 2017, on the idea’s ninth anniversary, so founders could see how it started.',
+  ['Deck written late 2008, as “UberCab”.','Idea: get a car at the click of a button.','Published by Garrett Camp in 2017.'],[['YourStory, 2017','https://yourstory.com/2017/08/garrett-camp-uber-first-pitch-deck']]],
+ ['deck','linkedin','LinkedIn Series B','Reid Hoffman’s 2004 deck to Greylock for $10 million.','See the deck','https://reidhoffman.org/linkedin-pitch-to-greylock/',
+  'In 2004 Reid Hoffman pitched LinkedIn to the investor Greylock, asking for about $10 million. Greylock gave a term sheet the day after the pitch. Hoffman later published the deck with lessons. One lesson: deal with the investor’s biggest worry early. In 2004 that worry was revenue.',
+  ['2004 · about $10 million · Greylock.','Term sheet the day after the pitch.','Lesson: answer the biggest worry early.'],[['Reid Hoffman · LinkedIn’s Series B pitch','https://reidhoffman.org/linkedin-pitch-to-greylock/']]],
+ ['deck','buffer','Buffer seed deck','A small social-media app that shared its full deck.','See the deck','https://buffer.com/resources/the-slide-deck-we-used-to-raise-half-a-million-dollars/',
+  'Buffer schedules social media posts. Its founders raised a seed round of about $450,000 to $500,000 from 18 investors. They contacted about 200 investors and had about 50 meetings. They said the traction slide mattered most, and the competition slide came second. They published the deck in 2013.',
+  ['About 200 investors contacted, 50 meetings, 18 invested.','Most important slide: traction.','Deck published openly in 2013.'],[['Buffer, 2013','https://buffer.com/resources/the-slide-deck-we-used-to-raise-half-a-million-dollars/']]],
+ ['deck','canva','Canva','Melanie Perkins pitched to over 100 investors before saying yes.','Watch her story',YT('Melanie Perkins Canva rejected investors pitch deck'),
+  'Melanie Perkins, co-founder of Canva, pitched to more than 100 investors while seeking seed money. After each rejection or hard question, she improved her deck. Early decks spent the first slides on the product. Later decks first proved that the problem was real and affected many people.',
+  ['Pitched to more than 100 investors.','Improved the deck after every rejection.','Later decks proved the problem first.'],[['SmartCompany','https://www.smartcompany.com.au/startupsmart/how-canva-founder-melanie-perkins-overcame-rejection-to-build-a-truly-stunning-startup-2/']]],
+ ['launch','iphone','iPhone launch','Steve Jobs presents the first iPhone, January 2007.','Watch the keynote',YT('Steve Jobs iPhone introduction 2007 keynote'),
+  'On 9 January 2007, at Macworld in San Francisco, Steve Jobs presented the first iPhone. He opened by announcing three products: a widescreen iPod with touch controls, a mobile phone and an internet device. Then he revealed they were one device. Apple described the iPhone as a phone, an iPod and an internet device in one.',
+  ['Presented 9 January 2007, Macworld.','Hook: “three products” that were one device.','Live demo on stage.'],[['Apple Newsroom, 2007','https://www.apple.com/newsroom/2007/01/09Apple-Reinvents-the-Phone-with-iPhone/']]],
+ ['launch','dropbox','Dropbox demo video','A short screen video that grew a waiting list overnight.','Watch the demo',YT('Dropbox original demo video Drew Houston'),
+  'Before Dropbox was ready, founder Drew Houston made a short demo video. It showed files moving between computers. The video brought hundreds of thousands of people to the website. Houston said the beta waiting list grew from about 5,000 to about 75,000 people overnight.',
+  ['A demo video, before the full product.','Waiting list: about 5,000 → 75,000 overnight.','Showed the product, not slides.'],[['TechCrunch, 2011','https://techcrunch.com/2011/10/19/dropbox-minimal-viable-product']]],
+ ['launch','pebble','Pebble smartwatch','A Kickstarter video that broke records in 2012.','Watch the Kickstarter video',YT('Pebble Kickstarter video 2012'),
+  'Pebble launched its smartwatch on Kickstarter on 11 April 2012 with a goal of $100,000. It reached the goal in about two hours. By 18 May 2012 it had $10,266,845 from 68,929 backers, a Kickstarter record then. In 2016 the company closed and sold assets to Fitbit.',
+  ['Goal $100,000; raised about $10.3 million.','68,929 backers; a record in 2012.','2016: company closed, assets sold to Fitbit.'],[['Wikipedia · Pebble (watch)','https://en.wikipedia.org/wiki/Pebble_(watch)']]],
+ ['launch','oculus','Oculus Rift','A virtual reality headset funded on Kickstarter in 2012.','Watch the Kickstarter video',YT('Oculus Rift Kickstarter video 2012'),
+  'The Oculus Rift Kickstarter started on 1 August 2012 with a goal of $250,000. It reached the goal in under 24 hours and raised more than $2.4 million. On 25 March 2014, Facebook announced it was buying Oculus for $2 billion.',
+  ['Goal $250,000; raised over $2.4 million.','Goal reached in under 24 hours.','Facebook bought Oculus for $2 billion (2014).'],[['Engadget, 2014','https://www.engadget.com/2014/03/28/oculus-rift-from-2-4-million-kickstarter-to-2-billion-sale/']]],
+ ['uae','careem','Careem','Dubai ride-hailing app, 2012. Bought by Uber in 2019.','Search the story','https://www.google.com/search?q='+encodeURIComponent('Careem founders story Uber acquisition'),
+  'Careem launched in Dubai in 2012, three years before Uber entered the region. Many riders had no credit card, so Careem let them pay in cash. In 2019 Uber bought Careem for $3.1 billion. In 2023 the UAE group e& bought 50.03% of the Careem super app.',
+  ['Launched 2012, before Uber came to the region.','Cash payment for riders without cards.','Uber bought it for $3.1 billion (2019).'],[['Al Jazeera, 2019','https://www.aljazeera.com/amp/economy/2019/3/26/uber-buys-middle-east-rival-careem-for-3-1bn'],['Wamda, 2023','https://www.wamda.com/en/2023/04/e-acquires-majority-stake-careem-super-app-400-million']]],
+ ['uae','kitopi','Kitopi','Dubai cloud kitchens, founded 2018. Raised $415 million in 2021.','Search the story','https://www.google.com/search?q='+encodeURIComponent('Kitopi cloud kitchen Dubai founder'),
+  'Kitopi was founded in Dubai in 2018. It runs cloud kitchens: kitchens that cook only for delivery, with no dining room. In 2021 it raised $415 million in a round led by SoftBank Vision Fund 2. At that time it ran more than 60 kitchens in the UAE, Saudi Arabia, Kuwait and Bahrain.',
+  ['Founded in Dubai, 2018.','Raised $415 million (2021), led by SoftBank.','60+ cloud kitchens in four countries.'],[['The National, 2021','https://www.thenationalnews.com/business/2021/07/01/dubai-cloud-kitchen-company-kitopi-raises-415m-in-funding-round-led-by-softbank']]],
+ ['uae','anghami','Anghami','Arabic music streaming, founded 2012. Listed on Nasdaq in 2022.','Search the story','https://www.google.com/search?q='+encodeURIComponent('Anghami Nasdaq listing Eddy Maroun'),
+  'Anghami is a music streaming app built for Arabic music. It was founded in 2012 by Eddy Maroun and Elie Habib. On 3 February 2022 it listed on Nasdaq in New York. It said it was the first Arab technology company listed on Nasdaq. It had more than 75 million users then.',
+  ['Founded 2012 by Eddy Maroun and Elie Habib.','Listed on Nasdaq, 3 February 2022.','75 million+ users at listing.'],[['The National, 2022','https://www.thenationalnews.com/business/markets/2022/02/03/adgm-based-anghami-lists-on-nasdaq-with-a-bell-ringing-ceremony']]],
+ ['uae','instashop','InstaShop','Dubai grocery delivery app. Bought for $360 million in 2020.','Search the story','https://www.google.com/search?q='+encodeURIComponent('InstaShop founders story Dubai'),
+  'InstaShop is a Dubai grocery delivery app founded by Ioanna Angelidaki and John Tsioris. It links shoppers with local stores. In August 2020, Delivery Hero agreed to buy it in a deal worth up to $360 million. It had about 500,000 users in five markets, and it was already profitable.',
+  ['A marketplace: shoppers and local stores.','Bought by Delivery Hero for up to $360 million (2020).','Already profitable when it was sold.'],[['TechCrunch, 2020','https://techcrunch.com/2020/08/26/on-demand-grocery-startup-instashop-acquired-by-delivery-hero-for-360m']]],
+ ['uae','talabat','Talabat','Food delivery from Kuwait, 2004. Listed in Dubai in 2024.','Search the story','https://www.google.com/search?q='+encodeURIComponent('talabat Dubai IPO 2024'),
+  'Talabat started in Kuwait in 2004 so people could order from many restaurants in one place. Delivery Hero bought it in 2015. On 10 December 2024 it listed on the Dubai Financial Market. The share sale raised about $2 billion. It works in eight markets.',
+  ['Started in Kuwait, 2004.','Bought by Delivery Hero, 2015.','Dubai listing, December 2024: about $2 billion raised.'],[['Dubai Media Office, 2024','https://mediaoffice.ae/en/news/2024/november/11-11/talabat-holding-plc-announces-its-intention-to-float-on-the-dubai-financial-market']]]];
+const KIND={tv:'TV pitch',deck:'Investor deck',launch:'Launch video',uae:'Around us'};
+let TF='all';
+function drawTopics(){ const cur=DocB.get('topic')||'';
+  document.getElementById('tfil').innerHTML=[['all','All 20'],['tv','TV pitches'],['deck','Investor decks'],['launch','Launch videos'],['uae','Around us']].map(([k,l])=>`<button type="button" data-f="${k}" aria-pressed="${TF===k}">${l}</button>`).join('');
+  document.getElementById('topics').innerHTML=TOPICS.map((t,i)=>[t,i]).filter(([t])=>TF==='all'||t[0]===TF).map(([t,i])=>`<button type="button" class="tp" data-t="${i}" aria-pressed="${cur===t[2]}"><span class="c">${KIND[t[0]]} · ${i+1}</span><b>${esc(t[2])}</b><small>${esc(t[3])}</small></button>`).join('');
+  const t=TOPICS.find(x=>x[2]===cur), p=document.getElementById('picked'); p.hidden=!t; if(!t) return;
+  p.innerHTML=`<span class="lbl2">Case · read and watch first</span><h3 style="margin:4px 0 8px">${esc(t[2])}</h3><a class="watch" href="${esc(t[5])}" target="_blank" rel="noopener">${esc(t[4])} ↗</a><p style="margin:0 0 10px;font-size:1.02rem;line-height:1.55">${esc(t[6])}</p><b>Key facts</b><ul style="margin:4px 0 10px">${t[7].map(f=>`<li>${esc(f)}</li>`).join('')}</ul><small>Source: ${t[8].map(([a,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(a)} ↗</a>`).join(' · ')}</small>`; }
+document.getElementById('tfil').addEventListener('click',e=>{ const b=e.target.closest('[data-f]'); if(b){ TF=b.dataset.f; drawTopics(); } });
+document.getElementById('topics').addEventListener('click',e=>{ const b=e.target.closest('[data-t]'); if(!b) return; const t=TOPICS[+b.dataset.t]; DocB.set('topic',t[2]); DocB.set('title',t[2]); drawTopics(); document.getElementById('picked').scrollIntoView({behavior:'smooth',block:'start'}); });
+const RATE=['Strong','OK','Weak','Missing'];
+const PART=(k,n,name,q)=>[{t:'q',k,n,label:`${name} · ${q}`,rows:2},{t:'pick',k:k+'r',label:`${n} · How strong is the ${name.toLowerCase()}?`,opts:RATE}];
+const SECTIONS=[
+ {id:'cover',cover:true,titleKey:'title',titlePh:'Your pitch case (choose above)',items:[{t:'in',k:'name',label:'Name'},{t:'in',k:'sid',label:'Student ID'}]},
+ {id:'facts',n:'2',title:'The pitch facts',tag:'with sources',howto:'From the case card, the video or the deck. Add the source.',
+  items:[{t:'in',k:'who',label:'Who pitched, to whom, when?'},{t:'in',k:'asked',label:'What did they ask for?',ph:'Money, stake, users, a buyer…'},{t:'q',k:'out',label:'What happened next?',rows:2},{t:'in',k:'src',label:'Sources',ph:'Website or video, date'}]},
+ {id:'a',n:'3',title:'Analyse · five parts',tag:'about 250 words',fmt:true,wc:250,howto:'Write what they actually said or showed. <a href="week-12.html">Week 12 · Elevator pitch</a>',
+  items:[...PART('h','1','Hook','How did they grab attention?'),...PART('p','2','Problem','What problem did they show, and for whom?'),...PART('s','3','Solution','What did they offer?'),...PART('e','4','Proof','What evidence: numbers, demo, customers?'),...PART('k','5','Ask','What did they ask for, clearly?')]},
+ {id:'v',n:'4',title:'Your verdict',tag:'about 100 words',fmt:true,wc:100,howto:'Use the facts. A pitch can be good and still get no deal.',
+  items:[{t:'q',k:'v1',n:'1',label:'Why did this pitch work, or not work?',rows:3},{t:'q',k:'v2',n:'2',label:'One change that would make it stronger.',rows:2}]},
+ {id:'r',n:'5',title:'Reflect',tag:'about 100 words',fmt:true,wc:100,howto:'Write in the first person: "I".',
+  items:[{t:'q',k:'r1',n:'1',label:'What will I copy in my own 30–45 second pitch?',rows:2},{t:'q',k:'r2',n:'2',label:'What will I avoid?',rows:2}]}];
+const EX={title:'Reggae Reggae Sauce',name:'Student A',sid:'2026XXXX',
+ who:'Levi Roots, to the Dragons on BBC Dragons’ Den, 7 February 2007',asked:'Investment for his sauce business',out:'Peter Jones and Richard Farleigh invested £50,000 for 40%. The sauce was in Sainsbury’s across the UK one month later.',src:'Wikipedia · Reggae Reggae Sauce; BBC Dragons’ Den clip',
+ h:'He sang his own Reggae Reggae Sauce song. Everyone remembered him.',hr:'Strong',
+ p:'In my view the problem was not clear. He spoke more about his story than a customer problem.',pr:'Weak',
+ s:'A ready-made Caribbean jerk sauce from his family recipe.',sr:'OK',
+ e:'Little proof of sales on the day. His energy and the taste were the main proof.',er:'Weak',
+ k:'He asked for money for part of his company.',kr:'OK',
+ v1:'It worked because the hook and his passion made the Dragons trust him, even with weak proof.',v2:'Add one number: how many bottles he sold at events.',
+ r1:'A hook people remember, and real passion.',r2:'Talking only about me. I will show the customer problem and one true number.','fmt-a':'qa','fmt-v':'qa','fmt-r':'qa'};
+DocB.mount({key:'ent142-a2c',docTitle:'Activity 2 · Pitch Case Analysis',titleKey:'title',root:document.getElementById('pw'),sections:SECTIONS,ex:EX,
+  course:'ENT 142',courseLine:'ENT 142 · Fundamentals of Innovation and Entrepreneurship 2',
+  coverOut:()=>[['Name',V('name')],['Student ID',V('sid')],['Instructor','Nadia']],
+  fileName:()=>`${(V('name')||'Student').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_')}_${V('sid')||'ID'}_ENT142_Activity2`});
+document.getElementById('chips').innerHTML=`<span>In class</span><span>Individual</span><span><b>10%</b></span><span>Due <b>${esc(DUE)}</b></span><span>CLO <b>2</b></span>`;
+document.getElementById('due').textContent=DUE+', 23:59';
+document.getElementById('mdl').innerHTML=MOODLE?`<a class="bbtn pri" href="${esc(MOODLE)}" target="_blank" rel="noopener">Submit on Moodle ↗</a>`:`<span class="bbtn" aria-disabled="true">Moodle link coming soon</span>`;
+document.getElementById('rub').innerHTML=`<div class="rub"><dl>${[['Pitch facts with real sources',2],['Five parts found, with evidence from the pitch',4],['Verdict reasoned with facts',2],['Reflection linked to your own pitch',2]].map(([t,m])=>`<dt>${m} marks</dt><dd>${t}</dd>`).join('')}</dl></div>`;
+drawTopics();
 </script>
 </body>
 </html>
