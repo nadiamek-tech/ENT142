@@ -60,5 +60,5 @@ function mount({slides,key,onInput,all}){
   if(onInput) onInput(DATA,null);
   return {go,data:()=>DATA};
 }
-window.Deck={mount,field,doc,words,esc,data:()=>DATA,get};
+window.Deck={mount,field,doc,words,esc,data:()=>DATA,get,set:(k,v)=>{ DATA[k]=v; save(); }};
 })();

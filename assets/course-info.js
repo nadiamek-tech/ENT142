@@ -8,7 +8,7 @@ window.COURSE={
     {key:'project',label:'Project 1',href:'project-1.html',icon:'project',blurb:'Team report: done 27 Oct.'},
     {key:'present',label:'P1 Presentation',href:'presentation.html',icon:'present',blurb:'Individual presentation: done 27 Oct.'},
     {key:'project2',label:'Project 2',href:'project-2.html',icon:'project',blurb:'Reflective Portfolio builder: write, save as Word or PDF, submit.'},
-    {key:'pitch',label:'Video pitch',href:'activity-2.html',icon:'present',blurb:'Activity 2: script, timer, record or pitch on Teams.'}
+    {key:'pitch',label:'Video pitch',href:'activity-2.html',icon:'present',blurb:'Activity 1: script as Word · Activity 2: video or Teams pitch.'}
   ],
   navExtra:[['roadmap.html','Roadmap','roadmap'],['toolkit.html','Toolkit','toolkit']],
   assessPage:'project-2.html', assessLabel:'Project 2',
@@ -26,7 +26,8 @@ window.COURSE={
 
   /* assessments (syllabus). date = Dubai time; time:false hides the clock time. submit.link = Moodle submission, '' = coming soon */
   assess:[
-    {id:'a1',name:'Activity 1',short:'Activity 1',type:'Activity',weight:'10%',when:'Week 6',covers:['In-class activity','Requirements published later'],format:'In class'},
+    {id:'a1',name:'Activity 1 · Pitch script',short:'Activity 1',type:'Activity',weight:'10%',date:'2026-12-01T09:00:00+04:00',time:false,covers:['Your 30–45 second pitch script (75–110 words)','Hook, problem, solution, proof, ask · saved as Word'],format:'Individual',clos:'2',
+      submit:{link:'',due:'2026-12-01T23:59:00+04:00',dueText:'Tue 1 Dec'},revise:[['Script builder','activity-2.html#s1'],['Week 13 · Pitch tips','week-13.html']]},
     {id:'p1',name:'Project 1 · Social Enterprise Report',short:'P1 Report',type:'Project',weight:'40%',date:'2026-10-27T09:00:00+04:00',time:false,
       covers:['Group report, 4000 words, one Word file','Executive summary, introduction and seven sections','Verified open data and your prototype test'],format:'Team of 4–5',clos:'1, 3',
       submit:{link:'',due:'2026-10-27T23:59:00+04:00',dueText:'Tue 27 Oct'},revise:[['Project guide','project-1.html'],['Report Lab','report-lab.html']]},
