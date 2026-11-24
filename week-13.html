@@ -86,90 +86,84 @@ const RUBRIC=`<table class="tbl"><thead><tr><th>Activity 2 criterion</th><th>Mar
 <tr><td>Hook</td><td>2</td></tr><tr><td>Problem + solution clarity</td><td>3</td></tr><tr><td>Proof / evidence</td><td>2</td></tr>
 <tr><td>Delivery: voice, eye contact, within time</td><td>2</td></tr><tr><td>Clear ask</td><td>1</td></tr><tr><td><b>Total</b></td><td><b>10</b></td></tr></tbody></table>`;
 
+/* ---------- Hooks ---------- */
+const HOOKS={
+ 'Three hooks':[
+  ['A question','"How much did you spend on lunch today?" The listener answers in their head.'],
+  ['A surprising number','"Every evening, our campus cafés throw away good food." One true fact, said simply.'],
+  ['A short story','"Last Monday, Sara skipped lunch: the queue was 30 minutes." One person, one moment.']]};
+const SAY=`<table class="tbl"><thead><tr><th>Weak line</th><th>Strong line</th><th>Why</th></tr></thead><tbody>
+<tr><td>"Our innovative, unique platform leverages AI…"</td><td>"An app that lists surplus meals at 6 pm for 5 AED."</td><td>Says what it does</td></tr>
+<tr><td>"Many people have this problem."</td><td>"Students want cheap meals; cafés lose money after 6 pm."</td><td>Names who suffers</td></tr>
+<tr><td>Four numbers in one sentence</td><td>"We tested it with 12 students: 9 would use it weekly."</td><td>One number, from your test</td></tr>
+<tr><td>"Thank you for listening."</td><td>"Will you be our first pilot café?"</td><td>A clear ask</td></tr></tbody></table>`;
+
 Lecture.mount({
   id:'ent142-w13', week:13, clo:2, course:'ENT 142', short:'Week 13 · Elevator Pitch Workshop (Part 1)',
   title:'Elevator Pitch Workshop (Part 1)',
-  meta:'Activity 2 guide, Kawasaki (2005) · 2-hour lab',
+  meta:'Pitch tips · 35-minute lecture, then practice',
   scenes:[
-  { nav:'Start here', title:'How do you record a 45-second pitch with only a phone?', minutes:5,
-    narration:[`Record a practice take of your pitch (not graded), then do Activity 2: analyse a real pitch. <span class="mono">Topics: Recording with a phone · Framing · Light · Sound · Eye line · One clean take · File size and format · Peer review. CLO 2.</span>`],
-    src:`Reading: <a href="activity-2.html">Activity 2 guide</a> · <a href="pitch-practice.html">Pitch practice</a> · Kawasaki, G. (2005). <em>The 10/20/30 rule of PowerPoint</em>. guykawasaki.com · Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill Education.`,
-    fig:{label:`Today's lab · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Think first`,5,'l'],[`Camera position`,10,'l'],[`The room`,8,'l'],[`One clean take`,8,'l'],[`File and format`,5,'l'],[`Mistakes → fixes`,5,'l'],[`Practice take`,22,'a'],[`Activity 2 · pitch case analysis`,40,'a'],[`Check`,10,'c'],[`Takeaways`,2,'l']])} },
+  { nav:'Start here', title:'Pitch tips in 35 minutes', minutes:2,
+    narration:[`Seven tips, then you write and practise your own pitch. <span class="mono">Topics: 45-second structure · Hooks · Plain words · Voice and eyes · Camera · Video or Teams. CLO 2.</span>`],
+    src:`Reading: <a href="activity-2.html">Activity 2 guide</a> · Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill.`,
+    fig:{label:`Today · 120 minutes`, build:el=>W.agenda(el,[[`Pitch tips`,35,'l'],[`Write your script`,25,'a'],[`Practise in pairs`,45,'a'],[`Choose: video or Teams`,10,'a'],[`Check`,5,'c']])} },
 
-  { nav:'Think first', title:'Same words, two videos', minutes:5,
-    narration:[`Founders pitch on video too. Y Combinator asks applicants for a one-minute founder video.`],
-    think:`Two classmates send the same script. One is dark, echoing and looking down. One is bright, clear and looking at you. Which venture do you trust more? Why, if the words are the same?`,
-    src:`Y Combinator. <em>Apply to Y Combinator</em> (founder video). ycombinator.com/apply`,
-    fig:{label:`What the marker notices first`, flow:[
-      {t:'See',s:'0–2 s',d:'Face, light, background.'},
-      {t:'Hear',s:'0–3 s',d:'Clear voice or echo and noise.'},
-      {t:'Connect',s:'first sentence',d:'Eye contact and the hook.'},
-      {t:'Judge',s:'45 s',d:'Problem, solution, proof, ask.'}]} },
+  { nav:'The formula', title:'Tip 1 · Five parts in 45 seconds', minutes:6,
+    narration:[`An <b>elevator pitch</b> is your venture said in the time of a lift ride. Five parts, in order: Hook → Problem → Solution → Proof → Ask. About 75–110 words.`],
+    src:`Activity 2 brief: 30–45 seconds, Hook → Problem → Solution → Proof → Ask.`,
+    fig:{label:`45 seconds · five parts`, html:TAKE, caption:`Timings are a guide. The proof comes from your Project 1 test.`} },
 
-  { nav:'Camera position', title:'Framing and eye line', minutes:10,
-    narration:[`<b>Framing</b> is what the lens sees. Hold the phone horizontally on a stand or books, lens at eye level, about an arm's length away. Head and shoulders fill the frame; eyes sit on the top third. Look into the lens.`],
-    src:`Y Combinator. <em>Apply to Y Combinator</em>: founders record a short video of themselves talking to the camera.`,
-    fig:{label:`Framing · eye line`, html:FRAME, caption:`Plain, tidy background. Nothing moving behind you.`} },
+  { nav:'The hook', title:'Tip 2 · Win the first five seconds', minutes:5,
+    narration:[`The <b>hook</b> makes the listener want the next sentence. Choose one type. Never open with "Hi, my name is… and today I will…".`],
+    fig:{label:`Three hooks · click a card`, build:el=>W.picker(el,HOOKS,'Select a hook type.')} },
 
-  { nav:'The room', title:'Light and sound', minutes:8,
-    narration:[`The room decides the quality before you speak. Face the light. Choose a quiet, soft room. Click each card.`],
-    fig:{label:`Room check · click a card`, build:el=>W.picker(el,ROOM,'Select a card.')} },
+  { nav:'Plain words', title:'Tip 3 · Say less, say it clearly', minutes:5,
+    narration:[`Short sentences. No buzzwords. One number only: the strongest one, from your own test. End with an ask, not a thank-you.`],
+    fig:{label:`Weak → strong · example venture`, html:SAY} },
 
-  { nav:'One clean take', title:'One clean take', minutes:8,
-    narration:[`A <b>clean take</b> is one continuous recording: no cuts, music or slides. Follow Hook → Problem → Solution → Proof → Ask in 30–45 seconds. Rehearse twice, then record. Restart if you stumble.`],
-    src:`Activity 2 brief: Hook → Problem → Solution → Proof → Ask, 30–45 seconds. · Kawasaki, G. (2005). <em>The 10/20/30 rule of PowerPoint</em>: short, focused pitches.`,
-    fig:{label:`45 seconds · one take`, html:TAKE, caption:`Timings are a guide, not a rule. Proof uses your Project 1 prototype test.`} },
+  { nav:'Voice and eyes', title:'Tip 4 · Voice, pace and eye contact', minutes:5,
+    narration:[`Speak a little slower than normal. Pause after the hook and before the ask. Look at the lens or the person, not the screen.`],
+    fig:{label:`Delivery · four habits`, flow:[
+      {t:'Pace',s:'≈150 words/min',d:'Slow down; cut words, not speed.'},
+      {t:'Pause',s:'2 pauses',d:'After the hook, before the ask.'},
+      {t:'Eyes',s:'lens',d:'Look at the lens, not your face.'},
+      {t:'Card',s:'5 words',d:'One keyword per part, behind the phone.'}]} },
 
-  { nav:'File and format', title:'File size and format', minutes:5,
-    narration:[`A great pitch that will not play earns nothing. Record at 1080p, export MP4, name the file clearly and test it on a laptop before uploading.`],
-    src:`Apple. <em>iPhone User Guide</em>: Change advanced camera settings (Formats: High Efficiency or Most Compatible). support.apple.com`,
-    fig:{label:`Before you upload`, html:FILE} },
+  { nav:'Camera', title:'Tip 5 · Camera and room in one minute', minutes:4,
+    narration:[`Phone horizontal, lens at eye level, about an arm's length away. Face the light. Quiet room.`],
+    fig:{label:`Framing · eye line`, html:FRAME, caption:`Plain background. Nothing moving behind you.`} },
 
-  { nav:'Mistakes → fixes', title:'Four common mistakes', kind:'review', minutes:5,
-    narration:[`Check your take 1 against this table before peer review.`],
+  { nav:'Video or Teams', title:'Tip 6 · Two ways to pitch', minutes:4,
+    narration:[`Shy, no phone or no quiet room? Pitch live to Nadia on Teams instead. The call is recorded, so it counts as your video. Same marks either way.`],
+    fig:{label:`Activity 2 · choose one`, flow:[
+      {t:'A · Video',s:'phone or laptop',d:'One take, 30–45 s. Upload on Moodle by Tue 1 Dec, 23:59.'},
+      {t:'B · Teams',s:'live, recorded',d:'Tell Nadia by Fri 27 Nov. Camera on, pitch once. Nothing to upload.'}],
+      html:RUBRIC} },
+
+  { nav:'Mistakes → fixes', title:'Tip 7 · Avoid four mistakes', kind:'review', minutes:2,
+    narration:[`Check your practice take against this table.`],
     fig:{label:`Mistake → fix`, html:MIST} },
 
-  { nav:'Practice take', title:'Practice · Record a take and peer review', kind:'activity', minutes:22, wide:true,
-    narration:[`Work in pairs. Record each other with your own phones and give one specific change. Not graded. Then open <a href="activity-2.html">Activity 2 · pitch case analysis</a> (40 min, 10%).`],
-    fig:{label:`Pairs · record, swap, review`, flow:[
-      {t:'Key words',s:'2 min',d:'Five keywords on a card: hook, problem, solution, proof, ask.'},
-      {t:'Set up',s:'3 min',d:'Framing, light, sound, eye line. Use the partner as the camera holder.'},
-      {t:'Record',s:'6 min',d:'One rehearsal, then one clean take.'},
-      {t:'Swap',s:'6 min',d:'Your partner records you.'},
-      {t:'Review',s:'5 min',d:'Watch together. Write one change for next week.'}],
-      html:RUBRIC,
-      build:el=>W.worksheet(el,{id:'ent142-w13-take1',title:'ENT 142 · Week 13 · Take 1 peer review',fields:[
-      {l:'Partner name and take 1 length (seconds)',rows:1},
-      {l:'Marks: Hook /2 · Problem + solution /3 · Proof /2 · Delivery /2 · Ask /1 · Total /10',rows:2},
-      {l:'Strongest moment: what worked, and why',rows:2},
-      {l:'Set-up fix: framing, light, sound or eye line',rows:2},
-      {l:'One change for take 2',hint:'One sentence. Name the criterion it improves.',rows:2}]})} },
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:5,
+    narration:[`Four scenarios. One click per question.`],
+    fig:{label:`4 questions`, build:el=>W.quiz(el,[
+      {q:'Which opening is the strongest hook?',
+       o:['"Hi, my name is Ali and today I will present our project."','"How much did you spend on lunch today?"','"Thank you for this opportunity."','"Our project is very innovative."'],a:1,
+       why:'A question makes the listener think straight away. Introducing yourself, thanking or calling the idea innovative uses the first seconds without giving a reason to listen.'},
+      {q:'Omar\'s pitch is clear but lasts 58 seconds. Which mark is most at risk?',
+       o:['Hook','Proof','Delivery (includes within time)','Ask'],a:2,
+       why:'Time sits inside delivery. His hook, proof and ask are judged on content, and the content is clear. The fix is to cut words, not to speak faster.'},
+      {q:'Which line is the strongest proof?',
+       o:['"Our idea is unique."','"We tested a paper prototype with 12 students; 9 asked to join."','"Food waste is a global problem."','"Our team is passionate."'],a:1,
+       why:'Proof is evidence from a test: who, how many, what they did. "Unique" is a claim. Global food waste describes the problem. Passion is about the team, not the evidence.'},
+      {q:'Maya is very shy and has no quiet room at home. What can she do for Activity 2?',
+       o:['Skip Activity 2','Send a written script instead','Pitch live to Nadia on Teams; the call is recorded','Ask a friend to pitch for her'],a:2,
+       why:'Option B is a recorded Teams pitch with the same marks. A written script is not a pitch, skipping loses 10%, and someone else\'s pitch is not her work.'}])} },
 
-  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
-    narration:[`Five scenarios. One click per question.`],
-    fig:{label:`5 questions`, build:el=>W.quiz(el,[
-      {q:'Amira records at her desk with a bright window behind her. Her face looks dark. What is the best fix?',
-       o:['Turn the desk so she faces the window','Raise the phone screen brightness','Add a bright filter after recording','Move the phone closer to her face'],a:0,
-       why:'Facing the window puts the light on her face. Screen brightness changes only what she sees, not the recording. A filter also brightens the window and cannot rebuild lost detail. Moving closer does not change where the light comes from.'},
-      {q:'Omar\'s pitch is clear and well structured but lasts 58 seconds. Which mark is most directly at risk?',
-       o:['Hook','Proof / evidence','Delivery (includes within time)','Clear ask'],a:2,
-       why:'Time sits inside the delivery criterion. Hook, proof and ask are judged on content, and his content is clear. Length does not remove his hook or evidence.'},
-      {q:'Which line is the strongest proof for a surplus-meal app?',
-       o:['"Our idea is very innovative and unique."','"We tested a paper prototype with 12 students; 9 asked to join the pilot."','"Food waste is a huge global problem."','"Our team is passionate and hardworking."'],a:1,
-       why:'Proof is evidence from a test: who, how many, what they did. "Innovative" is a claim with no evidence. Global food waste describes the problem, not proof your solution works. Passion is about the team, not evidence.'},
-      {q:'Sara looks at her own face on the screen while recording. How does the viewer see it?',
-       o:['As natural eye contact','As looking slightly down and away','As confident, because she is smiling','No difference on a phone'],a:1,
-       why:'The lens sits above the screen, so watching the screen looks like looking down. Eye contact only appears when you look at the lens. A smile does not fix the eye line. The gap is visible on every phone.'},
-      {q:'Lina\'s 4K video plays on her phone but not on the marker\'s laptop. What is the best first step?',
-       o:['Zip the file before uploading','Record again at 1080p, Most Compatible / MP4','Trim it to 20 seconds','Upload screenshots instead'],a:1,
-       why:'1080p H.264 MP4 is smaller and plays almost everywhere. Zipping does not change the codec and barely shrinks video. 20 seconds breaks the 30–45 second requirement. Screenshots are not a video pitch.'}])} },
-
-  { nav:'Takeaways', title:'Takeaways', minutes:2,
-    narration:[`<ul><li>Lens at eye level, face the light, quiet soft room.</li><li>One clean take: Hook → Problem → Solution → Proof → Ask, 30–45 seconds.</li><li>1080p MP4, clear file name, tested before upload.</li></ul>`,
-      `<b>Activity 2 due:</b> Tuesday 24 November, 23:59, on Moodle. <a href="activity-2.html">Activity 2 guide</a>.`,
-      `<b>Next week:</b> bring your practice video for live Q&amp;A practice.`,
+  { nav:'Takeaways', title:'Takeaways', minutes:1,
+    narration:[`<ul><li>Hook → Problem → Solution → Proof → Ask, 30–45 seconds.</li><li>Plain words, one true number, a clear ask.</li><li>Video or Teams: same pitch, same marks.</li></ul>`,
+      `<b>Activity 2 due:</b> Tuesday 1 December, 23:59. Teams option: tell Nadia by Friday 27 November. <a class="btn" href="activity-2.html">Write my script →</a>`,
       `<a class="btn" href="week-14.html">Next lecture · Week 14 · Elevator Pitch Workshop (Part 2) →</a>`] },
-
   ]
 });
 </script>
